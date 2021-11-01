@@ -1,4 +1,5 @@
-package com.skarp.prio.restservice;
+package com.skarp.prio.products;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,3 +17,4 @@ public class ProductController {
         return new Product(String.format(template, name), price);
     };
 }
+

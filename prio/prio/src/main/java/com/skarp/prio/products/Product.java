@@ -1,4 +1,4 @@
-package com.skarp.prio.restservice;
+package com.skarp.prio.products;
 
 public class Product {
     private String productName;

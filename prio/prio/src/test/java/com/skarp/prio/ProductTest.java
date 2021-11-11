@@ -2,6 +2,7 @@ package com.skarp.prio;
 
 import com.skarp.prio.products.Product;
 import com.skarp.prio.spareparts.SparePart;
+import com.skarp.prio.spareparts.UsedSparePart;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +12,7 @@ public class ProductTest {
     Product iphone;
     @BeforeEach
     public void setup() {
-       iphone = new Product("Iphone 12", 4000, 1500);
+       iphone = new Product("Apple", "iPhone", "11 Pro", "2018", "256gb white", 4000, 1500);
     }
 
     @Test
@@ -57,7 +58,8 @@ public class ProductTest {
     @Test
     public void testCanAddSparePart() {
 
-        SparePart iphone_battery = new SparePart();
+        Product phone = new Product("Apple", "iPhone", "11 Pro", "2018", "256gb white", 4000, 2000);
+        SparePart iphone_battery = new UsedSparePart(phone, "Battery", "OEM");
 
         assertTrue(iphone.addSparePart(iphone_battery));
 

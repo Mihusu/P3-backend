@@ -39,8 +39,10 @@ public class Repair {
 
     public void resumeRepair() {
 
-        this.state = "ON-GOING";
-        this.resumedAt = new Date();
-        this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
+        if (this.state.equals("PAUSED")){
+            this.state = "ON-GOING";
+            this.resumedAt = new Date();
+            this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
+        }
     }
 }

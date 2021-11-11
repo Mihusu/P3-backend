@@ -1,3 +1,4 @@
+/*
 package com.skarp.prio.products;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,3 +19,4 @@ public class ProductController {
     };
 }
 
+*/

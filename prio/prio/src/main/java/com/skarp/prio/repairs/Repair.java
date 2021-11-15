@@ -1,6 +1,8 @@
 package com.skarp.prio.repairs;
 
 import com.skarp.prio.products.Product;
+import com.skarp.prio.products.ProductState;
+
 import java.util.Date;
 
 public class Repair {
@@ -14,8 +16,10 @@ public class Repair {
     private Long repairTime = 0L;
 
     public Repair(Product product) {
-        this.state = "ON-GOING";
+        this.state = RepairState.ON_GOING;
         this.startDate = new Date();
+
+        product.setState(ProductState.IN_REPAIR);
     }
 
     public String getState() {

@@ -3,6 +3,7 @@ import com.skarp.prio.*;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
 
+import com.skarp.prio.repairs.RepairState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +15,6 @@ public class RepairTest {
     public void setup() {
         iphone = new Product("Iphone 12", 4000, 1500);
     }
-
 
     @Test
     public void canStartRepair() {
@@ -33,7 +33,7 @@ public class RepairTest {
 
         repair.pauseRepair();
 
-        assertEquals("PAUSED", repair.getState());
+        assertEquals(RepairState.PAUSED, repair.getState());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class RepairTest {
 
         repair.resumeRepair();
 
-        assertEquals("ON-GOING", repair.getState());
+        assertEquals(RepairState.ON_GOING, repair.getState());
     }
 
     @Test

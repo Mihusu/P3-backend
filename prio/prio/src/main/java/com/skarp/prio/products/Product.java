@@ -12,6 +12,7 @@ public class Product {
     private String brand;       // Apple, Lenovo
     private String category;    // Smartphone (and iPhone), Laptop, MacBook
     private String specification; //Ex. 128gb, white
+    private ProductState state;
     private final double salesPrice;
     private double costPrice;
 
@@ -72,5 +73,13 @@ public class Product {
 
     public String getModelYear() {
         return this.modelYear;
+    }
+
+    public ProductState getState() {
+        return this.state;
+    }
+
+    public void setState(ProductState state) {
+        this.state = state;
     }
 }

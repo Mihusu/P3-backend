@@ -1,8 +1,11 @@
 package com.skarp.prio;
 
 import com.skarp.prio.products.Product;
+import com.skarp.prio.products.ProductState;
+import com.skarp.prio.repairs.Repair;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.UsedSparePart;
+import com.skarp.prio.writeoffticket.WriteOffTicket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,6 +67,43 @@ public class ProductTest {
         assertTrue(iphone.addSparePart(iphone_battery));
 
     }
+
+    @Test
+    public void testStateAfterWriteOff(){
+        Technician technician = new Technician("Jakob", "MacBook");
+        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician);
+
+        assertEquals(ProductState.IN_WRITEOFF, iphone.getState());
+    }
+
+    @Test
+    public void testStateAfterWriteOffDecline() {
+        Technician technician = new Technician("Jakob", "MacBook");
+        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician);
+
+        testTicket.decline();
+
+        assertEquals(ProductState.DEFECTIVE, iphone.getState());
+    }
+
+    @Test
+    public void testStateAfterWriteOffApproved() {
+        Technician technician = new Technician("Jakob", "MacBook");
+        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician);
+
+        testTicket.approve();
+
+        assertEquals(ProductState.WRITTEN_OFF, iphone.getState());
+    }
+
+    @Test
+    public void testStateAfterRepairStarted() {
+
+        Repair iphone_repair = new Repair(iphone);
+
+        assertEquals(ProductState.IN_REPAIR, iphone.getState());
+    }
+
 
 }
 

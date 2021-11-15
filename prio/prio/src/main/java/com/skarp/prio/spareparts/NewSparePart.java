@@ -1,8 +1,6 @@
 package com.skarp.prio.spareparts;
 
-import com.skarp.prio.products.Product;
-
-import java.util.Date;
+import com.skarp.prio.spareparts.Enums.NewSparePartState;
 
 public class NewSparePart extends SparePart{
 

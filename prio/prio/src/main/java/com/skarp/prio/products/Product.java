@@ -15,6 +15,7 @@ public class Product {
     private ProductState state;
     private final double salesPrice;
     private double costPrice;
+    // hans is awesome <3
 
 
     public Product(String brand, String category, String modelName, String modelYear, String specification, int salesPrice, int costPrice) {

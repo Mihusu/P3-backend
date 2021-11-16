@@ -1,10 +1,14 @@
 package com.skarp.prio.products;
 
 import com.skarp.prio.spareparts.SparePart;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 
 public class Product {
+    @Id
+    private String id;
+
     private ArrayList<SparePart> spareParts = new ArrayList<>();
     private String productName;
     private String modelName;       // Ex: Pro, E480, 8, 9, 11 Pro

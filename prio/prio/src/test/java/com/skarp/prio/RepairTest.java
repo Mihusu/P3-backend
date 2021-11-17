@@ -12,21 +12,19 @@ public class RepairTest {
 
     @BeforeEach
     public void setup() {
-        iphone = new Product("Iphone 12", 4000, 1500);
+        iphone = new Product("Apple", "iPhone", "11 Pro", "2018", "256gb white", 4000, 1500);;
     }
 
     @Test
     public void canStartRepair() {
-        Product iphone = new Product("iPhone", 4000, 2000);
 
         Repair repair = new Repair(iphone);
 
-        assertEquals("ON-GOING", repair.getState());
+        assertEquals(RepairState.ON_GOING, repair.getState());
     }
 
     @Test
     public void canPauseRepair() {
-        Product iphone = new Product("iPhone", 4000, 2000);
 
         Repair repair = new Repair(iphone);
 
@@ -37,7 +35,6 @@ public class RepairTest {
 
     @Test
     public void canResumeRepair() {
-        Product iphone = new Product("iPhone", 4000, 2000);
 
         Repair repair = new Repair(iphone);
 
@@ -48,7 +45,6 @@ public class RepairTest {
 
     @Test
     public void hasDate() {
-        Product iphone = new Product("iPhone", 4000, 2000);
 
         Repair repair = new Repair(iphone);
 

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.mongodb.core.MongoTemplate;
+
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -20,7 +20,7 @@ public class ProductController {
 
     @GetMapping("/product/search")
     public List<Product> product(@RequestParam(value = "brand", defaultValue = "Apple") String brand,
-                                @RequestParam(value = "category", defaultValue = "iPhone") String category) {
+                                 @RequestParam(value = "category", defaultValue = "iPhone") String category) {
 
         List<Product> result = operations.query(Product.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
 

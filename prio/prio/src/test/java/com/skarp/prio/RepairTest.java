@@ -1,5 +1,4 @@
 package com.skarp.prio;
-import com.skarp.prio.*;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
 

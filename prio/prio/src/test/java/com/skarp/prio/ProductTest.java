@@ -22,6 +22,7 @@ public class ProductTest {
     @Test
     public void testConstructor() {
         assertNotNull(iphone);
+        assertEquals(ProductState.DEFECTIVE, iphone.getState());
     }
 
     @Test

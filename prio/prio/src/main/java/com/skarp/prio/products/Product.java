@@ -1,10 +1,14 @@
 package com.skarp.prio.products;
 
 import com.skarp.prio.spareparts.SparePart;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 
 public class Product {
+    @Id
+    private String id;
+
     private ArrayList<SparePart> spareParts = new ArrayList<>();
     private String productName;
     private String modelName;       // Ex: Pro, E480, 8, 9, 11 Pro
@@ -18,7 +22,7 @@ public class Product {
     // hans is awesome <3
 
 
-    public Product(String brand, String category, String modelName, String modelYear, String specification, int salesPrice, int costPrice) {
+    public Product(String brand, String category, String modelName, String modelYear, String specification, double salesPrice, double costPrice) {
         this.productName = brand + " " + category + " " + modelName + " " + modelYear + " " + specification;
         this.brand = brand;
         this.category = category;
@@ -27,7 +31,9 @@ public class Product {
         this.specification = specification;
         this.salesPrice = salesPrice;
         this.costPrice = costPrice;
-    };
+
+        this.state = ProductState.DEFECTIVE;
+    }
 
     public String getProductName() {
         return this.productName;
@@ -40,7 +46,7 @@ public class Product {
     public double getCostPrice() {return this.costPrice;}
 
     public double getProfitSum(){return this.salesPrice - this.costPrice;}
-    //returns profit margin in procent
+    //returns profit margin in percent
     public double getProfitMargin(){return (1 - ( this.costPrice / this.salesPrice)) * 100;}
 
     public boolean setCostPrice(int costPrice) {

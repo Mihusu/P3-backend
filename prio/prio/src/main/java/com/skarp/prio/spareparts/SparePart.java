@@ -1,7 +1,5 @@
 package com.skarp.prio.spareparts;
 
-import com.skarp.prio.products.Product;
-
 import java.util.Date;
 
 public class SparePart {

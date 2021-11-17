@@ -22,11 +22,12 @@ public class ProductTest {
     @Test
     public void testConstructor() {
         assertNotNull(iphone);
+        assertEquals(ProductState.DEFECTIVE, iphone.getState());
     }
 
     @Test
     public void testGetName() {
-        assertEquals("Iphone 12", iphone.getProductName());
+        assertEquals("Apple iPhone 11 Pro 2018 256gb white", iphone.getProductName());
     }
 
     @Test

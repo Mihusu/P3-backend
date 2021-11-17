@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Repair {
 
-    private String state;
+    private RepairState state;
     private Date startDate;
     private Date endDate;
     private Date pausedAt;
@@ -22,12 +22,12 @@ public class Repair {
         product.setState(ProductState.IN_REPAIR);
     }
 
-    public String getState() {
+    public RepairState getState() {
         return this.state;
     }
 
     public void pauseRepair() {
-        this.state = "PAUSED";
+        this.state = RepairState.PAUSED;
         this.pausedAt = new Date();
     }
 
@@ -43,8 +43,8 @@ public class Repair {
 
     public void resumeRepair() {
 
-        if (this.state.equals("PAUSED")){
-            this.state = "ON-GOING";
+        if (this.state.equals(RepairState.PAUSED)){
+            this.state = RepairState.ON_GOING;
             this.resumedAt = new Date();
             this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
         }

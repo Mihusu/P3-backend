@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProductTest {
 
     Product iphone;
+
     @BeforeEach
     public void setup() {
        iphone = new Product("Apple", "iPhone", "11 Pro", "2018", "256gb white", 4000, 1500);

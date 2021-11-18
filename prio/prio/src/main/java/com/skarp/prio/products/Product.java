@@ -40,14 +40,15 @@ public class Product {
         this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
         this.storageTime = calcStorageTime();
-
     }
+
     public LocalDate getDateAdded(){
         return this.dateAdded;
     }
 
     public String getName() {
         return this.name;
+    }
 
     public long getStorageTime(){
         this.storageTime = calcStorageTime();
@@ -65,6 +66,7 @@ public class Product {
     public double getCostPrice() {return this.costPrice;}
 
     public double getProfitSum(){return this.salesPrice - this.costPrice;}
+
     //returns profit margin in percent
     public double getProfitMargin(){return (1 - ( this.costPrice / this.salesPrice)) * 100;}
 

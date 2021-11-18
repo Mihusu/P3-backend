@@ -24,7 +24,7 @@ public class ProductController {
 
     private static int price = ThreadLocalRandom.current().nextInt(0,200);
 
-    @GetMapping("/product/search")
+    @GetMapping("/products/")
     public List<Product> product(@RequestParam(value = "brand") String brand,
                                  @RequestParam(value = "category") String category) {
 

@@ -12,14 +12,13 @@ public class Product {
     private ArrayList<SparePart> spareParts = new ArrayList<>();
     private String productName;
     private String modelName;       // Ex: Pro, E480, 8, 9, 11 Pro
-    private String modelYear;   // 2016
-    private String brand;       // Apple, Lenovo
-    private String category;    // Smartphone (and iPhone), Laptop, MacBook
-    private String specification; //Ex. 128gb, white
+    private String modelYear;       // 2016
+    private String brand;           // Apple, Lenovo
+    private String category;        // Smartphone (and iPhone), Laptop, MacBook
+    private String specification;   //Ex. 128gb, white
     private ProductState state;
     private final double salesPrice;
     private double costPrice;
-    // hans is awesome <3
 
 
     public Product(String brand, String category, String modelName, String modelYear, String specification, double salesPrice, double costPrice) {

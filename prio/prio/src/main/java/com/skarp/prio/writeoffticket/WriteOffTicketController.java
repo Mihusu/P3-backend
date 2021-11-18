@@ -1,8 +1,10 @@
-package com.skarp.prio.products;
+package com.skarp.prio.writeoffticket;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.skarp.prio.products.Product;
+import com.skarp.prio.products.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 @RestController
-public class ProductController {
+public class WriteOffTicketController {
 
     @Autowired
     MongoOperations operations;
@@ -21,14 +23,13 @@ public class ProductController {
     @Autowired
     ProductRepository repository;
 
-    private static int price = ThreadLocalRandom.current().nextInt(0,200);
+    private static int writeoffs = ThreadLocalRandom.current().nextInt(0,200);
 
-    @GetMapping("/products/")
-    public List<Product> product(@RequestParam(value = "brand") String brand,
+    @GetMapping("/writeoffs/")
+    public List<WriteOffTicket> writeOffTickets(@RequestParam(value = "brand") String brand,
                                  @RequestParam(value = "category") String category) {
 
-        List<Product> result = operations.query(Product.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
+        List<WriteOffTicket> result = operations.query(WriteOffTicket.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
         return result;
     };
 }
-

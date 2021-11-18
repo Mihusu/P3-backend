@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Product {
     @Id
     private String id;
-
     private ArrayList<SparePart> spareParts = new ArrayList<>();
     private String productName;
     private String modelName;       // Ex: Pro, E480, 8, 9, 11 Pro
@@ -20,7 +19,6 @@ public class Product {
     private ProductState state;
     private final double salesPrice;
     private double costPrice;
-    // hans is awesome <3
 
 
     public Product(String brand, Category category, String modelName, String modelYear, String specification, double salesPrice, double costPrice) {

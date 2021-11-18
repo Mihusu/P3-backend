@@ -40,8 +40,8 @@ public class Product {
         this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
         this.storageTime = calcStorageTime();
-
     }
+
     public LocalDate getDateAdded(){
         return this.dateAdded;
     }

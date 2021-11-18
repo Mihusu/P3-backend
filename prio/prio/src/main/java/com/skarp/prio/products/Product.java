@@ -13,14 +13,14 @@ import java.util.ArrayList;
 public class Product {
     @Id
     private String id;
-
     private ArrayList<SparePart> spareParts = new ArrayList<>();
-    private String productName;
-    private String modelName;       // Ex: Pro, E480, 8, 9, 11 Pro
-    private String modelYear;   // 2016
-    private String brand;       // Apple, Lenovo
-    private Category category;    // Smartphone (and iPhone), Laptop, MacBook
-    private String specification; //Ex. 128gb, white
+
+    private String name;
+    private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
+    private String year;            // 2016
+    private String brand;           // Apple, Lenovo
+    private Category category;      // Smartphone (and iPhone), Laptop, MacBook
+    private String specification;   //Ex. 128gb, white
     private LocalDate dateAdded;  //date added to the warehouse
     private long storageTime;
     private ProductState state;
@@ -28,12 +28,12 @@ public class Product {
     private double costPrice;
 
 
-    public Product(String brand, Category category, String modelName, String modelYear, String specification, double salesPrice, double costPrice) {
-        this.productName = brand + " " + category + " " + modelName + " " + modelYear + " " + specification;
+    public Product(String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
+        this.name = brand + " " + category + " " + model + " " + year + " " + specification;
         this.brand = brand;
         this.category = category;
-        this.modelName = modelName;
-        this.modelYear = modelYear;
+        this.model = model;
+        this.year = year;
         this.specification = specification;
         this.salesPrice = salesPrice;
         this.costPrice = costPrice;
@@ -46,6 +46,10 @@ public class Product {
         return this.dateAdded;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public long getStorageTime(){
         this.storageTime = calcStorageTime();
         return this.storageTime;
@@ -53,9 +57,6 @@ public class Product {
 
     public long calcStorageTime(){
         return ChronoUnit.DAYS.between(this.dateAdded, LocalDate.now());
-    }
-    public String getProductName() {
-        return this.productName;
     }
 
     public double getSalesPrice() {
@@ -65,11 +66,11 @@ public class Product {
     public double getCostPrice() {return this.costPrice;}
 
     public double getProfitSum(){return this.salesPrice - this.costPrice;}
+
     //returns profit margin in percent
     public double getProfitMargin(){return (1 - ( this.costPrice / this.salesPrice)) * 100;}
 
     public boolean setCostPrice(int costPrice) {
-
         if (costPrice >= 0) {
             this.costPrice = costPrice;
             return true;
@@ -81,7 +82,6 @@ public class Product {
 
     }
     public boolean addSparePart(SparePart sp) {
-
         return this.spareParts.add(sp);
     }
 
@@ -93,12 +93,12 @@ public class Product {
         return this.category.toString();
     }
 
-    public String getModelName() {
-        return this.modelName;
+    public String getModel() {
+        return this.model;
     }
 
-    public String getModelYear() {
-        return this.modelYear;
+    public String getYear() {
+        return this.year;
     }
 
     public ProductState getState() {

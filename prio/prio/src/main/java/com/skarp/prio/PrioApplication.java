@@ -18,11 +18,10 @@ public class PrioApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 
 		repository.deleteAll();
-		repository.save(new Product("Lenovo", "Laptop", "TI", "2016", "8gb RAM", 3000, 500));
-
+		repository.save(new Product("Hansi", Category.laptop, "TI", "2016", "8gb RAM", 3000, 500));
 
 		for (Product product : repository.findAll()) {
 			System.out.println(product.getProductName());

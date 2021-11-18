@@ -12,7 +12,6 @@ public class UsedSparePart extends SparePart {
         super(origin.getBrand(), origin.getCategory(), origin.getModelName(), origin.getModelYear(), grade, type);
         this.origin = origin;
         this.state = UsedSparePartState.AVAILABLE;
-
     }
 
     public Product getOrigin() {

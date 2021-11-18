@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Product {
     @Id
     private String id;
-
     private ArrayList<SparePart> spareParts = new ArrayList<>();
     private String name;
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro

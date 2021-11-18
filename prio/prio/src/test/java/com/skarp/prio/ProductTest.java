@@ -27,7 +27,7 @@ public class ProductTest {
 
     @Test
     public void testGetName() {
-        assertEquals("Apple iPhone 11 Pro 2018 256gb white", iphone.getProductName());
+        assertEquals("Apple iPhone 11 Pro 2018 256gb white", iphone.getName());
     }
 
     @Test
@@ -104,6 +104,13 @@ public class ProductTest {
         Repair iphone_repair = new Repair(iphone);
 
         assertEquals(ProductState.IN_REPAIR, iphone.getState());
+    }
+
+    @Test
+    public void testStorageTime(){
+        Product Lenovo = new Product("Lenovo", Category.laptop, "TI", "2016", "8gb RAM", 3000, 500);
+        Lenovo.getStorageTime();
+        assertEquals(0, Lenovo.getStorageTime());
     }
 
 

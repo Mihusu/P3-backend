@@ -1,5 +1,6 @@
 package com.skarp.prio.products;
 
+import com.skarp.prio.Category;
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
 
@@ -14,7 +15,7 @@ public class Product {
     private String modelName;       // Ex: Pro, E480, 8, 9, 11 Pro
     private String modelYear;   // 2016
     private String brand;       // Apple, Lenovo
-    private String category;    // Smartphone (and iPhone), Laptop, MacBook
+    private Category category;    // Smartphone (and iPhone), Laptop, MacBook
     private String specification; //Ex. 128gb, white
     private ProductState state;
     private final double salesPrice;
@@ -22,7 +23,7 @@ public class Product {
     // hans is awesome <3
 
 
-    public Product(String brand, String category, String modelName, String modelYear, String specification, double salesPrice, double costPrice) {
+    public Product(String brand, Category category, String modelName, String modelYear, String specification, double salesPrice, double costPrice) {
         this.productName = brand + " " + category + " " + modelName + " " + modelYear + " " + specification;
         this.brand = brand;
         this.category = category;
@@ -71,7 +72,7 @@ public class Product {
     }
 
     public String getCategory() {
-        return this.category;
+        return this.category.toString();
     }
 
     public String getModelName() {

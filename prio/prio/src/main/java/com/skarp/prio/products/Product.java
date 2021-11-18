@@ -63,7 +63,6 @@ public class Product {
 
     }
     public boolean addSparePart(SparePart sp) {
-
         return this.spareParts.add(sp);
     }
 

@@ -16,7 +16,7 @@ public class ProductTest {
 
     @BeforeEach
     public void setup() {
-       iphone = new Product("Apple", "iPhone", "11 Pro", "2018", "256gb white", 4000, 1500);
+       iphone = new Product("Apple", Category.iphone, "11 Pro", "2018", "256gb white", 4000, 1500);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ProductTest {
     @Test
     public void testCanAddSparePart() {
 
-        Product phone = new Product("Apple", "iPhone", "11 Pro", "2018", "256gb white", 4000, 2000);
+        Product phone = new Product("Apple", Category.iphone, "11 Pro", "2018", "256gb white", 4000, 2000);
         SparePart iphone_battery = new UsedSparePart(phone, "Battery", "OEM");
 
         assertTrue(iphone.addSparePart(iphone_battery));

@@ -2,20 +2,27 @@ package com.skarp.prio.products;
 
 import com.skarp.prio.Category;
 import com.skarp.prio.spareparts.SparePart;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Product {
     @Id
     private String id;
     private ArrayList<SparePart> spareParts = new ArrayList<>();
+
     private String name;
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     private String year;            // 2016
     private String brand;           // Apple, Lenovo
     private Category category;      // Smartphone (and iPhone), Laptop, MacBook
     private String specification;   //Ex. 128gb, white
+    private LocalDate dateAdded;  //date added to the warehouse
+    private long storageTime;
     private ProductState state;
     private final double salesPrice;
     private double costPrice;
@@ -30,12 +37,25 @@ public class Product {
         this.specification = specification;
         this.salesPrice = salesPrice;
         this.costPrice = costPrice;
-
+        this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
+        this.storageTime = calcStorageTime();
+
+    }
+    public LocalDate getDateAdded(){
+        return this.dateAdded;
     }
 
     public String getName() {
         return this.name;
+
+    public long getStorageTime(){
+        this.storageTime = calcStorageTime();
+        return this.storageTime;
+    }
+
+    public long calcStorageTime(){
+        return ChronoUnit.DAYS.between(this.dateAdded, LocalDate.now());
     }
 
     public double getSalesPrice() {

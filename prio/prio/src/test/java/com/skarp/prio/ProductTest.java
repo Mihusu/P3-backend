@@ -106,6 +106,13 @@ public class ProductTest {
         assertEquals(ProductState.IN_REPAIR, iphone.getState());
     }
 
+    @Test
+    public void testStorageTime(){
+        Product Lenovo = new Product("Lenovo", Category.laptop, "TI", "2016", "8gb RAM", 3000, 500);
+        Lenovo.getStorageTime();
+        assertEquals(0, Lenovo.getStorageTime());
+    }
+
 
 }
 

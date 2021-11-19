@@ -34,10 +34,11 @@ public class RepairTest {
     }
 
     @Test
-    public void canResumeRepair() {
+    public void canResumeRepairAfterPause() {
 
         Repair repair = new Repair(iphone);
 
+        repair.pauseRepair();
         repair.resumeRepair();
 
         assertEquals(RepairState.ON_GOING, repair.getState());

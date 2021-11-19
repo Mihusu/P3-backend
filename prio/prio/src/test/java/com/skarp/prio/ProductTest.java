@@ -27,7 +27,7 @@ public class ProductTest {
 
     @Test
     public void testGetName() {
-        assertEquals("Apple iPhone 11 Pro 2018 256gb white", iphone.getName());
+        assertEquals("Apple iphone 11 Pro 2018 256gb white", iphone.getName());
     }
 
     @Test

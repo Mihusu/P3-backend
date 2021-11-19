@@ -32,11 +32,6 @@ public class Repair {
         return this.state;
     }
 
-    public void pauseRepair() {
-        this.state = RepairState.PAUSED;
-        this.pausedAt = new Date();
-    }
-
     public Date getStartDate() {
         return this.startDate;
     }
@@ -47,16 +42,45 @@ public class Repair {
 
     }
 
-    public void resumeRepair() {
-
-        if (this.state.equals(RepairState.PAUSED)){
-            this.state = RepairState.ON_GOING;
-            this.resumedAt = new Date();
-            this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
-        }
-    }
-
     public String getId() {
         return this.id;
+    }
+
+    public Product getProduct() {
+        return this.product;
+    }
+
+    public void pauseRepair() {
+
+        if (!this.state.equals(RepairState.ON_GOING)) {
+            throw new IllegalRepairOperationException("Repair must be on-going before a pause");
+        }
+
+        this.state = RepairState.PAUSED;
+        this.pausedAt = new Date();
+    }
+
+    public void resumeRepair() {
+
+        if (!this.state.equals(RepairState.PAUSED)) {
+            throw new IllegalRepairOperationException("Repair must be paused before resume");
+        }
+
+        this.state = RepairState.ON_GOING;
+        this.resumedAt = new Date();
+        this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
+
+    }
+
+    public void finishRepair() {
+
+        if (!this.state.equals(RepairState.ON_GOING)) {
+            throw new IllegalRepairOperationException("Repair must be on going before it can be finished");
+        }
+
+        this.state = RepairState.FINISHED;
+        this.endDate = new Date();
+        product.setState(ProductState.REPAIRED);
+
     }
 }

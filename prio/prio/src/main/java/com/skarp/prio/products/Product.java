@@ -14,6 +14,7 @@ public class Product {
     @Id
     private String id;
     private ArrayList<SparePart> spareParts = new ArrayList<>();
+
     private String name;
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     private String year;            // 2016
@@ -26,10 +27,9 @@ public class Product {
     private final double salesPrice;
     private double costPrice;
 
+
     public Product(String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;
-
-        this.id = id;
         this.brand = brand;
         this.category = category;
         this.model = model;
@@ -40,10 +40,6 @@ public class Product {
         this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
         this.storageTime = calcStorageTime();
-    }
-
-    public String getId(){
-        return this.id;
     }
 
     public LocalDate getDateAdded(){
@@ -59,7 +55,7 @@ public class Product {
         return this.storageTime;
     }
 
-    public long calcStorageTime() {
+    public long calcStorageTime(){
         return ChronoUnit.DAYS.between(this.dateAdded, LocalDate.now());
     }
 

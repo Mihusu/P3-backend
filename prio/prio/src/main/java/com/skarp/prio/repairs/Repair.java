@@ -2,11 +2,16 @@ package com.skarp.prio.repairs;
 
 import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductState;
+import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
 public class Repair {
 
+    @Id
+    private String id;
+
+    private Product product;
     private RepairState state;
     private Date startDate;
     private Date endDate;
@@ -18,6 +23,7 @@ public class Repair {
     public Repair(Product product) {
         this.state = RepairState.ON_GOING;
         this.startDate = new Date();
+        this.product = product;
 
         product.setState(ProductState.IN_REPAIR);
     }
@@ -48,5 +54,9 @@ public class Repair {
             this.resumedAt = new Date();
             this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
         }
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

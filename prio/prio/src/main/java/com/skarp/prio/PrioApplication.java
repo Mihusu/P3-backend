@@ -19,16 +19,6 @@ public class PrioApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
-		repository.deleteAll();
-		repository.save(new Product("Hansi", Category.laptop, "TI", "2016", "8gb RAM", 3000, 500));
-		repository.save(new Product("Macbook", Category.macbook, "M1", "2020", "16gb RAM", 8000, 9000));
-		repository.save(new Product("Apple", Category.iphone, "13 pro", "2021", "512gb", 11500, 10500));
-
-
-		System.out.println("All Products: ");
-		for (Product product : repository.findAll()) {
-			System.out.println(" - " + product.getName());
-		}
+		repository.findById("2323");
 	}
 }

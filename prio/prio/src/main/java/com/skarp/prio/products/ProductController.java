@@ -39,8 +39,8 @@ public class ProductController {
         Query productQuery = new Query();
 
         // Check for Params and add to Criteria
-        if (name != null) { productQuery.addCriteria(Criteria.where("name").in(name));}
-        if (model != null) { productQuery.addCriteria(Criteria.where("model").is(model));}
+        if (name != null) {productQuery.addCriteria(Criteria.where("name").in(name));}
+        if (model != null) {productQuery.addCriteria(Criteria.where("model").is(model));}
         if (brand != null) {productQuery.addCriteria(Criteria.where("brand").is(brand));}
         if (category != null) { productQuery.addCriteria(Criteria.where("category").is(category));}
         if (state != null) { productQuery.addCriteria(Criteria.where("state").is(state));}

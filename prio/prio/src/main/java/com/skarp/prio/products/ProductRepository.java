@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends MongoRepository<Product, String> {
 
     //Do stuff....s
-    Product findProductByProdID(String prod_id);
+    //Product findProductByProdID(String prod_id);
 }

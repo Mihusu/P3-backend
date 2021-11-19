@@ -2,6 +2,7 @@ package com.skarp.prio;
 
 import com.skarp.prio.products.Product;
 import com.skarp.prio.writeoffticket.WriteOffTicket;
+import com.skarp.prio.writeoffticket.WriteOffTicketState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,13 +34,13 @@ public class WriteOffTicketTest {
     public void approveWriteOffTicket(){
         WriteOffTicket myTestTicket = new WriteOffTicket(iphone, technician);
         myTestTicket.approve();
-        assertEquals("APPROVED", myTestTicket.getState());
+        assertEquals(WriteOffTicketState.APPROVED, myTestTicket.getState());
     }
     @Test
     public void declineWriteOffTicket(){
         WriteOffTicket myTestTicket = new WriteOffTicket(iphone, technician);
         myTestTicket.decline();
-        assertEquals("DECLINED", myTestTicket.getState());
+        assertEquals(WriteOffTicketState.DECLINED, myTestTicket.getState());
     }
 
     @Test

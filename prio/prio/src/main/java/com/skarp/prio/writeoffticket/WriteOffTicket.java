@@ -27,8 +27,8 @@ public class WriteOffTicket {
         return creationDate;
     }
 
-    public String getState() {
-        return this.state.toString();
+    public WriteOffTicketState getState() {
+        return this.state;
     }
 
     public void approve(){

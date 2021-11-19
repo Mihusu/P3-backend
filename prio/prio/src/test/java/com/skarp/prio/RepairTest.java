@@ -38,6 +38,7 @@ public class RepairTest {
 
         Repair repair = new Repair(iphone);
 
+        repair.pauseRepair();
         repair.resumeRepair();
 
         assertEquals(RepairState.ON_GOING, repair.getState());

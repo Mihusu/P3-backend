@@ -32,10 +32,6 @@ public class Repair {
         return this.state;
     }
 
-    public RepairState getState() {
-        return this.state;
-    }
-
     public Date getStartDate() {
         return this.startDate;
     }

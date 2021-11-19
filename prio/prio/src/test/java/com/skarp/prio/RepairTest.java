@@ -34,7 +34,7 @@ public class RepairTest {
     }
 
     @Test
-    public void canResumeRepair() {
+    public void canResumeRepairAfterPause() {
 
         Repair repair = new Repair(iphone);
 

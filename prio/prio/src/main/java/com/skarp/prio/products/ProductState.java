@@ -5,5 +5,6 @@ public enum ProductState {
     DEFECTIVE,
     IN_REPAIR,
     IN_WRITEOFF,
-    WRITTEN_OFF
+    WRITTEN_OFF,
+    REPAIRED
 }

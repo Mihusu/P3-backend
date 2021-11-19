@@ -9,10 +9,9 @@ public class UsedSparePart extends SparePart {
     private UsedSparePartState state;
 
     public UsedSparePart(Product origin, String grade, String type) {
-        super(origin.getBrand(), origin.getCategory(), origin.getModelName(), origin.getModelYear(), grade, type);
+        super(origin.getBrand(), origin.getCategory(), origin.getModel(), origin.getYear(), grade, type);
         this.origin = origin;
         this.state = UsedSparePartState.AVAILABLE;
-
     }
 
     public Product getOrigin() {

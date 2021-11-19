@@ -1,7 +1,6 @@
-package com.skarp.prio.spareparts.Enums;
+package com.skarp.prio;
 
 public enum Category {
-
     iphone,
     macbook,
     ipad,

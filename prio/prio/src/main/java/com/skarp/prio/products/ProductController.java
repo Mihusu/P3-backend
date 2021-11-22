@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
-
-
 @RestController
 public class ProductController {
 
@@ -33,8 +29,6 @@ public class ProductController {
             @RequestParam(required = false, value="state") String state,
             @RequestParam(required = false, value="sortBy") String sortBy
     ) {
-        // Jakobs for reference
-        // List<Product> result = operations.query(Product.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
 
         // Create Empty Query
         Query productQuery = new Query();
@@ -51,6 +45,6 @@ public class ProductController {
         List<Product> foundProducts = operations.find(productQuery, Product.class);
 
         return foundProducts;
-    };
+    }
 }
 

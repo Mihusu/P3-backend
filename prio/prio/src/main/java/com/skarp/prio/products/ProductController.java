@@ -7,15 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
-
-@CrossOrigin("*")
 @RestController
 public class ProductController {
 
@@ -25,7 +20,7 @@ public class ProductController {
     @Autowired
     ProductRepository repository;
 
-    @GetMapping("/products/")
+    @GetMapping("/products")
     public List<Product> product(
             @RequestParam(required=false, value="name") String name,
             @RequestParam(required=false, value="model") String model,
@@ -34,8 +29,6 @@ public class ProductController {
             @RequestParam(required = false, value="state") String state,
             @RequestParam(required = false, value="sortBy") String sortBy
     ) {
-        // Jakobs for reference
-        // List<Product> result = operations.query(Product.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
 
         // Create Empty Query
         Query productQuery = new Query();
@@ -49,9 +42,7 @@ public class ProductController {
         if (sortBy != null) {productQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
 
         // Find Products matching Query
-        List<Product> foundProducts = operations.find(productQuery, Product.class);
-
-        return foundProducts;
-    };
+        return operations.find(productQuery, Product.class);
+    }
 }
 

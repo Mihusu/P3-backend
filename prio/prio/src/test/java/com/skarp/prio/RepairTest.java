@@ -3,6 +3,8 @@ import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
 
 import com.skarp.prio.repairs.RepairState;
+import com.skarp.prio.spareparts.NewSparePart;
+import com.skarp.prio.spareparts.SparePart;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,6 +52,17 @@ public class RepairTest {
         Repair repair = new Repair(iphone);
 
         assertNotNull(repair.getStartDate());
+    }
+
+    @Test
+    public void canAddSparePart() {
+
+        SparePart battery = new NewSparePart("Apple","iPhone","11 Pro", "2019","A","battery");
+        Repair repair = new Repair(iphone);
+
+        repair.addSparePart(battery);
+
+        assertEquals(1, repair.getAddedSpareParts().size());
     }
 
 

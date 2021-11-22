@@ -20,7 +20,7 @@ public class ProductController {
     @Autowired
     ProductRepository repository;
 
-    @GetMapping("/products/")
+    @GetMapping("/products")
     public List<Product> product(
             @RequestParam(required=false, value="name") String name,
             @RequestParam(required=false, value="model") String model,
@@ -42,9 +42,7 @@ public class ProductController {
         if (sortBy != null) {productQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
 
         // Find Products matching Query
-        List<Product> foundProducts = operations.find(productQuery, Product.class);
-
-        return foundProducts;
+        return operations.find(productQuery, Product.class);
     }
 }
 

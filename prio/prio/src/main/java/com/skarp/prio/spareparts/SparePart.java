@@ -11,7 +11,7 @@ public class SparePart {
     private String modelYear;   // 2016
     private String brand;       // Apple, Lenovo
     private String category;    // Smartphone (and iPhone), Laptop, MacBook
-    final private Date addedDate;
+    private Date addedDate;
     private String grade;       // OEM, slightly used
     private double cost;
 

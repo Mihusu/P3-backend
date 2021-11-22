@@ -19,6 +19,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@CrossOrigin("*")
 @RestController
 public class RepairController {
 
@@ -120,7 +121,7 @@ public class RepairController {
     }
 
     @PatchMapping("/repairs/{id}/")
-    public ResponseEntity<?> addSparePart(@PathVariable String repair_id,
+    public ResponseEntity<?> addSparePart(@PathVariable String id,
                                           @RequestParam(required = true, value = "sparepart_id") String sparepart_id)
     {
         Repair repair;
@@ -128,7 +129,7 @@ public class RepairController {
 
         try {
             sparePart = sparePartRepository.findById(sparepart_id).get();
-            repair = repairRepository.findById(repair_id).get();
+            repair = repairRepository.findById(id).get();
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

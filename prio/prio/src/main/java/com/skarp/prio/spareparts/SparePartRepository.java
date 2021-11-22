@@ -1,4 +1,9 @@
 package com.skarp.prio.spareparts;
 
-public interface SparePartRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SparePartRepository extends MongoRepository<SparePart, String> {
+
 }

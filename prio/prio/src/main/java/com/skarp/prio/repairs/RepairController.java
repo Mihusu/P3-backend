@@ -2,6 +2,8 @@ package com.skarp.prio.repairs;
 
 import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
+import com.skarp.prio.spareparts.SparePart;
+import com.skarp.prio.spareparts.SparePartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -25,6 +27,9 @@ public class RepairController {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    SparePartRepository sparePartRepository;
 
     @Autowired
     MongoOperations operations;
@@ -104,13 +109,38 @@ public class RepairController {
             }
         } catch (IllegalRepairOperationException e) {
             String msg = "Illegal repair operation: " + e.getMessage(); //TODO: Needs error handling
-            return ResponseEntity.internalServerError().body(msg);
+            return ResponseEntity.badRequest().body(msg);
         }
 
         repairRepository.save(repair);
         productRepository.save(repair.getProduct());
 
         return ResponseEntity.ok().build();
+
+    }
+
+    @PatchMapping("/repairs/{id}/")
+    public ResponseEntity<?> addSparePart(@PathVariable String repair_id,
+                                          @RequestParam(required = true, value = "sparepart_id") String sparepart_id)
+    {
+        Repair repair;
+        SparePart sparePart;
+
+        try {
+            sparePart = sparePartRepository.findById(sparepart_id).get();
+            repair = repairRepository.findById(repair_id).get();
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        repair.addSparePart(sparePart);
+
+        repairRepository.save(repair);
+        sparePartRepository.save(sparePart);
+        productRepository.save(repair.getProduct());
+
+        return ResponseEntity.accepted().build();
 
     }
 

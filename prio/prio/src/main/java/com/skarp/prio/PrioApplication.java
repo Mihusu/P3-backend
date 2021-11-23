@@ -39,14 +39,16 @@ public class PrioApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-//		productRepository.deleteAll();
+		productRepository.deleteAll();
 //		sparePartRepository.deleteAll();
 //		repairRepository.deleteAll();
 
+		Product product2 = new Product("Samsung", Category.smartphone, "Galaxy S3", "2018", "256 gb black", 3500, 2500);
 		Product product = new Product("Apple", Category.iphone, "11 Pro", "", "128 gb white", 4000, 2000);
 		Repair repair = new Repair(product);
 		SparePart sparePart = new UsedSparePart(product, "A", "battery");
 
+		productRepository.save(product2);
 		productRepository.save(product);
 		repairRepository.save(repair);
 		sparePartRepository.save(sparePart);

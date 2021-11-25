@@ -2,15 +2,9 @@ package com.skarp.prio.services;
 
 import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
-import com.skarp.prio.repairs.IllegalRepairOperationException;
-import com.skarp.prio.repairs.Repair;
 import com.skarp.prio.repairs.RepairService;
-import com.skarp.prio.repairs.RepairState;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class RepairServiceTest {
 
@@ -21,7 +15,7 @@ public class RepairServiceTest {
 
     @BeforeEach
     public void setup() {
-        testProduct = new Product("Apple", Category.iphone, "11 Pro", "2018", "256gb white", 4000, 1500);
+        testProduct = new Product("Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
     }
 
     /*@Test

@@ -10,7 +10,7 @@ public class SparePartDescriptorTest {
     @Test
     public void canAddNewDescriptor() {
 
-        SparePartDescriptor descriptor = new SparePartDescriptor("Apple", Category.iphone, "11 Pro", "2018", "128 gb white", Grade.OEM, "Battery", "23345");
+        SparePartDescriptor descriptor = new SparePartDescriptor("Apple", Category.IPHONE, "11 Pro", "2018", "128 gb white", Grade.OEM, "Battery", "23345");
 
     }
 }

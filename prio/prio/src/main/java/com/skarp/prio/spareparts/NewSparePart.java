@@ -12,8 +12,9 @@ public class NewSparePart extends SparePart{
         super(brand, category, model, modelYear, grade, type, costPrice);
     }
 
-
-    public String getLocation(){return this.location;};
-    public String getSKU(){return this.SKU;};
+    public String getLocation(){return this.location;}
+    public String getSKU(){return this.SKU;}
+    public void setLocation(String location){this.location = location;}
+    public void setSKU(String SKU){this.SKU = SKU;}
 
 }

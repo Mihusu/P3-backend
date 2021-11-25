@@ -1,6 +1,6 @@
 package com.skarp.prio.products;
 
-import com.skarp.prio.Category;
+import com.skarp.prio.products.Category;
 
 public class ProductParser {
     public static Product parse(String line) {
@@ -13,10 +13,35 @@ public class ProductParser {
         parsedProduct.setModel(line_split[2]);
         parsedProduct.setSpecification(line_split[3]);
         parsedProduct.setBrand(line_split[4]);
-        parsedProduct.setCategory(Category.valueOf(line_split[5]));
         parsedProduct.setState(ProductState.valueOf(line_split[6]));
         parsedProduct.setSalesPrice(Double.parseDouble(line_split[7].replace(",",".")));
         parsedProduct.setCostPrice(Double.parseDouble(line_split[8].replace(",",".")));
+
+        switch (line_split[5].trim().toLowerCase()) {
+
+            case "iphone":
+                parsedProduct.setCategory(Category.IPHONE);
+                break;
+
+            case "macbook":
+                parsedProduct.setCategory(Category.MACBOOK);
+                break;
+
+            case "ipad":
+                parsedProduct.setCategory(Category.IPAD);
+                break;
+
+            case "laptop":
+                parsedProduct.setCategory(Category.LAPTOP);
+                break;
+
+            case "smartphone":
+                parsedProduct.setCategory(Category.SMARTPHONE);
+                break;
+
+            case "tablet":
+                parsedProduct.setCategory(Category.TABLET);
+        }
 
         return parsedProduct;
     }

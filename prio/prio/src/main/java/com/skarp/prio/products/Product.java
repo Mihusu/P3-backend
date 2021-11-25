@@ -81,17 +81,6 @@ public class Product {
     //returns profit margin in percent
     public double getProfitMargin(){return (1 - ( this.costPrice / this.salesPrice)) * 100;}
 
-    public boolean setCostPrice(double costPrice) {
-        if (costPrice >= 0) {
-            this.costPrice = costPrice;
-            return true;
-        }
-        else {
-            return false;
-
-        }
-
-    }
     public boolean addSparePart(SparePart sp) {
         return this.spareParts.add(sp);
     }
@@ -100,8 +89,8 @@ public class Product {
         return this.brand;
     }
 
-    public String getCategory() {
-        return this.category.toString();
+    public Category getCategory() {
+        return this.category;
     }
 
     public String getModel() {
@@ -116,6 +105,17 @@ public class Product {
         return this.state;
     }
 
+    public boolean setCostPrice(double costPrice) {
+        if (costPrice >= 0) {
+            this.costPrice = costPrice;
+            return true;
+        }
+        else {
+            return false;
+
+        }
+
+    }
     public void setState(ProductState state) {
         this.state = state;
     }

@@ -1,5 +1,6 @@
 package com.skarp.prio.repairs;
 
+import com.skarp.prio.spareparts.SparePart;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;

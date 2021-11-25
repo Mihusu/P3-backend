@@ -58,7 +58,7 @@ public class SparePart {
         return brand;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 

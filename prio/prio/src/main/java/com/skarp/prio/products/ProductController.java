@@ -45,7 +45,10 @@ public class ProductController {
         if (name != null) {productQuery.addCriteria(Criteria.where("name").regex(name));}
         if (model != null) {productQuery.addCriteria(Criteria.where("model").is(model));}
         if (brand != null) {productQuery.addCriteria(Criteria.where("brand").is(brand));}
-        if (category != null) {productQuery.addCriteria(Criteria.where("category").is(category));}
+        if (category != null) {
+            //Convert to enum type
+            Category category1 = Category.valueOf(category.toUpperCase());
+            productQuery.addCriteria(Criteria.where("category").is(category1));}
         if (state != null) {productQuery.addCriteria(Criteria.where("state").is(state));}
         if (sortBy != null) {productQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
 
@@ -65,7 +68,7 @@ public class ProductController {
 
                for (Product product: productList) {
                    // Save all Products
-                   //repository.save(product);
+                   repository.save(product);
                    System.out.println(product);
                }
             } catch (IOException e) {

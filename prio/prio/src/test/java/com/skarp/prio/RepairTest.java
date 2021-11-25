@@ -39,7 +39,7 @@ public class RepairTest {
     @Test
     public void canAddSparePart() {
 
-        SparePart battery = new NewSparePart("Apple","iPhone","11 Pro", "2019", Grade.A,"battery", 250);
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A,"battery", 250);
         Repair repair = new Repair(iphone);
 
         repair.addSparePart(battery);

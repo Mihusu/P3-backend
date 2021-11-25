@@ -1,9 +1,6 @@
 package com.skarp.prio.products;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -62,33 +59,21 @@ public class ProductController {
 
     @PostMapping("/products/file")
     public ResponseEntity<Object> uploadProducts(@RequestParam("File") MultipartFile multipart) throws IOException {
-
         if (!multipart.isEmpty()) {
-            // Create File handler
-            ProductFileHandler handler = new ProductFileHandler();
-            handler.createFile(FILE_DIRECTORY, multipart);
-
-            try (BufferedReader reader = Files.newBufferedReader(handler.getPath())) {
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(multipart.getBytes())))) {
                 List<Product> productList = reader.lines().map(ProductParser::parse).toList();
 
                for (Product product: productList) {
                    // Save all Products
-                   repository.save(product);
-
-                   // test
+                   //repository.save(product);
                    System.out.println(product);
                }
-
             } catch (IOException e) {
-                System.out.println("Unable to read the file");
+                return new ResponseEntity<Object>("The File Uploaded, could not be read", HttpStatus.EXPECTATION_FAILED);
             }
 
-            // Delete file after usage
-            handler.deleteFile();
-
             // Return Reponse
-            return new ResponseEntity<Object>("The File Uploaded Successfully", HttpStatus.OK); //Todo : make a proper response text
-
+            return new ResponseEntity<Object>("The File Uploaded Successfully", HttpStatus.CREATED); //Todo : make a proper response text
         } else {
             // Return Reponse
             return new ResponseEntity<Object>("The File Uploaded to server was empty", HttpStatus.NO_CONTENT);

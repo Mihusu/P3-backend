@@ -1,4 +1,4 @@
-package com.skarp.prio;
+package com.skarp.prio.products;
 
 public enum Category {
     iphone,

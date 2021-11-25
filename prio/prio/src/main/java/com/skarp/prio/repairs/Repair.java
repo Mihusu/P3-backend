@@ -4,6 +4,7 @@ import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,13 +16,18 @@ public class Repair {
     private String id;
 
     private Product product;
+
     private RepairState state;
     private Date startDate;
+
     private Date endDate;
+
     private Date pausedAt;
+
     private Date resumedAt;
     private Long pausedTime = 0L;
     private Long repairTime = 0L;
+
     private List<SparePart> spareParts = new ArrayList<>();
 
     public Repair(Product product) {
@@ -54,33 +60,39 @@ public class Repair {
         return this.product;
     }
 
-    public void pauseRepair() {
-
-        if (!this.state.equals(RepairState.ON_GOING)) {
-            throw new IllegalRepairOperationException("Repair must be on-going before a pause");
-        }
-
-        this.state = RepairState.PAUSED;
-        this.pausedAt = new Date();
+    public void setState(RepairState state) {
+        this.state = state;
     }
 
-    public void resumeRepair() {
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-        if (!this.state.equals(RepairState.PAUSED)) {
-            throw new IllegalRepairOperationException("Repair must be paused before resume");
-        }
+    public void setPausedAt(Date pausedAt) {
+        this.pausedAt = pausedAt;
+    }
 
-        this.state = RepairState.ON_GOING;
-        this.resumedAt = new Date();
+    public void setResumedAt(Date resumedAt) {
+
+        this.resumedAt = resumedAt;
         this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
-
     }
 
     public void finishRepair() {
 
+        double addedProductCost = 0;
+        double currentProductCost = this.product.getCostPrice();
+
         if (!this.state.equals(RepairState.ON_GOING)) {
             throw new IllegalRepairOperationException("Repair must be on going before it can be finished");
         }
+
+        //Update product cost
+        for (SparePart sp : this.spareParts) {
+            addedProductCost += sp.getCostPrice();
+        }
+
+        this.product.setCostPrice(currentProductCost + addedProductCost);
 
         this.state = RepairState.FINISHED;
         this.endDate = new Date();
@@ -88,12 +100,24 @@ public class Repair {
 
     }
 
-    public void addSparePart(SparePart sparePart) {
+    public void addSparePart(SparePart sparePart) { //TODO : Update cost price of product, using price of sparepart
+
 
         this.spareParts.add(sparePart);
     }
 
     public List<SparePart> getAddedSpareParts() {
         return this.spareParts;
+    }
+
+    public double getRepairCost() {
+
+        double repairCost = 0;
+
+        for (SparePart sp : this.spareParts) {
+            repairCost += sp.getCostPrice();
+        }
+
+        return repairCost;
     }
 }

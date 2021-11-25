@@ -1,11 +1,8 @@
 package com.skarp.prio.products;
 
-import com.skarp.prio.Category;
 import com.skarp.prio.spareparts.SparePart;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.skarp.prio.spareparts;
 
-import com.skarp.prio.Category;
+import com.skarp.prio.products.Category;
 import com.skarp.prio.spareparts.Enums.Grade;
 
 public class SparePartDescriptor {

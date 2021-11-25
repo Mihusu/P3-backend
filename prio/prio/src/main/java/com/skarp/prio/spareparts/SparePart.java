@@ -9,13 +9,15 @@ import java.util.Date;
 
 public class SparePart {
 
+
+    @Id
     private int part_id;        // Internal ID use
 
     private String name;        // Brand-Category-Model-Year-Grade-Type
     private String type;        // Ex: Battery, Screen
     private String model;       // Ex: Pro, E480
     private String modelYear;   // 2016
-    private String brand;       // Apple, Lenovo
+    private String brand;       // Apple, Lenovo Todo: Decide whether this should be String or Category
     private Category category;    // Smartphone (and iPhone), Laptop, MacBook
     private Date addedDate;
     private Grade grade;        // OEM, slightly used

@@ -1,8 +1,10 @@
 package com.skarp.prio;
 
+import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductState;
 import com.skarp.prio.repairs.Repair;
+import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.UsedSparePart;
 import com.skarp.prio.writeoffticket.WriteOffTicket;
@@ -64,7 +66,7 @@ public class ProductTest {
     public void testCanAddSparePart() {
 
         Product phone = new Product("Apple", Category.iphone, "11 Pro", "2018", "256gb white", 4000, 2000);
-        SparePart iphone_battery = new UsedSparePart(phone, "Battery", "OEM");
+        SparePart iphone_battery = new UsedSparePart(phone, Grade.A, "Battery", 200);
 
         assertTrue(iphone.addSparePart(iphone_battery));
 

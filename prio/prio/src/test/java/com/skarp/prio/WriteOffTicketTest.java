@@ -1,5 +1,6 @@
 package com.skarp.prio;
 
+import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.writeoffticket.WriteOffTicket;
 import com.skarp.prio.writeoffticket.WriteOffTicketState;

@@ -1,11 +1,8 @@
 package com.skarp.prio.products;
 
-import com.skarp.prio.Category;
 import com.skarp.prio.spareparts.SparePart;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -70,7 +67,7 @@ public class Product {
     //returns profit margin in percent
     public double getProfitMargin(){return (1 - ( this.costPrice / this.salesPrice)) * 100;}
 
-    public boolean setCostPrice(int costPrice) {
+    public boolean setCostPrice(double costPrice) {
         if (costPrice >= 0) {
             this.costPrice = costPrice;
             return true;

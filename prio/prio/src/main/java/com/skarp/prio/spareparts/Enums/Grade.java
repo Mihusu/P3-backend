@@ -4,5 +4,6 @@ public enum Grade {
 
     OEM,
     ORIGINAL,
-    A_PLUS
+    A;
+
 }

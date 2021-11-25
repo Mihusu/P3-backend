@@ -1,7 +1,9 @@
 package com.skarp.prio;
 
+import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
-import com.skarp.prio.spareparts.Enums.UsedSparePartState;
+import com.skarp.prio.spareparts.Enums.Grade;
+import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.UsedSparePart;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,15 +20,15 @@ public class UsedSparePartTest {
     @Test
     public void hasGottenAProductOrigin() {
 
-        UsedSparePart battery = new UsedSparePart(iphone, "OEM", "Battery");
+        UsedSparePart battery = new UsedSparePart(iphone, Grade.OEM, "Battery", 200);
         assertNotNull(battery.getOrigin());
     }
 
     @Test
     public void isAvailableAfterSalvage() {
-        UsedSparePart battery = new UsedSparePart(iphone, "OEM", "Battery");
+        UsedSparePart battery = new UsedSparePart(iphone, Grade.OEM, "Battery", 200);
 
-        assertEquals(UsedSparePartState.AVAILABLE, battery.getState());
+        assertEquals(SparePartState.AVAILABLE, battery.getState());
     }
 
 }

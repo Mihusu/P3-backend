@@ -1,6 +1,6 @@
 package com.skarp.prio.spareparts.Enums;
 
-public enum NewSparePartState{
+public enum SparePartState {
     AVAILABLE,
     CONSUMED,
     ON_ORDER,

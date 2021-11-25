@@ -1,5 +1,8 @@
 package com.skarp.prio.spareparts;
 
+import com.skarp.prio.spareparts.Enums.Grade;
+import com.skarp.prio.spareparts.Enums.SparePartState;
+
 import java.util.Date;
 
 public class SparePart {
@@ -12,10 +15,13 @@ public class SparePart {
     private String brand;       // Apple, Lenovo
     private String category;    // Smartphone (and iPhone), Laptop, MacBook
     private Date addedDate;
-    private String grade;       // OEM, slightly used
-    private double cost;
+    private Grade grade;        // OEM, slightly used
+    private double costPrice;
 
-    public SparePart(String brand, String category, String model, String modelYear, String grade, String type) {
+
+    private SparePartState state;
+
+    public SparePart(String brand, String category, String model, String modelYear, Grade grade, String type, double costPrice) {
         this.name = brand+" "+category+" "+model+"-"+modelYear+": "+grade+"-"+type;
         this.brand = brand;
         this.category = category;
@@ -23,8 +29,10 @@ public class SparePart {
         this.modelYear = modelYear;
         this.grade = grade;
         this.type = type;
+        this.costPrice = costPrice;
         this.addedDate = new Date();
     }
+
 
     public int getPart_id() {
         return part_id;
@@ -58,8 +66,14 @@ public class SparePart {
         return addedDate;
     }
 
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
+
+    public double getCostPrice() {return costPrice;}
+
+    public SparePartState getState() {return state;}
+
+    public void setState(SparePartState state) {this.state = state;}
 
 }

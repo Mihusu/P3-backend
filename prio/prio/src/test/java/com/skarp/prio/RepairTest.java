@@ -1,8 +1,10 @@
 package com.skarp.prio;
+import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
 
 import com.skarp.prio.repairs.RepairState;
+import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.NewSparePart;
 import com.skarp.prio.spareparts.SparePart;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,26 +27,6 @@ public class RepairTest {
         assertEquals(RepairState.ON_GOING, repair.getState());
     }
 
-    @Test
-    public void canPauseRepair() {
-
-        Repair repair = new Repair(iphone);
-
-        repair.pauseRepair();
-
-        assertEquals(RepairState.PAUSED, repair.getState());
-    }
-
-    @Test
-    public void canResumeRepairAfterPause() {
-
-        Repair repair = new Repair(iphone);
-
-        repair.pauseRepair();
-        repair.resumeRepair();
-
-        assertEquals(RepairState.ON_GOING, repair.getState());
-    }
 
     @Test
     public void hasDate() {
@@ -57,7 +39,7 @@ public class RepairTest {
     @Test
     public void canAddSparePart() {
 
-        SparePart battery = new NewSparePart("Apple","iPhone","11 Pro", "2019","A","battery");
+        SparePart battery = new NewSparePart("Apple","iPhone","11 Pro", "2019", Grade.A,"battery", 250);
         Repair repair = new Repair(iphone);
 
         repair.addSparePart(battery);

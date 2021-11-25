@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -24,6 +26,9 @@ import java.util.NoSuchElementException;
 public class RepairController {
 
     @Autowired
+    RepairService repairService;
+
+    @Autowired
     RepairRepository repairRepository;
 
     @Autowired
@@ -36,88 +41,84 @@ public class RepairController {
     MongoOperations operations;
 
     @GetMapping("/repairs")
-    public List<Repair> getRepairList(@RequestParam(required = false, value = "state") RepairState state)
+    public ResponseEntity<?> getRepairList(@RequestParam(required = false, value = "sortBy") String sortBy, @RequestParam(required = false, value = "LIMIT") String limit)
     {
+        return new ResponseEntity<>(repairService.getRepairList(sortBy, limit), HttpStatus.OK);
 
-        Query repairQuery = new Query();
-
-        if (state != null) {repairQuery.addCriteria(Criteria.where("state").is(state));}
-
-        List<Repair> repairList = operations.find(repairQuery, Repair.class);
-
-        return repairList;
     }
 
     @PostMapping("/repairs")
     public ResponseEntity<?> createRepair(@RequestParam(required = true, value = "prod_id") String prod_id,
                                           @RequestParam(required = false, value = "tech_id") String tech_id,
                                           UriComponentsBuilder uriComponentsBuilder) {
-        Product product;
-        Repair repair;
-
         try {
-            product = productRepository.findById(prod_id).get();
+            return new ResponseEntity<URI>(repairService.createRepair(prod_id, tech_id, uriComponentsBuilder), HttpStatus.CREATED);
 
         } catch (NoSuchElementException e) { //TODO: Should have an error handler
-            System.out.println("Error occured: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(e);
-        };
+            String msg = "Failed to create repair: ";
 
-        repair = new Repair(product);
-
-        productRepository.save(product);
-        repairRepository.save(repair);
-
-        //Builds URI path
-        UriComponents uriComponents =
-                uriComponentsBuilder.path("/repairs/{id}").buildAndExpand(repair.getId());
-
-        URI uri = uriComponents.toUri();
-
-        return ResponseEntity.created(uri).build();
+            return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
     @GetMapping("/repairs/{id}")
-    public Repair getRepairByID(@PathVariable String id) {
-
-        return repairRepository.findById(id).get();
-    }
-
-    @PostMapping("/repairs/{id}")
-    public ResponseEntity<?> updateRepair(@PathVariable String id,
-                             @RequestParam(required = true, value = "func") String func) {
-
-        Repair repair = repairRepository.findById(id).get();
+    public ResponseEntity<?> getRepairByID(@PathVariable String id) {
 
         try {
+            return new ResponseEntity<>(repairService.getRepairByID(id), HttpStatus.OK);
+        }
+        catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 
-            if (func.equals("resume")) {
+    @PostMapping("/repairs/{id}/pause")
+    public ResponseEntity<?> pauseRepair(@PathVariable String id)
+    {
+        try {
+            repairService.pauseRepair(id);
+        } catch (NoSuchElementException e) {
 
-                repair.resumeRepair();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-            } else if (func.equals("pause")) {
-
-                repair.pauseRepair();
-
-            } else if (func.equals("finish")) {
-
-                repair.finishRepair();
-
-            } else {
-                System.out.println("Bad request");
-                return ResponseEntity.badRequest().build();
-            }
         } catch (IllegalRepairOperationException e) {
-            String msg = "Illegal repair operation: " + e.getMessage(); //TODO: Needs error handling
-            return ResponseEntity.badRequest().body(msg);
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
 
-        repairRepository.save(repair);
-        productRepository.save(repair.getProduct());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-        return ResponseEntity.ok().build();
+    @PostMapping("/repairs/{id}/resume")
+    public ResponseEntity<?> resumeRepair(@PathVariable String id)
+    {
+        try {
+            repairService.resumeRepair(id);
+        } catch (NoSuchElementException e) {
 
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalRepairOperationException e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/repairs/{id}/finish")
+    public ResponseEntity<?> finishRepair(@PathVariable String id) {
+        try {
+            repairService.finishRepair(id);
+        } catch (NoSuchElementException e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalRepairOperationException e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/repairs/{id}/")

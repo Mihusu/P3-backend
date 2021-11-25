@@ -1,5 +1,6 @@
 package com.skarp.prio;
 
+import com.skarp.prio.products.Category;
 import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.SparePartDescriptor;
 import org.junit.jupiter.api.Test;

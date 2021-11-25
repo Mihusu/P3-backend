@@ -11,7 +11,8 @@ public class Product {
     @Id
     private String id;
     private ArrayList<SparePart> spareParts = new ArrayList<>();
-
+    
+    private String itemID;
     private String name;
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     private String year;            // 2016
@@ -21,9 +22,18 @@ public class Product {
     private LocalDate dateAdded;  //date added to the warehouse
     private long storageTime;
     private ProductState state;
-    private final double salesPrice;
+    private double salesPrice;
     private double costPrice;
+    private String serialNumber;            // 356571101513554
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Product{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 
     public Product(String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;
@@ -37,6 +47,10 @@ public class Product {
         this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
         this.storageTime = calcStorageTime();
+    }
+
+    public Product(){
+
     }
 
     public LocalDate getDateAdded(){
@@ -104,5 +118,37 @@ public class Product {
 
     public void setState(ProductState state) {
         this.state = state;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setSalesPrice(double salesPrice) {
+        this.salesPrice = salesPrice;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSerialnumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+    
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
     }
 }

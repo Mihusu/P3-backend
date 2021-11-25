@@ -1,16 +1,22 @@
 package com.skarp.prio.products;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin("*")
 @RestController
@@ -36,7 +42,7 @@ public class ProductController {
         Query productQuery = new Query();
 
         // Check for Params and add to Criteria
-        if (name != null) {productQuery.addCriteria(Criteria.where("name").in(name));}
+        if (name != null) {productQuery.addCriteria(Criteria.where("name").regex(name));}
         if (model != null) {productQuery.addCriteria(Criteria.where("model").is(model));}
         if (brand != null) {productQuery.addCriteria(Criteria.where("brand").is(brand));}
         if (category != null) {productQuery.addCriteria(Criteria.where("category").is(category));}
@@ -45,6 +51,33 @@ public class ProductController {
 
         // Find Products matching Query
         return operations.find(productQuery, Product.class);
+    }
+
+    // File location
+    @Value("${file.upload-dir}")
+    String FILE_DIRECTORY;
+
+    @PostMapping("/products/file")
+    public ResponseEntity<Object> uploadProducts(@RequestParam("File") MultipartFile multipart) throws IOException {
+        if (!multipart.isEmpty()) {
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(multipart.getBytes())))) {
+                List<Product> productList = reader.lines().map(ProductParser::parse).toList();
+
+               for (Product product: productList) {
+                   // Save all Products
+                   //repository.save(product);
+                   System.out.println(product);
+               }
+            } catch (IOException e) {
+                return new ResponseEntity<Object>("The File Uploaded, could not be read", HttpStatus.EXPECTATION_FAILED);
+            }
+
+            // Return Reponse
+            return new ResponseEntity<Object>("The File Uploaded Successfully", HttpStatus.CREATED); //Todo : make a proper response text
+        } else {
+            // Return Reponse
+            return new ResponseEntity<Object>("The File Uploaded to server was empty", HttpStatus.NO_CONTENT);
+        }
     }
 }
 

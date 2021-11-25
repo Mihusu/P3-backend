@@ -20,7 +20,7 @@ public class Product {
     private Category category;      // Smartphone (and iPhone), Laptop, MacBook
     private String specification;   //Ex. 128gb, white
     private LocalDate dateAdded;  //date added to the warehouse
-    private long storageTime;
+    //private long storageTime;
     private ProductState state;
     private double salesPrice;
     private double costPrice;
@@ -46,11 +46,10 @@ public class Product {
         this.costPrice = costPrice;
         this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
-        this.storageTime = calcStorageTime();
     }
 
     public Product(){
-
+        this.dateAdded = LocalDate.now();
     }
 
     public LocalDate getDateAdded(){
@@ -62,11 +61,6 @@ public class Product {
     }
 
     public long getStorageTime(){
-        this.storageTime = calcStorageTime();
-        return this.storageTime;
-    }
-
-    public long calcStorageTime(){
         return ChronoUnit.DAYS.between(this.dateAdded, LocalDate.now());
     }
 

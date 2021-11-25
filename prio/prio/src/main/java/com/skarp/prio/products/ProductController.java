@@ -53,7 +53,12 @@ public class ProductController {
         if (sortBy != null) {productQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
 
         // Find Products matching Query
-        return operations.find(productQuery, Product.class);
+        try {
+            return operations.find(productQuery, Product.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     // File location

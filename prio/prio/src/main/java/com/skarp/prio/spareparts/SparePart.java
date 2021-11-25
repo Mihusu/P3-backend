@@ -3,11 +3,14 @@ package com.skarp.prio.spareparts;
 import com.skarp.prio.products.Category;
 import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.Enums.SparePartState;
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
 public class SparePart {
 
     private int part_id;        // Internal ID use
+
     private String name;        // Brand-Category-Model-Year-Grade-Type
     private String type;        // Ex: Battery, Screen
     private String model;       // Ex: Pro, E480

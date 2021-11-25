@@ -32,7 +32,7 @@ public class SparePartController {
      */
 
 
-    @GetMapping("/spareparts/")
+    /*@GetMapping("/spareparts/")
     public ResponseEntity<?> getSparePartList(@RequestParam(required = false, value = "category") String category,
                                               @RequestParam(required = false, value = "model") String model,
                                               @RequestParam(required = false, value = "year") String year,
@@ -40,10 +40,15 @@ public class SparePartController {
                                               @RequestParam(required = false, value = "state") SparePartState state)
     {
         // Ensure category is passed correctly as upper case before conversion to enum
-        Category categoryEnum = Category.valueOf(category.toUpperCase());
-        return new ResponseEntity<>(sparePartService.getSparePartList(categoryEnum, model, year, brand, state), HttpStatus.OK);
+        if (category != null) {
 
-    }
+            Category categoryEnum = Category.valueOf(category.toUpperCase());
+            return new ResponseEntity<>(sparePartService.getSparePartList(categoryEnum, model, year, brand, state), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    }*/
 
 
 }

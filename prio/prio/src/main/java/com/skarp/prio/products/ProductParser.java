@@ -17,7 +17,7 @@ public class ProductParser {
         parsedProduct.setSalesPrice(Double.parseDouble(line_split[7].replace(",",".")));
         parsedProduct.setCostPrice(Double.parseDouble(line_split[8].replace(",",".")));
 
-        switch (line_split[5].trim().toLowerCase()) {
+        switch (line_split[5].trim().toLowerCase()) { //TODO: Make conversion from string to enum with valueOf
 
             case "iphone":
                 parsedProduct.setCategory(Category.IPHONE);

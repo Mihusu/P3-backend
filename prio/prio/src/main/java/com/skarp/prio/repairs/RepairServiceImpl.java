@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RepairServiceImpl implements RepairService {
@@ -205,9 +206,13 @@ public class RepairServiceImpl implements RepairService {
             // TODO: Remove comparability check - Let the user handle that
             //if (sparePartModel.getModel().equals(repairModel.getProduct().getModel())) {
             if (true) {
+                
                 // Check if the repair already contains this sparepart
-                // TODO: The check fails in spotting duplicates
-                if (!repairModel.getAddedSpareParts().contains(sparePartModel)) {
+                List<SparePart> duplicates = repairModel.getAddedSpareParts()
+                        .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0)
+                        .collect(Collectors.toList());
+
+                if (duplicates.isEmpty()) {
                     sparePartModel.setState(SparePartState.RESERVED);
                     repairModel.addSparePart(sparePartModel);
 
@@ -218,8 +223,7 @@ public class RepairServiceImpl implements RepairService {
                     throw new IllegalRepairOperationException("Repair can not contain the same spare-part twice");
                 }
             } else {
-
-                throw new IncompatibleSparepartTypeException("Bonjour, spareparts and repair product is incompatible");
+                throw new IncompatibleSparepartTypeException("Spare-part and the product being repaired is not compatible");
             }
 
             return;

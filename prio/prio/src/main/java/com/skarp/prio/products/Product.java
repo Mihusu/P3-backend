@@ -11,7 +11,6 @@ public class Product {
     @Id
     private String id;
     private ArrayList<SparePart> spareParts = new ArrayList<>();
-    
     private String itemID;
     private String name;
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
@@ -54,6 +53,11 @@ public class Product {
 
     public LocalDate getDateAdded(){
         return this.dateAdded;
+    }
+
+
+    public String getId() {
+        return this.id;
     }
 
     public String getName() {
@@ -145,4 +149,6 @@ public class Product {
     public void setItemID(String itemID) {
         this.itemID = itemID;
     }
+
+    public String getItemID() {return itemID;}
 }

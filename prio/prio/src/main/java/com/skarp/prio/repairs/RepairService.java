@@ -10,7 +10,6 @@ import java.net.URI;
 import java.util.List;
 
 public interface RepairService {
-
     public List<Repair>      getRepairList(@RequestParam(required = false, value = "sortBy") String sortBy, @RequestParam(required = false, value = "LIMIT") String limit);
     public URI               createRepair(@RequestParam(required = true, value = "prod_id") String prod_id, @RequestParam(required = false, value = "tech_id") String tech_id, UriComponentsBuilder uriComponentsBuilder);
     public Repair            getRepairByID(@PathVariable String id);

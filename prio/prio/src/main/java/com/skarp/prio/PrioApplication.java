@@ -38,19 +38,5 @@ public class PrioApplication implements CommandLineRunner {
 		//sparePartRepository.deleteAll();
 		//repairRepository.deleteAll();
 
-		/*
-
-		Product product2 = new Product("Samsung", Category.SMARTPHONE, "Galaxy S3", "2018", "256 gb black", 3500, 2500);
-		Product product = new Product("Apple", Category.IPHONE, "11 Pro", "", "128 gb white", 4000, 2000);
-		Repair repair = new Repair(product);
-		SparePart sparePart = new UsedSparePart(product, Grade.A, "battery", 200.0);
-
-		productRepository.save(product2);
-		productRepository.save(product);
-		repairRepository.save(repair);
-		sparePartRepository.save(sparePart);
-
-		*/
-
 	}
 }

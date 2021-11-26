@@ -1,12 +1,10 @@
 package com.skarp.prio.writeoffticket;
 
+import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -32,5 +30,16 @@ public class WriteOffTicketController {
 
         List<WriteOffTicket> result = operations.query(WriteOffTicket.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
         return result;
-    };
+    }
+
+    @PostMapping("/products/{id}")
+    public WriteOffTicket writeOffTicket(@RequestParam(value = "product_id") String product_id),
+                                            @RequestParam(value = "name") String name)
+    // Todo: Need information about functional spareparts from the product
+    {
+
+        Product product = operations.query(Product.class).matching(query(where("product_id").is(product_id))).all();
+        WriteOffTicket ticket = new WriteOffTicket();
+    }
+
 }

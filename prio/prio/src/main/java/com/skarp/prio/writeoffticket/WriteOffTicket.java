@@ -3,6 +3,7 @@ package com.skarp.prio.writeoffticket;
 import com.skarp.prio.Technician;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductState;
+import org.apache.catalina.Manager;
 
 import java.util.Date;
 
@@ -13,6 +14,7 @@ public class WriteOffTicket {
     private Date creationDate;
     private Date approvalDate;
     private WriteOffTicketState state;
+    private Manager approvedBy;
 
     public WriteOffTicket(Product product, Technician technician){
         this.product = product;

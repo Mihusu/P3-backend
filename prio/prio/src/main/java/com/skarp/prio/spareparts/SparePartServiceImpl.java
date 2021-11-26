@@ -7,14 +7,19 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class SparePartServiceImpl implements SparePartService{
 
     @Autowired
     MongoOperations operations;
+
+    @Autowired
+    SparePartRepository sparePartRepository;
 
     @Override
     public List<SparePart> getSparePartList(Category category, String model, String year, String brand, SparePartState state) {
@@ -33,5 +38,16 @@ public class SparePartServiceImpl implements SparePartService{
         // Find NewSpareParts matching Query
         return operations.find(sparePartQuery, SparePart.class);
 
+    }
+
+    @Override
+    public SparePart getSparePartByID(@PathVariable(required = true, value = "id") String id) {
+
+        if (!sparePartRepository.findById(id).isPresent()) {
+            String msg = "Sparepart not found with id: " + id;
+            throw new NoSuchElementException(msg);
+        }
+
+        return sparePartRepository.findById(id).get();
     }
 }

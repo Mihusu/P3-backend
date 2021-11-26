@@ -1,15 +1,14 @@
 package com.skarp.prio.spareparts;
 
-import com.skarp.prio.products.Category;
-import com.skarp.prio.spareparts.Enums.SparePartState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.NoSuchElementException;
 
 @RestController
 public class SparePartController {
@@ -49,6 +48,17 @@ public class SparePartController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }*/
+
+    @GetMapping("/spareparts/{id}")
+    public ResponseEntity<?> getSparePartsByID(@PathVariable String id) {
+        try {
+            return new ResponseEntity<SparePart>(sparePartService.getSparePartByID(id), HttpStatus.OK);
+        }
+        catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 
 }

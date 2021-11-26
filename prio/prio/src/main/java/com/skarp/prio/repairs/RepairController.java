@@ -73,7 +73,7 @@ public class RepairController {
         }
     }
 
-    @PostMapping("/repairs/{id}/pause")
+    @PostMapping("/repairs/pause/{id}")
     public ResponseEntity<?> pauseRepair(@PathVariable String id)
     {
         try {
@@ -90,7 +90,7 @@ public class RepairController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/repairs/{id}/resume")
+    @PostMapping("/repairs/resume/{id}")
     public ResponseEntity<?> resumeRepair(@PathVariable String id)
     {
         try {
@@ -106,7 +106,7 @@ public class RepairController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/repairs/{id}/finish")
+    @PostMapping("/repairs/finish/{id}")
     public ResponseEntity<?> finishRepair(@PathVariable String id) {
         try {
             repairService.finishRepair(id);
@@ -121,7 +121,7 @@ public class RepairController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/repairs/{id}/")
+    @PatchMapping("/repairs/add/{id}/")
     public ResponseEntity<?> addSparePart(@PathVariable String id,
                                           @RequestParam(required = true, value = "sparepart_id") String sparepart_id)
     {

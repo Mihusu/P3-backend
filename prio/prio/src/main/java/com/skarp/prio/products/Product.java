@@ -24,6 +24,7 @@ public class Product {
     private double salesPrice;
     private double costPrice;
     private String serialNumber;            // 356571101513554
+    private String comment;
 
     @Override
     public String toString() {
@@ -151,4 +152,12 @@ public class Product {
     }
 
     public String getItemID() {return itemID;}
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

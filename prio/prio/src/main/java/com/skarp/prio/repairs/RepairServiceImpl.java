@@ -206,7 +206,7 @@ public class RepairServiceImpl implements RepairService {
             // TODO: Remove comparability check - Let the user handle that
             //if (sparePartModel.getModel().equals(repairModel.getProduct().getModel())) {
             if (true) {
-                
+
                 // Check if the repair already contains this sparepart
                 List<SparePart> duplicates = repairModel.getAddedSpareParts()
                         .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0)

@@ -61,9 +61,6 @@ public class ProductController {
         }
     }
 
-    // File location
-    @Value("${file.upload-dir}")
-    String FILE_DIRECTORY;
 
     @PostMapping("/products/file")
     public ResponseEntity<Object> uploadProducts(@RequestParam("File") MultipartFile multipart) throws IOException {

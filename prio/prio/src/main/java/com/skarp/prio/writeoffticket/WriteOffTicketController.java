@@ -2,6 +2,7 @@ package com.skarp.prio.writeoffticket;
 
 import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
+import com.skarp.prio.products.ProductState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -33,7 +34,7 @@ public class WriteOffTicketController {
 
     @GetMapping("/writeoffs/")
     public List<WriteOffTicket> writeOffTickets(@RequestParam(value = "brand") String brand,
-                                                    @RequestParam(value = "category") String category) {
+                                                @RequestParam(value = "category") String category) {
 
         List<WriteOffTicket> result = operations.query(WriteOffTicket.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
         return result;
@@ -55,6 +56,8 @@ public class WriteOffTicketController {
             if (products.isEmpty())
                 throw new NoSuchElementException("Item not found in database");
             product = products.get(0);
+            if (product.getState() == ProductState.IN_WRITEOFF)
+                throw new Exception("Product is already in write-off");
             ticket = new WriteOffTicket(product, name);
             // operations.save(product); // Todo: find out why have both repository and operations
             productRepository.save(product);

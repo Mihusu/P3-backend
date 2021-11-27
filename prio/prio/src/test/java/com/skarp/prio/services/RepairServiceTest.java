@@ -15,7 +15,7 @@ public class RepairServiceTest {
 
     @BeforeEach
     public void setup() {
-        testProduct = new Product("Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
+        testProduct = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
     }
 
     /*@Test

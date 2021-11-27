@@ -34,7 +34,9 @@ public class PrioApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-		productRepository.deleteAll();
+		//Product testProduct = new Product("697140000001","Lenovo", Category.LAPTOP,"E480","2016","17\"",4321,1234);
+		//productRepository.save(testProduct);
+		//productRepository.deleteAll(); // Please don't leave this active after testing
 		//sparePartRepository.deleteAll();
 		//repairRepository.deleteAll();
 

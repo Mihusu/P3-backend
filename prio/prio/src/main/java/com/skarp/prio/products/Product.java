@@ -33,8 +33,9 @@ public class Product {
         return sb.toString();
     }
 
-    public Product(String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
+    public Product(String productId, String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;
+        this.productId = productId;
         this.brand = brand;
         this.category = category;
         this.model = model;

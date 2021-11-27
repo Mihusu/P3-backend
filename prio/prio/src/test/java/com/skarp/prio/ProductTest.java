@@ -18,7 +18,7 @@ public class ProductTest {
 
     @BeforeEach
     public void setup() {
-       iphone = new Product("Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
+       iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ProductTest {
     @Test
     public void testCanAddSparePart() {
 
-        Product phone = new Product("Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 2000);
+        Product phone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 2000);
         SparePart iphone_battery = new UsedSparePart(phone, Grade.A, "Battery", 200);
 
         assertTrue(iphone.addSparePart(iphone_battery));
@@ -110,7 +110,7 @@ public class ProductTest {
 
     @Test
     public void testStorageTime(){
-        Product Lenovo = new Product("Lenovo", Category.LAPTOP, "TI", "2016", "8gb RAM", 3000, 500);
+        Product Lenovo = new Product("somenumber","Lenovo", Category.LAPTOP, "TI", "2016", "8gb RAM", 3000, 500);
         Lenovo.getStorageTime();
         assertEquals(0, Lenovo.getStorageTime());
     }

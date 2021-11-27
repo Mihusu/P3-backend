@@ -9,19 +9,16 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Repair {
 
     @Id
     private String id;
-
     private Product product;
-
     private RepairState state;
     private Date startDate;
-
     private Date endDate;
-
     private Date pausedAt;
 
     private Date resumedAt;
@@ -100,8 +97,7 @@ public class Repair {
 
     }
 
-    public void addSparePart(SparePart sparePart) { //TODO : Update cost price of product, using price of sparepart
-
+    public void addSparePart(SparePart sparePart) {
 
         this.spareParts.add(sparePart);
     }
@@ -119,5 +115,13 @@ public class Repair {
         }
 
         return repairCost;
+    }
+
+    public void removeSparePart(SparePart sparePart) {
+        // Filter out the received spare part from spare parts list
+        List<SparePart> filtered_parts = this.spareParts.stream()
+                .filter(sp -> !sp.getPart_id().equals(sparePart.getPart_id()))
+                .collect(Collectors.toList());
+        this.spareParts = filtered_parts;
     }
 }

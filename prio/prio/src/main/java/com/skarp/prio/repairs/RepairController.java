@@ -73,7 +73,7 @@ public class RepairController {
         }
     }
 
-    @PostMapping("/repairs/pause/{id}")
+    @PostMapping("/repairs/{id}/pause")
     public ResponseEntity<?> pauseRepair(@PathVariable String id)
     {
         try {
@@ -90,7 +90,7 @@ public class RepairController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/repairs/resume/{id}")
+    @PostMapping("/repairs/{id}/resume")
     public ResponseEntity<?> resumeRepair(@PathVariable String id)
     {
         try {
@@ -106,10 +106,10 @@ public class RepairController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/repairs/finish/{id}")
-    public ResponseEntity<?> finishRepair(@PathVariable String id) {
+    @PostMapping("/repairs/{id}/cancel")
+    public ResponseEntity<?> cancelRepair(@PathVariable String id) {
         try {
-            repairService.finishRepair(id);
+            repairService.cancelRepair(id);
         } catch (NoSuchElementException e) {
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -121,28 +121,54 @@ public class RepairController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/repairs/add/{id}/")
-    public ResponseEntity<?> addSparePart(@PathVariable String id,
-                                          @RequestParam(required = true, value = "sparepart_id") String sparepart_id)
-    {
-        Repair repair;
-        SparePart sparePart;
-
+    @PostMapping("/repairs/{id}/finish")
+    public ResponseEntity<?> finishRepair(@PathVariable String id) {
         try {
-            sparePart = sparePartRepository.findById(sparepart_id).get();
-            repair = repairRepository.findById(id).get();
-
+            repairService.finishRepair(id);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+        } catch (IllegalRepairOperationException e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
 
-        repair.addSparePart(sparePart);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-        repairRepository.save(repair);
-        sparePartRepository.save(sparePart);
-        productRepository.save(repair.getProduct());
+    @PostMapping("/repairs/{repairId}/add/{sparepartId}")
+    public ResponseEntity<?> addSparePart(@PathVariable String repairId,
+                                          @PathVariable String sparepartId)
+    {
+        try {
+            repairService.addSparePart(repairId, sparepartId);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-        return ResponseEntity.accepted().build();
+        } catch (IllegalRepairOperationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        } catch (IncompatibleSparepartTypeException e) {
+            return  new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @PostMapping("/repairs/{repairId}/remove/{sparepartId}")
+    public ResponseEntity<?> removeSparePart(@PathVariable String repairId,
+                                             @PathVariable String sparepartId)
+    {
+        try {
+            repairService.removeSparePart(repairId, sparepartId);
+        } catch (NoSuchElementException e) {
+            return  new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+        return new  ResponseEntity<>(HttpStatus.OK);
 
     }
 

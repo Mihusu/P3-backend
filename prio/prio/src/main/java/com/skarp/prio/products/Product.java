@@ -22,6 +22,7 @@ public class Product {
     private double salesPrice;
     private double costPrice;
     private String serialNumber;            // 356571101513554
+    private String defectiveComment;
 
     @Override
     public String toString() {
@@ -149,4 +150,12 @@ public class Product {
     }
 
     public String getProductId() {return productId;}
+
+    public String getDefectiveComment() {
+        return defectiveComment;
+    }
+
+    public void setDefectiveComment(String defectiveComment) {
+        this.defectiveComment = defectiveComment;
+    }
 }

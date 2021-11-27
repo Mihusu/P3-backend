@@ -34,7 +34,7 @@ public class PrioApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-		//productRepository.deleteAll();
+		productRepository.deleteAll();
 		//sparePartRepository.deleteAll();
 		//repairRepository.deleteAll();
 

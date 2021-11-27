@@ -33,15 +33,14 @@ public class WriteOffTicketController {
 
     @GetMapping("/writeoffs/")
     public List<WriteOffTicket> writeOffTickets(@RequestParam(value = "brand") String brand,
-                                                @RequestParam(value = "category") String category) {
+                                                    @RequestParam(value = "category") String category) {
 
         List<WriteOffTicket> result = operations.query(WriteOffTicket.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
         return result;
     }
 
-    @PostMapping("/products/{id}")
-    public WriteOffTicket writeOffTicket(@RequestParam(value = "product_id") String product_id),
-                                            @RequestParam(value = "name") String name)
+    @GetMapping("/products/{productId}/wo/{name}")
+    public ResponseEntity<?> createWriteOffTicket(@PathVariable String productId, @PathVariable String name)
     // Todo: Need information about functional spareparts from the product
     {
         List<Product> products; //= new ArrayList<>();

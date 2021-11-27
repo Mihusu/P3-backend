@@ -2,7 +2,6 @@ package com.skarp.prio.products;
 
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ public class Product {
     @Id
     private String id;
     private ArrayList<SparePart> spareParts = new ArrayList<>();
-    private String itemID;
+    private String productId;       // In store product ID
     private String name;
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     private String year;            // 2016
@@ -19,7 +18,6 @@ public class Product {
     private Category category;      // Smartphone (and iPhone), Laptop, MacBook
     private String specification;   //Ex. 128gb, white
     private LocalDate dateAdded;  //date added to the warehouse
-    //private long storageTime;
     private ProductState state;
     private double salesPrice;
     private double costPrice;
@@ -146,9 +144,9 @@ public class Product {
         this.serialNumber = serialNumber;
     }
     
-    public void setItemID(String itemID) {
-        this.itemID = itemID;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
-    public String getItemID() {return itemID;}
+    public String getProductId() {return productId;}
 }

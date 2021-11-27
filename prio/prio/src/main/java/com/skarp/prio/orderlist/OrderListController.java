@@ -38,7 +38,6 @@ public class OrderListController {
 
     // Find NewSpareParts matching Query
     return operations.find(sparePartQuery, NewSparePart.class);
-
   }
 
 }

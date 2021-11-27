@@ -8,4 +8,8 @@ public class Technician {
         this.name = name;
         this.specialization = specialization;
     }
+
+    public String getName() {
+        return this.name;
+    }
 }

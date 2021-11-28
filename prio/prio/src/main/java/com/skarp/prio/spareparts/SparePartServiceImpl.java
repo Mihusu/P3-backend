@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class SparePartServiceImpl implements SparePartService{
+public class SparePartServiceImpl implements SparePartService {
 
     @Autowired
     MongoOperations operations;
@@ -41,9 +41,9 @@ public class SparePartServiceImpl implements SparePartService{
     }
 
     @Override
-    public SparePart getSparePartByID(@PathVariable(required = true, value = "id") String id) {
+    public SparePart getSparePartByID(@PathVariable(value = "id") String id) {
 
-        if (!sparePartRepository.findById(id).isPresent()) {
+        if (sparePartRepository.findById(id).isEmpty()) {
             String msg = "Sparepart not found with id: " + id;
             throw new NoSuchElementException(msg);
         }

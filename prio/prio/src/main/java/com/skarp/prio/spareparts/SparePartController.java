@@ -1,10 +1,7 @@
 package com.skarp.prio.spareparts;
 
 import com.skarp.prio.products.Category;
-import com.skarp.prio.products.Product;
-import com.skarp.prio.spareparts.Enums.Grade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,7 +36,7 @@ public class SparePartController {
      */
 
 
-    @GetMapping("/spareparts")
+    @GetMapping("/spareparts") // Todo: find out if this is still used or should be changed to getSparePartList
     public List<SparePart> spareparts(
             @RequestParam(required=false, value="name") String name,
             @RequestParam(required=false, value="type") String type,
@@ -82,7 +77,7 @@ public class SparePartController {
     @GetMapping("/spareparts/{id}")
     public ResponseEntity<?> getSparePartsByID(@PathVariable String id) {
         try {
-            return new ResponseEntity<SparePart>(sparePartService.getSparePartByID(id), HttpStatus.OK);
+            return new ResponseEntity<>(sparePartService.getSparePartByID(id), HttpStatus.OK);
         }
         catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

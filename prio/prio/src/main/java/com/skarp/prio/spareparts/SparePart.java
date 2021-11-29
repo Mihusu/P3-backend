@@ -1,8 +1,8 @@
 package com.skarp.prio.spareparts;
 
 import com.skarp.prio.products.Category;
-import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.Enums.SparePartState;
+import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -12,25 +12,24 @@ public class SparePart {
     @Id
     private String part_id;        // Internal ID use
     private String name;        // Brand-Category-Model-Year-Grade-Type
-    private String type;        // Ex: Battery, Screen
+    private SparePartType type;        // Ex: Battery, Screen
     private String model;       // Ex: Pro, E480
     private String modelYear;   // 2016
     private String brand;       // Apple, Lenovo Todo: Decide whether this should be String or Category
     private Category category;    // Smartphone (and iPhone), Laptop, MacBook
     private Date addedDate;
-    private Grade grade;        // OEM, slightly used
+
     private double costPrice;
 
 
     private SparePartState state;
 
-    public SparePart(String brand, Category category, String model, String modelYear, Grade grade, String type, double costPrice) {
-        this.name = brand+" "+category+" "+model+"-"+modelYear+": "+grade+"-"+type;
+    public SparePart(String brand, Category category, String model, String modelYear, SparePartType type, double costPrice) {
+        this.name = brand+" "+category+" "+model+"-"+modelYear+": "+"-"+type;
         this.brand = brand;
         this.category = category;
         this.model = model;
         this.modelYear = modelYear;
-        this.grade = grade;
         this.type = type;
         this.costPrice = costPrice;
         this.addedDate = new Date();
@@ -45,7 +44,7 @@ public class SparePart {
         return name;
     }
 
-    public String getType() {
+    public SparePartType getType() {
         return type;
     }
 
@@ -67,10 +66,6 @@ public class SparePart {
 
     public Date getAddedDate() {
         return addedDate;
-    }
-
-    public Grade getGrade() {
-        return grade;
     }
 
     public double getCostPrice() {return costPrice;}

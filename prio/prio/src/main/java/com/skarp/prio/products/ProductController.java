@@ -3,6 +3,7 @@ package com.skarp.prio.products;
 import java.io.*;
 import java.util.List;
 
+import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -78,6 +79,20 @@ public class ProductController {
             // Return Reponse
             return new ResponseEntity<Object>("The File Uploaded to server was empty", HttpStatus.NO_CONTENT);
         }
+    }
+
+    @GetMapping("/products/{productId}/sparepart_types")
+    public ResponseEntity<?> getCompatibleTypes(@PathVariable String productId) {
+
+        Product product = repository.findByProductID(productId);
+
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<SparePartType> sparePartTypes = CompatibleSparePartTypeMap.conversionMap.get(product.getCategory());
+
+        return new ResponseEntity<>(sparePartTypes, HttpStatus.OK);
     }
 }
 

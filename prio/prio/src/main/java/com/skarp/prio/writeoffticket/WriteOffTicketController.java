@@ -40,6 +40,8 @@ public class WriteOffTicketController {
         return result;
     }
 
+    @PostMapping("/writeoffs/")
+
     @GetMapping("/products/{productId}/wo/{name}")
     public ResponseEntity<?> createWriteOffTicket(@PathVariable String productId, @PathVariable String name)
     // Todo: Need information about functional spareparts from the product

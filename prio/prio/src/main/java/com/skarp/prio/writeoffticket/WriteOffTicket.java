@@ -12,6 +12,7 @@ public class WriteOffTicket {
     @Id
     private String id;
     private String productId; // Id of product for write-off
+    private String reason; //Reason for making the write-off
     private String technicianName; // name of technician initiating the write-off
     private Date creationDate;
     private Date approvalDate;

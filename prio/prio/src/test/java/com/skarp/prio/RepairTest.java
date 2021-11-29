@@ -5,6 +5,7 @@ import com.skarp.prio.repairs.Repair;
 
 import com.skarp.prio.repairs.RepairState;
 import com.skarp.prio.spareparts.Enums.Grade;
+import com.skarp.prio.spareparts.Enums.SparePartType;
 import com.skarp.prio.spareparts.NewSparePart;
 import com.skarp.prio.spareparts.SparePart;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,7 @@ public class RepairTest {
     @Test
     public void canAddSparePart() {
 
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A,"battery", 250);
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250);
         Repair repair = new Repair(iphone);
 
         repair.addSparePart(battery);

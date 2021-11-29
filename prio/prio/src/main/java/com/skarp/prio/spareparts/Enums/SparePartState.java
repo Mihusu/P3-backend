@@ -6,4 +6,5 @@ public enum SparePartState {
     CONSUMED,
     ON_ORDER,
     INCOMING,
+    MARKED_FUNCTIONAL,
 }

@@ -175,32 +175,52 @@ public class Product {
     /**
      * Getter for the sparepart(s) of a product.
      * @return a {@code boolean} specifying if a sparepart is found.
-     * If a
+     * The sparepart is then added to sparepart array list.
      */
     public boolean addSparePart(SparePart sp) {
         return this.spareParts.add(sp);
     }
-
+    /**
+     * Getter for the brand of a product.
+     * @return a {@code String} specifying the brand of the product.
+     */
     public String getBrand() {
         return this.brand;
     }
-
+    /**
+     * Getter for the category of a product.
+     * @return a {@link Category} specifying the category of the product.
+     */
     public Category getCategory() {
         return this.category;
     }
-
+    /**
+     * Getter for the model of a product.
+     * @return a {@code String} specifying the model of the product.
+     */
     public String getModel() {
         return this.model;
     }
-
+    /**
+     * Getter for the year produced of a product.
+     * @return a {@code String} specifying the year of the product.
+     */
     public String getYear() {
         return this.year;
     }
-
+    /**
+     * Getter for the state of a product.
+     * @return a {@link ProductState} specifying the state of the product.
+     */
     public ProductState getState() {
         return this.state;
     }
-
+    /**
+     * Getter for the cost price of a product.
+     * If cost price is bigger or equals to 0 then.
+     * @return a {@code true boolean} specifying the cost price of the product.
+     * If the cost price is less then 0 then @return a {@code false boolean}.
+     */
     public boolean setCostPrice(double costPrice) {
         if (costPrice >= 0) {
             this.costPrice = costPrice;

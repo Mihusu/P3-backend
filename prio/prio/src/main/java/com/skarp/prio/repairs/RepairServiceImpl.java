@@ -115,6 +115,7 @@ public class RepairServiceImpl implements RepairService {
             if (repairModel.getState().equals(RepairState.PAUSED)) {
 
                 repairModel.setState(RepairState.ON_GOING);
+                repairModel.setPausedTime(new Date());
 
                 repairRepository.save(repairModel);
                 return;
@@ -173,6 +174,7 @@ public class RepairServiceImpl implements RepairService {
 
                 repairModel.setState(RepairState.FINISHED);
                 repairModel.setEndDate(new Date());
+                repairModel.setRepairTime(((repairModel.getEndDate().getTime() - repairModel.getPausedTime()) - repairModel.getStartDate().getTime()));
 
                 productModel.setCostPrice(productModel.getCostPrice() + repairModel.getRepairCost());
                 productModel.setState(ProductState.REPAIRED);

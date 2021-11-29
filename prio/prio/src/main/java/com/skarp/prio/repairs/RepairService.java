@@ -18,5 +18,5 @@ public interface RepairService {
     public void              cancelRepair(@PathVariable String id);
     public void              finishRepair(@PathVariable String id);
     public void              addSparePart(@PathVariable String repairId, @PathVariable String sparepartId);
-    public void              removeSparePart(@PathVariable String reapirId, @PathVariable  String sparepartId);
+    public void              removeSparePart(@PathVariable String repairId, @PathVariable  String sparepartId);
 }

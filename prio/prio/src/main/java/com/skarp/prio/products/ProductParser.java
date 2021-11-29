@@ -8,7 +8,7 @@ public class ProductParser {
         parsedProduct.setProductId(line_split[0].trim());
         parsedProduct.setName(line_split[4] +" "+ line_split[5] +" "+ line_split[2] +" "+ line_split[3]);
         parsedProduct.setSerialnumber(line_split[1]);
-        parsedProduct.setModel(line_split[2]);
+        parsedProduct.setModel(line_split[2].replace("''","\""));
         parsedProduct.setSpecification(line_split[3]);
         parsedProduct.setBrand(line_split[4]);
         parsedProduct.setState(ProductState.valueOf(line_split[6]));

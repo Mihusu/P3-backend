@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
@@ -48,11 +50,15 @@ public class WriteOffTicketController {
     public ResponseEntity<?> createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, @RequestParam(value = "prod_id") String prod_id, @RequestParam(value = "tech_id") String tech_id)
     {
         try {
+            System.out.println(woForm.reason);
+            System.out.println(woForm.markedParts);
+
+            System.out.println("Before creating WOT");
             writeOffTicketService.createWriteOffTicket(woForm, prod_id, tech_id);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

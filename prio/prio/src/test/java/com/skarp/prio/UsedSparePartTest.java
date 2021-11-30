@@ -2,7 +2,6 @@ package com.skarp.prio;
 
 import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
-import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.Enums.SparePartType;
 import com.skarp.prio.spareparts.UsedSparePart;
@@ -22,7 +21,7 @@ public class UsedSparePartTest {
     public void hasGottenAProductOrigin() {
 
         UsedSparePart battery = new UsedSparePart(iphone, SparePartType.BATTERY, 200);
-        assertNotNull(battery.getOrigin());
+        assertNotNull(battery.getOriginProductId());
     }
 
     @Test

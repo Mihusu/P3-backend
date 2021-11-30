@@ -53,8 +53,8 @@ import java.util.ArrayList;
  */
 
 public class Product {
-    @Id
     /** Contains the id of the product*/
+    @Id
     private String id;
     /** Array contains the sparepart(s) within the product*/
     private ArrayList<SparePart> spareParts = new ArrayList<>();
@@ -97,7 +97,7 @@ public class Product {
      * Initializes a newly created {@code Product} object.
      * It contains the following information about the product:
      * productId, brand, category, model, year, specification, sales price, cost price.
-     * @param name, a {@code String} object containing the name of the student.
+     * {@param name}, a {@code String} object containing the name of the student. // Todo: student? check comments for more students
      */
     public Product(String productId, String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;

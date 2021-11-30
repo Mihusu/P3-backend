@@ -84,13 +84,14 @@ public class ProductController {
     @GetMapping("/products/{productId}/sparepart_types")
     public ResponseEntity<?> getCompatibleTypes(@PathVariable String productId) {
 
-        Product product = repository.findByProductID(productId);
+        Optional<Product> product = repository.findById(productId);
 
-        if (product == null) {
+        if (product.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
-        List<SparePartType> sparePartTypes = CompatibleSparePartTypeMap.conversionMap.get(product.getCategory());
+        Product productModel = product.get();
+
+        List<SparePartType> sparePartTypes = CompatibleSparePartTypeMap.conversionMap.get(productModel.getCategory());
 
         return new ResponseEntity<>(sparePartTypes, HttpStatus.OK);
     }

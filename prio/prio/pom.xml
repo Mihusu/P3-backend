@@ -36,6 +36,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+
 		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
 		<dependency>
 		    <groupId>org.codehaus.mojo</groupId>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class WriteOffTicketServiceImpl implements WriteOffTicketService{
@@ -37,6 +38,8 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
       //  if (DBproduct.isEmpty())
       //      throw new NoSuchElementException("Item not found in database");
 
+      //  Product product = DBproduct.get();
+        System.out.println("checking for in write-off state");
         if (product.getState() == ProductState.IN_WRITEOFF)
             throw new Exception("Product is already in write-off");
 

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +47,7 @@ public class WriteOffTicketController {
         return result;
     }
 
-    @PostMapping("/writeoffs/create")
+    @PostMapping(value = "/writeoffs/create", consumes = "application/json")
     public ResponseEntity<?> createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, @RequestParam(value = "prod_id") String prod_id, @RequestParam(value = "tech_id") String tech_id)
     {
         try {

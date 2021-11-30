@@ -2,6 +2,7 @@ package com.skarp.prio.products;
 
 import java.io.*;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,23 @@ public class ProductController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> getProductsByID(@PathVariable String id) {
+
+        try {
+            if (!repository.findById(id).isPresent()) {
+                String msg = "Repair not found with id: " + id;
+                throw new NoSuchElementException(msg);
+            }
+
+            return new ResponseEntity<>(repository.findById(id).get(), HttpStatus.OK);
+        }
+        catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 

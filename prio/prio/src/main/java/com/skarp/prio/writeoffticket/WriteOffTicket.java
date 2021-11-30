@@ -34,7 +34,6 @@ public class WriteOffTicket {
         return creationDate;
     }
     public Date getApprovalDate() {
-
         if (this.state != WriteOffTicketState.APPROVED) {
             return null;
         }

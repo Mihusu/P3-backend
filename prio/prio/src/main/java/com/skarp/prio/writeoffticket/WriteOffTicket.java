@@ -11,9 +11,9 @@ public class WriteOffTicket {
 
     @Id
     private String id;
-    private String productId; // Id of product for write-off
-    private String reason; //Reason for making the write-off
-    private String technicianName; // name of technician initiating the write-off
+    private String productId;       // Id of product for write-off
+    private String reason;          //Reason for making the write-off
+    private String technicianName;  // name of technician initiating the write-off
     private Date creationDate;
     private Date approvalDate;
     private WriteOffTicketState state;
@@ -41,23 +41,9 @@ public class WriteOffTicket {
         return this.approvalDate;
     }
 
-    /* //Todo: should this be in a service?
-        public void approve(){
-            this.state = WriteOffTicketState.APPROVED;
-            this.approvalDate = new Date();
-
-            product.setState(ProductState.WRITTEN_OFF);
-        }
-
-     */
-    /*  //Todo: should this be in a service?
-
-    public void decline(){
-        this.state = WriteOffTicketState.DECLINED;
-
-        productId.setState(ProductState.DEFECTIVE);
+    public void addReason(String reason) {
+        this.reason = reason;
     }
-     */
 
     public String getId() {
         return id;

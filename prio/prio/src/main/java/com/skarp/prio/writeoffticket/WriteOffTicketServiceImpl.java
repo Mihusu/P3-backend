@@ -5,6 +5,7 @@ import com.skarp.prio.products.ProductRepository;
 import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.Enums.SparePartType;
+import com.skarp.prio.spareparts.SparePartRepository;
 import com.skarp.prio.spareparts.UsedSparePart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    SparePartRepository sparePartRepository;
+
     @Override
     public void createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, String prod_id, String tech_id) {
 
@@ -35,8 +39,13 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
 
         List<SparePartType> sparePartTypes = WriteOffFormParser.parseTypes(woForm);
 
+        /* Generate used spare-parts from the product under write-off */
         sparePartTypes.forEach(type -> {
-            product.addSparePart(new UsedSparePart(product, type, product.getCostPrice() / (double) sparePartTypes.size()));
+            UsedSparePart part = new UsedSparePart(product, type, product.getCostPrice() / (double) sparePartTypes.size());
+            part.setState(SparePartState.MARKED_FUNCTIONAL);
+            product.addSparePart(part);
+
+            sparePartRepository.save(part);
         });
 
         WriteOffTicket ticket = new WriteOffTicket(product, tech_id);

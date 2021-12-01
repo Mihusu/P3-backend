@@ -6,6 +6,7 @@ import com.skarp.prio.products.ProductRepository;
 import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.Enums.SparePartType;
+import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
 import com.skarp.prio.spareparts.UsedSparePart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
 
         Product product = DBproduct.get();
 
-        if (product.getState() == ProductState.IN_WRITEOFF)
-            throw new Exception("Product is already in write-off");
+        if (product.getState() != ProductState.IN_REPAIR && product.getState() != ProductState.DEFECTIVE)
+            throw new Exception("Product state not applicable for write-off");
 
         List<SparePartType> sparePartTypes = WriteOffFormParser.parseTypes(woForm);
 
@@ -76,12 +77,57 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
     }
 
     @Override
-    public void  approveWriteOffTicket() {
+    public void approveWriteOffTicket(String id) throws Exception {
+        Optional<WriteOffTicket> DBticket = writeOffTicketRepository.findById(id);
 
+        if (DBticket.isEmpty())
+            throw new NoSuchElementException("Write-off ticket not found in database");
+
+        WriteOffTicket ticket = DBticket.get();
+
+        if (ticket.getState() != WriteOffTicketState.AWAITING)
+            throw new Exception("Write-off ticket is not awaiting");
+
+        Product product = productRepository.findByProductId(ticket.getProduct().getProductId());
+        System.out.println("What is product? " + product);
+        product.setState(ProductState.WRITTEN_OFF);
+        List<SparePart> partList = product.getSpareParts();
+
+        for (SparePart part : partList) {
+           // maybe not needed if already got the right part::: SparePart foundPart = sparePartRepository.findById(part.getPart_id()).orElseThrow();
+            part.setState(SparePartState.AVAILABLE);
+            sparePartRepository.save(part);
+        }
+
+        productRepository.save(product);
+        writeOffTicketRepository.delete(ticket);
     }
 
     @Override
-    public void declineWriteOffTicket() {
+    public void disApproveWriteOffTicket(String id) throws Exception {
+
+        WriteOffTicket ticket = writeOffTicketRepository.findById(id).orElseThrow();
+
+        if (ticket.getState() != WriteOffTicketState.AWAITING)
+            throw new Exception("Write-off ticket is not awaiting");
+
+        Product product = productRepository.findByProductId(ticket.getProduct().getProductId());
+
+        product.setState(ProductState.DEFECTIVE);
+        List<SparePart> partList = product.getSpareParts();
+
+        sparePartRepository.deleteAll(partList);
+        /*
+        for (SparePart part : partList) {
+            // maybe not needed if already got the right part::: SparePart foundPart = sparePartRepository.findById(part.getPart_id()).orElseThrow();
+            // part.setState(SparePartState.AVAILABLE);
+            sparePartRepository.delete(part);
+        }
+
+         */
+
+        productRepository.save(product);
+        writeOffTicketRepository.delete(ticket);
 
     }
 }

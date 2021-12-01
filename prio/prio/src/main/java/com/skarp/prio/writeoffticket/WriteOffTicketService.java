@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface WriteOffTicketService {
 
-    public void createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, String prod_id, String tech_id) throws Exception;
+    void createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, String prod_id, String tech_id) throws Exception;
     List<WriteOffTicket> getAllWriteOffTickets();
-    void approveWriteOffTicket();
-    void declineWriteOffTicket();
+    void approveWriteOffTicket(String id) throws Exception;
+    void disApproveWriteOffTicket(String id) throws Exception;
 
 }

@@ -117,6 +117,12 @@ public class Product {
         this.dateAdded = LocalDate.now();
         this.state = ProductState.DEFECTIVE;
     }
+
+
+    public Product(){
+        this.dateAdded = LocalDate.now();
+        this.year = null;
+    }
     /**
      * Getter for the date product added to warehouse.
      * @return a {@code LocalDate} specifying the date product added to warehouse.

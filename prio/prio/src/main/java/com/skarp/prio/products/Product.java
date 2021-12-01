@@ -218,8 +218,8 @@ public class Product {
     /**
      * Getter for the cost price of a product.
      * If cost price is bigger or equals to 0 then.
-     * @return a {@code true boolean} specifying the cost price of the product.
-     * If the cost price is less then 0 then @return a {@code false boolean}.
+     * @return a {@code boolean} that is true specifying the cost price of the product.
+     * If the cost price is less then 0 then @return a {@code false}.
      */
     public boolean setCostPrice(double costPrice) {
         if (costPrice >= 0) {
@@ -232,6 +232,12 @@ public class Product {
         }
 
     }
+    /**
+     * Initializes a newly created {@code Repair} object with the given {@code Product} object.
+     * The {@code RepairState} is set to {@code ON_GOING} and the start date is set to the current date.
+     * The {@link ProductState} enum for the provided {@code Product} is set to {@code IN_REPAIR}.
+     * @param product, a {@link Product} object which the repair will be started for.
+     */
     public void setState(ProductState state) {
         this.state = state;
     }

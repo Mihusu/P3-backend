@@ -1,7 +1,7 @@
 package com.skarp.prio.products;
 /**
  * The {@code Category} enum stores the different electronic devices that a product could be.
- * This information is stored in a {@link com.skarp.prio.products.Product Product}'s object.
+ * This information is stored in the {@link com.skarp.prio.products.Product Product}'s object.
  *
  *  These are the possible values:
  *
@@ -26,7 +26,6 @@ package com.skarp.prio.products;
  *      Product product = new Product("productId");
  *      product.setCategory(Category.IPHONE);
  * </pre></blockquote>
-
  *
  * @author Team-Skarp
  * @see com.skarp.prio.products

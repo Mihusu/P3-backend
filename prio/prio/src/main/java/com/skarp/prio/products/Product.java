@@ -122,6 +122,7 @@ public class Product {
      */
     public Product(){
         this.dateAdded = LocalDate.now();
+        this.year = null;
     }
 
     public LocalDate getDateAdded(){

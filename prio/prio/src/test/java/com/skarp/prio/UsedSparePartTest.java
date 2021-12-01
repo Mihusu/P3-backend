@@ -20,16 +20,10 @@ public class UsedSparePartTest {
     @Test
     public void hasGottenAProductOrigin() {
 
-        UsedSparePart battery = new UsedSparePart(iphone, SparePartType.BATTERY, 200);
+        UsedSparePart battery = new UsedSparePart(iphone.getProductId(), iphone.getBrand(), iphone.getCategory(),iphone.getModel(), iphone.getYear(), SparePartType.BATTERY, 200);
         assertNotNull(battery.getOriginProductId());
     }
 
-    @Test
-    public void isAvailableAfterSalvage() {
-        UsedSparePart battery = new UsedSparePart(iphone, SparePartType.BATTERY, 200);
-
-        assertEquals(SparePartState.AVAILABLE, battery.getState());
-    }
 
 }
 // good job :)

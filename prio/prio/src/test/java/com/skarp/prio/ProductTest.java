@@ -67,7 +67,7 @@ public class ProductTest {
     public void testCanAddSparePart() {
 
         Product phone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 2000);
-        SparePart iphone_battery = new UsedSparePart(phone, SparePartType.BATTERY, 200);
+        SparePart iphone_battery = new UsedSparePart(iphone.getProductId(), iphone.getBrand(), iphone.getCategory(),iphone.getModel(), iphone.getYear(), SparePartType.BATTERY, 200);
 
         assertTrue(iphone.addSparePart(iphone_battery));
 

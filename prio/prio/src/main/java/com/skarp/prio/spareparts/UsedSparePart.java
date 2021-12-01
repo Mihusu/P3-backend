@@ -6,8 +6,7 @@ import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.Enums.SparePartType;
 
 public class UsedSparePart extends SparePart {
-    private String origin_productId;     // productId of the write-off product that the spare-part is in
-    // private Product origin;
+    private String originProductId;     // productId of the write-off product that the spare-part is in
 
     public UsedSparePart(String originProductId, String brand, Category category, String model, String modelYear, SparePartType type, double costPrice) {
         super(brand, category, model, modelYear, type, costPrice);
@@ -19,6 +18,6 @@ public class UsedSparePart extends SparePart {
     }
 
     public void setOriginProductId(String origin_productId) {
-        this.origin_productId = origin_productId;
+        this.originProductId = origin_productId;
     }
 }

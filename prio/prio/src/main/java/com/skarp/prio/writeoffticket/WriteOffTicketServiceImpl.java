@@ -49,11 +49,8 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         if (product.getState() == ProductState.IN_WRITEOFF)
             throw new Exception("Product is already in write-off");
 
-        System.out.println("Parsing");
         List<SparePartType> sparePartTypes = WriteOffFormParser.parseTypes(woForm);
-        System.out.println("Type" + sparePartTypes.get(0));
-        System.out.println("Parsing of types successful: " + sparePartTypes);
-        System.out.println(sparePartTypes.size());
+
         /*Generate used spare-parts from the product under write-off*/
         for (SparePartType type : sparePartTypes) {
             UsedSparePart part = new UsedSparePart(product.getProductId(), product.getBrand(), product.getCategory(), product.getModel(), product.getYear(), type,product.getCostPrice() / (double) sparePartTypes.size());
@@ -69,7 +66,6 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         ticket.addReason(woForm.getReason());
         productRepository.save(product);
         writeOffTicketRepository.save(ticket);
-
 
     }
 

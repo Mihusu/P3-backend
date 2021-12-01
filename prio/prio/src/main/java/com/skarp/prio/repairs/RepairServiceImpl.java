@@ -53,9 +53,10 @@ public class RepairServiceImpl implements RepairService {
         Product product;
         Repair repair;
 
-        product = productRepository.findById(prod_id).get();
+        product = productRepository.findById(prod_id).orElseThrow();
 
         repair = new Repair(product);
+        product.setState(ProductState.IN_REPAIR);
 
         productRepository.save(product);
         repairRepository.save(repair);
@@ -70,7 +71,7 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair getRepairByID(String id) {
 
-        if (!repairRepository.findById(id).isPresent()) {
+        if (repairRepository.findById(id).isEmpty()) {
             String msg = "Repair not found with id: " + id;
             throw new NoSuchElementException(msg);
         }

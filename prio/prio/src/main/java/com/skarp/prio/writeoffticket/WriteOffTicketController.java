@@ -46,9 +46,9 @@ public class WriteOffTicketController {
             System.out.println(woForm.getReason());
             System.out.println(woForm.getMarkedParts());
 
-            System.out.println("Before creating WOT");
+            // System.out.println("Before creating WOT");
             writeOffTicketService.createWriteOffTicket(woForm, prod_id, tech_id);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("Write-off created", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -78,6 +78,6 @@ public class WriteOffTicketController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Write-off disapproved", HttpStatus.OK);
+        return new ResponseEntity<>("I disapprove of this Write-off!", HttpStatus.OK);
     }
 }

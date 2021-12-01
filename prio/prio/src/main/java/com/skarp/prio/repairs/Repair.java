@@ -96,8 +96,6 @@ public class Repair {
         this.state = RepairState.ON_GOING;
         this.startDate = new Date();
         this.product = product;
-
-        product.setState(ProductState.IN_REPAIR);
     }
 
     /**

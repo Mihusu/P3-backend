@@ -93,11 +93,16 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         product.setState(ProductState.WRITTEN_OFF);
         List<SparePart> partList = product.getSpareParts();
 
+        partList.forEach(part -> part.setState(SparePartState.AVAILABLE));
+        sparePartRepository.saveAll(partList);
+
+        /*
         for (SparePart part : partList) {
            // maybe not needed if already got the right part::: SparePart foundPart = sparePartRepository.findById(part.getPart_id()).orElseThrow();
             part.setState(SparePartState.AVAILABLE);
             sparePartRepository.save(part);
         }
+         */
 
         productRepository.save(product);
         writeOffTicketRepository.delete(ticket);

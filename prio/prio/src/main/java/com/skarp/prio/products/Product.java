@@ -1,5 +1,6 @@
 package com.skarp.prio.products;
 
+import com.skarp.prio.repairs.RepairState;
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -99,8 +100,9 @@ public class Product {
      * Initializes a newly created {@code Product} object.
      * It contains the following information about the product:
      * productId, brand, category, model, year, specification, sales price, cost price.
-     * {@param name}, a {@code String} object containing the name of the student. // Todo: student? check comments for more students
-     */
+     * The {@link ProductState} is set to {@code DEFECTIVE}.
+     * @param ???, a {@code ???} containing ???.
+    */
     // Seems it doesn't need this @PersistenceConstructor even though it has a no-arg constructor
     public Product(String productId, String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;
@@ -116,19 +118,20 @@ public class Product {
         this.state = ProductState.DEFECTIVE;
     }
     /**
-     * Initializes a newly created {@code Product} object. Information
-     * about the age, the city and the university is not provided.
-     * {@param name}, a {@code String} object containing the name of the student.
+     * Getter for the date product added to warehouse.
+     * @return a {@code LocalDate} specifying the date product added to warehouse.
      */
-    public Product(){
-        this.dateAdded = LocalDate.now();
-        this.year = null;
-    }
-
     public LocalDate getDateAdded(){
         return this.dateAdded;
     }
-
+    /**
+     * Setter for the date product added to warehouse.
+     * date product added to warehouse is set to current date.
+     * @param dateAdded, a {@code LocalDate} specifying the current date.
+     */
+    public void setDateAdded(LocalDate dateAdded){
+        this.dateAdded = LocalDate.now();
+    }
     /**
      * Getter for the ID of a product.
      * @return a {@code String} specifying the ID of the product.
@@ -146,7 +149,7 @@ public class Product {
     /**
      * Getter for the storage time of a product.
      * Finds the days between date product added to warehouse and date now to determine storage time.
-     * @return a {@code String} specifying the name of the product.
+     * @return a {@code Long} specifying the name of the product.
      */
     public long getStorageTime(){
         return ChronoUnit.DAYS.between(this.dateAdded, LocalDate.now());
@@ -160,13 +163,13 @@ public class Product {
     }
     /**
      * Getter for the cost price of a product.
-     * @return a {@code String} specifying the cost price of the product.
+     * @return a {@code double} specifying the cost price of the product.
      */
     public double getCostPrice() {return this.costPrice;}
     /**
      * Getter for the profit sum of a product.
      * Subtracts the cost price with the sales price to determine the profit sum.
-     * @return a {@code String} specifying the cost price of the product.
+     * @return a {@code double} specifying the cost price of the product.
      */
     public double getProfitSum(){return this.salesPrice - this.costPrice;}
     /**
@@ -183,11 +186,13 @@ public class Product {
     public boolean addSparePart(SparePart sp) {
         return this.spareParts.add(sp);
     }
-
+    /**
+     * Adds id of the functional spare part(s) of a product.
+     * @return a {@code ArrayList} containing spare parts within the product.
+     */
     public ArrayList<SparePart> getSpareParts() {
         return spareParts;
     }
-
     /**
      * Getter for the brand of a product.
      * @return a {@code String} specifying the brand of the product.
@@ -224,10 +229,10 @@ public class Product {
         return this.state;
     }
     /**
-     * Getter for the cost price of a product.
-     * If cost price is bigger or equals to 0 then.
-     * @return a {@code boolean} that is true specifying the cost price of the product.
-     * If the cost price is less then 0 then @return a {@code false}.
+     * Getter and setter for the cost price of a product.
+     * If cost price is bigger or equals to 0 then @return a true {@code boolean} that specifies the cost price
+     * of the product.
+     * If the cost price is less then 0 then @return a false {@code boolean}.
      */
     public boolean setCostPrice(double costPrice) {
         if (costPrice >= 0) {
@@ -238,56 +243,86 @@ public class Product {
             return false;
 
         }
-
     }
     /**
-     * Initializes a newly created {@code Repair} object with the given {@code Product} object.
-     * The {@code RepairState} is set to {@code ON_GOING} and the start date is set to the current date.
-     * The {@link ProductState} enum for the provided {@code Product} is set to {@code IN_REPAIR}.
-     * @param product, a {@link Product} object which the repair will be started for.
+     * Setter for the state of the product.
+     * @param state, a {@link ProductState} specifying the state of the product.
      */
     public void setState(ProductState state) {
         this.state = state;
     }
-
+    /**
+     * Setter for the model of the product.
+     * @param model, a {@code String} specifying the model of the product.
+     */
     public void setModel(String model) {
         this.model = model;
     }
-
+    /**
+     * Setter for the specifications of the product.
+     * @param specification, a {@code String} specifying the specification of the product.
+     */
     public void setSpecification(String specification) {
         this.specification = specification;
     }
-
+    /**
+     * Setter for the specifications of the product.
+     * @param brand, a {@code String} specifying the brand of the product.
+     */
     public void setBrand(String brand) {
         this.brand = brand;
     }
-
+    /**
+     * Setter for the specifications of the product.
+     * @param category, an enum from {@link Category} specifying the category of the product.
+     */
     public void setCategory(Category category) {
         this.category = category;
     }
-
+    /**
+     * Setter for the specifications of the product.
+     * @param salesPrice, a {@code double} specifying the brand of the product.
+     */
     public void setSalesPrice(double salesPrice) {
         this.salesPrice = salesPrice;
     }
-
+    /**
+     * Setter for the specifications of the product.
+     * @param name, a {@code String} specifying the name of the product.
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     * Setter for the specifications of the product.
+     * @param serialNumber, a {@code String} specifying the serialnumber of the product.
+     */
     public void setSerialnumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
-    
+    /**
+     * Setter for the productID of the product.
+     * @param productId, a {@code String} specifying the productID of the product.
+     */
     public void setProductId(String productId) {
         this.productId = productId;
     }
-
+    /**
+     * Getter for the productID of a product.
+     * @return a {@code String} specifying the productID of the product.
+     */
     public String getProductId() {return productId;}
-
+    /**
+     * Getter for the defective comment of a product.
+     * @return a {@code String} specifying the defective comment of the product.
+     */
     public String getDefectiveComment() {
         return defectiveComment;
     }
-
+    /**
+     * Setter for the defective comment of the product.
+     * @param defectiveComment, a {@code String} detailing the defects of the product.
+     */
     public void setDefectiveComment(String defectiveComment) {
         this.defectiveComment = defectiveComment;
     }

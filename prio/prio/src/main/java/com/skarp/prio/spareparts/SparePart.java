@@ -10,32 +10,40 @@ import java.util.Date;
 public class SparePart {
     
     @Id
-    private String part_id;        // Internal ID use
-    private String name;        // Brand-Category-Model-Year-Grade-Type
-    private SparePartType type;        // Ex: Battery, Screen
-    private String model;       // Ex: Pro, E480
-    private String modelYear;   // 2016
-    private String brand;       // Apple, Lenovo Todo: Decide whether this should be String or Category
-    private Category category;    // Smartphone (and iPhone), Laptop, MacBook
-    private Date addedDate;
-
-    private double costPrice;
-
-
-    private SparePartState state;
+    private String part_id;         // Internal ID use
+    protected String name;          // Brand-Category-Model-Year-Grade-Type
+    private String brand;           // Apple, Lenovo Todo: Decide whether this should be String or Category
+    private Category category;      // Smartphone (and iPhone), Laptop, MacBook
+    private String model;           // Ex: Pro, E480
+    private String modelYear;       // 2016
+    private SparePartType type;     // Ex: Battery, Screen
+    private Date addedDate;         // Date of creation
+    private double costPrice;       // Cost price
+    private SparePartState state;   // AVAILABLE, RESERVED, CONSUMED, ON_ORDER, INCOMING, MARKED_FUNCTIONAL
 
     public SparePart(String brand, Category category, String model, String modelYear, SparePartType type, double costPrice) {
-        this.name = brand+" "+category+" "+model+"-"+modelYear+": "+"-"+type;
+        this.name = this.setDisplayName(brand, category, model, modelYear, type);
         this.brand = brand;
         this.category = category;
         this.model = model;
-        this.modelYear = modelYear;
+        this.modelYear = modelYear != null ?  modelYear : "";
         this.type = type;
         this.costPrice = costPrice;
         this.addedDate = new Date();
     }
 
+    public String setDisplayName(String brand, Category category, String model, String modelYear, SparePartType type) {
 
+        String displayName = "";
+
+        if (brand != null){displayName = displayName.concat(brand + " ");}
+        if (category != null){displayName = displayName.concat(category + " ");}
+        if (model != null){displayName = displayName.concat(model + " ");}
+        if (modelYear != null){displayName = displayName.concat(modelYear + " ");}
+        if (type != null){displayName = displayName.concat(type.toString());}
+
+        return displayName;
+    }
     public String getPart_id() {
         return part_id;
     }

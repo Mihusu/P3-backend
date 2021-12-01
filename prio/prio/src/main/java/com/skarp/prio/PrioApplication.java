@@ -14,6 +14,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.Instant;
+
 @SpringBootApplication
 public class PrioApplication implements CommandLineRunner {
 
@@ -39,6 +41,7 @@ public class PrioApplication implements CommandLineRunner {
 		//productRepository.deleteAll(); // Please don't leave this active after testing
 		//sparePartRepository.deleteAll();
 		//repairRepository.deleteAll();
+		System.out.println(Instant.now());
 
 	}
 }

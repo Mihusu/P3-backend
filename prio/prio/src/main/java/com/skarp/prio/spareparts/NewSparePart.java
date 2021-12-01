@@ -8,11 +8,12 @@ public class NewSparePart extends SparePart{
 
     private String location;    // Workshop location
     private String SKU;         // stock keeping unit
-    private Grade grade;        // OEM, slightly used
+    private Grade grade;        // OEM, ORIGINAL, A
 
     public NewSparePart(String brand, Category category, String model, String modelYear, Grade grade, SparePartType type, double costPrice) {
         super(brand, category, model, modelYear, type, costPrice);
         this.grade = grade;
+        name = name.concat(grade.toString()); // Todo: may need super.name, awaiting test
     }
 
     public String getLocation(){return this.location;}

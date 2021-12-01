@@ -11,6 +11,7 @@ public class WriteOffTicket {
 
     @Id
     private String id;
+    private Product product;
     private String productId;       // Id of product for write-off
     private String reason;          //Reason for making the write-off
     private String technicianName;  // name of technician initiating the write-off
@@ -20,6 +21,7 @@ public class WriteOffTicket {
     //private String approvedByManagerName;
 
     public WriteOffTicket(Product product, String technicianName){
+        this.product = product;
         this.productId = product.getProductId();
         this.technicianName = technicianName;
         this.creationDate = new Date();
@@ -46,5 +48,9 @@ public class WriteOffTicket {
 
     public String getId() {
         return id;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 }

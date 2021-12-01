@@ -64,8 +64,8 @@ public class ProductController {
     public ResponseEntity<?> getProductsByID(@PathVariable String id) {
 
         try {
-            if (!repository.findById(id).isPresent()) {
-                String msg = "Repair not found with id: " + id;
+            if (repository.findById(id).isEmpty()) {
+                String msg = "Repair not found with id: " + id; // Todo: get some meatballs for this juicy copy-pasta :P
                 throw new NoSuchElementException(msg);
             }
 

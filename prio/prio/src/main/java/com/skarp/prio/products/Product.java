@@ -100,13 +100,9 @@ public class Product {
      * Initializes a newly created {@code Product} object.
      * It contains the following information about the product:
      * productId, brand, category, model, year, specification, sales price, cost price.
-<<<<<<< HEAD
      * The {@link ProductState} is set to {@code DEFECTIVE}.
      * @param ???, a {@code ???} containing ???.
-=======
-     * {@param name}, a {@code String} object containing the name of the student. // Todo: student? check comments for more students
->>>>>>> f52fd3825d3004fc45d3bb0cb27d2c04ce71d603
-     */
+    */
     // Seems it doesn't need this @PersistenceConstructor even though it has a no-arg constructor
     public Product(String productId, String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;
@@ -122,28 +118,20 @@ public class Product {
         this.state = ProductState.DEFECTIVE;
     }
     /**
-<<<<<<< HEAD
-     * Getter for the ID of a product.
-     * @return a {@code LocalDate} specifying the ID of the product.
+     * Getter for the date product added to warehouse.
+     * @return a {@code LocalDate} specifying the date product added to warehouse.
      */
-
-    public Product(){
-        this.dateAdded = LocalDate.now();
-        this.year = null;
-    }
-
     public LocalDate getDateAdded(){
         return this.dateAdded;
     }
     /**
      * Setter for the date product added to warehouse.
      * date product added to warehouse is set to current date.
-     * @param dateAdded, a {@code } specifying the state of the product.
+     * @param dateAdded, a {@code LocalDate} specifying the current date.
      */
     public void setDateAdded(LocalDate dateAdded){
         this.dateAdded = LocalDate.now();
     }
-
     /**
      * Getter for the ID of a product.
      * @return a {@code String} specifying the ID of the product.
@@ -198,11 +186,13 @@ public class Product {
     public boolean addSparePart(SparePart sp) {
         return this.spareParts.add(sp);
     }
-
+    /**
+     * Adds id of the functional spare part(s) of a product.
+     * @return a {@code ArrayList} containing spare parts within the product.
+     */
     public ArrayList<SparePart> getSpareParts() {
         return spareParts;
     }
-
     /**
      * Getter for the brand of a product.
      * @return a {@code String} specifying the brand of the product.
@@ -253,7 +243,6 @@ public class Product {
             return false;
 
         }
-
     }
     /**
      * Setter for the state of the product.

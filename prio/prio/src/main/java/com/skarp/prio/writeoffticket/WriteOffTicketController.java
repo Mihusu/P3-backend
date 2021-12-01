@@ -1,21 +1,13 @@
 package com.skarp.prio.writeoffticket;
 
-import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
-import com.skarp.prio.products.ProductState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -40,19 +32,20 @@ public class WriteOffTicketController {
     private static int writeoffs = ThreadLocalRandom.current().nextInt(0,200); // Todo: find out what this is used for
 
     @GetMapping("/writeoffs")
-    public List<WriteOffTicket> writeOffTickets(@RequestParam(value = "brand") String brand,
-                                                @RequestParam(value = "category") String category) {
+    public List<WriteOffTicket> getAllWriteOffTickets(/*@RequestParam(value = "brand") String brand,
+                                                @RequestParam(value = "category") String category*/) {
 
-        List<WriteOffTicket> result = operations.query(WriteOffTicket.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
-        return result;
+        //List<WriteOffTicket> result = operations.query(WriteOffTicket.class).matching(query(where("brand").is(brand).and("category").is(category))).all();
+        return writeOffTicketService.getAllWriteOffTickets();
+       // return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(value = "/writeoffs/create", consumes = "application/json")
     public ResponseEntity<?> createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, @RequestParam(value = "prod_id") String prod_id, @RequestParam(value = "tech_id") String tech_id)
     {
         try {
-            System.out.println(woForm.reason);
-            System.out.println(woForm.markedParts);
+            System.out.println(woForm.getReason());
+            System.out.println(woForm.getMarkedParts());
 
             System.out.println("Before creating WOT");
             writeOffTicketService.createWriteOffTicket(woForm, prod_id, tech_id);

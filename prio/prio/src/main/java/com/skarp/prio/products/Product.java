@@ -2,6 +2,8 @@ package com.skarp.prio.products;
 
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -20,8 +22,8 @@ import java.util.ArrayList;
  *  product are not mutable.
  *  The date added to warehouse, the current state of the product, the cost price of the product and the defective
  *  comment added to the product are mutable.
- *  The products category is defined according to the enum {@link Category}.
- *  The products state is defined according to the enum {@link ProductState}.
+ *  The product's category is defined according to the enum {@link Category}.
+ *  The product's state is defined according to the enum {@link ProductState}.
  *  <p>
  *
  * This is an example of the creation of a {@code Product} object.
@@ -56,7 +58,7 @@ public class Product {
     /** Contains the id of the product*/
     @Id
     private String id;
-    /** Array contains the sparepart(s) within the product*/
+    /** Array contains the spare part(s) within the product*/
     private ArrayList<SparePart> spareParts = new ArrayList<>();
     /** Contains in store product ID*/
     private String productId;       // In store product ID
@@ -66,7 +68,7 @@ public class Product {
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     /** Contains year product was produced*/
     private String year;            // 2016
-    /** Contains braind of product*/
+    /** Contains brand of product*/
     private String brand;           // Apple, Lenovo
     /** Contains category of product*/
     private Category category;      // Smartphone (and iPhone), Laptop, MacBook
@@ -99,6 +101,7 @@ public class Product {
      * productId, brand, category, model, year, specification, sales price, cost price.
      * {@param name}, a {@code String} object containing the name of the student. // Todo: student? check comments for more students
      */
+    // Seems it doesn't need this @PersistenceConstructor even though it has a no-arg constructor
     public Product(String productId, String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
         this.name = brand + " " + category + " " + model + " " + year + " " + specification;
         this.productId = productId;
@@ -115,7 +118,7 @@ public class Product {
     /**
      * Initializes a newly created {@code Product} object. Information
      * about the age, the city and the university is not provided.
-     * @param name, a {@code String} object containing the name of the student.
+     * {@param name}, a {@code String} object containing the name of the student.
      */
     public Product(){
         this.dateAdded = LocalDate.now();
@@ -173,13 +176,17 @@ public class Product {
      */
     public double getProfitMargin(){return (1 - ( this.costPrice / this.salesPrice)) * 100;}
     /**
-     * Getter for the sparepart(s) of a product.
-     * @return a {@code boolean} specifying if a sparepart is found.
-     * The sparepart is then added to sparepart array list.
+     * Adds id of the functional spare part(s) of a product.
+     * @return a {@code boolean} specifying if a spare part is successfully added.
      */
     public boolean addSparePart(SparePart sp) {
         return this.spareParts.add(sp);
     }
+
+    public ArrayList<SparePart> getSpareParts() {
+        return spareParts;
+    }
+
     /**
      * Getter for the brand of a product.
      * @return a {@code String} specifying the brand of the product.

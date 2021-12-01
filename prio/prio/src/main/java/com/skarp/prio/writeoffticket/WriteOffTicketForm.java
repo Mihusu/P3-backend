@@ -1,13 +1,11 @@
 package com.skarp.prio.writeoffticket;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class WriteOffTicketForm {
 
-    String reason;
-    List<String> markedParts;
+    private String reason;
+    private List<String> markedParts;
 
     public String getReason() {
         return reason;

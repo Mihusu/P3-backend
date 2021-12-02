@@ -1,14 +1,10 @@
 package com.skarp.prio;
 
-import com.skarp.prio.products.Category;
-import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
-import com.skarp.prio.repairs.Repair;
 import com.skarp.prio.repairs.RepairRepository;
-import com.skarp.prio.spareparts.Enums.Grade;
-import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
-import com.skarp.prio.spareparts.UsedSparePart;
+import com.skarp.prio.user.User;
+import com.skarp.prio.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,6 +24,9 @@ public class PrioApplication implements CommandLineRunner {
 	@Autowired
 	private RepairRepository repairRepository;
 
+	@Autowired
+	private UserRepository userRepository;
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(PrioApplication.class, args);
@@ -42,6 +41,8 @@ public class PrioApplication implements CommandLineRunner {
 		//sparePartRepository.deleteAll();
 		//repairRepository.deleteAll();
 		System.out.println(Instant.now());
-
+		userRepository.deleteAll();
+		User skarp = new User("Prof. Dr. Skarp","VerySkarp");
+		userRepository.save(skarp);
 	}
 }

@@ -129,6 +129,20 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/{productId}/sparepart_types")
+    public ResponseEntity<?> getCompatibleTypes(@PathVariable String productId) {
+
+        Optional<Product> product = repository.findById(productId);
+
+        if (product.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Product productModel = product.get();
+
+        List<SparePartType> sparePartTypes = CompatibleSparePartTypeMap.conversionMap.get(productModel.getCategory());
+
+        return new ResponseEntity<>(sparePartTypes, HttpStatus.OK);
+    }
 
     @PostMapping("/products/file")
     public ResponseEntity<Object> uploadProducts(@RequestParam("File") MultipartFile multipart) throws IOException {
@@ -153,19 +167,45 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/products/{productId}/sparepart_types")
-    public ResponseEntity<?> getCompatibleTypes(@PathVariable String productId) {
+    @PostMapping("/products/")
+    public  ResponseEntity<?> uploadProduct(
+            @RequestParam("product_id") String productId,
+            @RequestParam("brand") String brand,
+            @RequestParam("model") String model,
+            @RequestParam("specification") String specification,
+            @RequestParam("cost_price") Double costPrice,
+            @RequestParam("sale_price") Double salePrice,
+            @RequestParam("category") String category,
+            @RequestParam("comment") String comment
+    ) {
+        System.out.println("Ramt");
+        Product product = new Product();
+        product.setName(brand +" "+ category +" "+ model +" "+ specification);
+        product.setProductId(productId);
+        product.setBrand(brand);
+        product.setModel(model);
+        product.setSpecification(specification);
+        product.setCostPrice(costPrice);
+        product.setSalesPrice(salePrice);
+        product.setDefectiveComment(comment);
 
-        Optional<Product> product = repository.findById(productId);
+        switch (category.trim().toLowerCase()) { //TODO: Make conversion from string to enum with valueOf
+            case "iphone" -> product.setCategory(Category.IPHONE);
+            case "macbook" -> product.setCategory(Category.MACBOOK);
+            case "ipad" -> product.setCategory(Category.IPAD);
+            case "laptop" -> product.setCategory(Category.LAPTOP);
+            case "smartphone" -> product.setCategory(Category.SMARTPHONE);
+            case "tablet" -> product.setCategory(Category.TABLET);
+        }
 
-        if (product.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Product productModel = product.get();
-
-        List<SparePartType> sparePartTypes = CompatibleSparePartTypeMap.conversionMap.get(productModel.getCategory());
-
-        return new ResponseEntity<>(sparePartTypes, HttpStatus.OK);
+        try {
+            repository.save(product);
+            System.out.println(product.toString());
+            return new ResponseEntity<>("Product created:"+product.getId(), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.EXPECTATION_FAILED);
+        }
     }
+
 }
 

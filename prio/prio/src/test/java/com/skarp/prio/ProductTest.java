@@ -64,52 +64,6 @@ public class ProductTest {
     }
 
     @Test
-    public void testCanAddSparePart() {
-
-        Product phone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 2000);
-        SparePart iphone_battery = new UsedSparePart(iphone.getProductId(), iphone.getBrand(), iphone.getCategory(),iphone.getModel(), iphone.getYear(), SparePartType.BATTERY, 200);
-
-        assertTrue(iphone.addSparePart(iphone_battery));
-
-    }
-
-    @Test
-    public void testStateAfterWriteOff(){
-        Technician technician = new Technician("Jakob", "MacBook");
-        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician.getName());
-
-        assertEquals(ProductState.IN_WRITEOFF, iphone.getState());
-    }
-
-    @Test
-    public void testStateAfterWriteOffDecline() {
-        Technician technician = new Technician("Jakob", "MacBook");
-        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician.getName());
-
-        // Todo: reimplement this test when the decline method is working --- testTicket.decline();
-
-        // assertEquals(ProductState.DEFECTIVE, iphone.getState());
-    }
-
-    @Test
-    public void testStateAfterWriteOffApproved() {
-        Technician technician = new Technician("Jakob", "MacBook");
-        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician.getName());
-
-        // Todo: reimplement this test when the decline method is working --- testTicket.approve();
-
-        // assertEquals(ProductState.WRITTEN_OFF, iphone.getState());
-    }
-
-    @Test
-    public void testStateAfterRepairStarted() {
-
-        Repair iphone_repair = new Repair(iphone);
-
-        assertEquals(ProductState.IN_REPAIR, iphone.getState());
-    }
-
-    @Test
     public void testStorageTime(){
         Product Lenovo = new Product("somenumber","Lenovo", Category.LAPTOP, "TI", "2016", "8gb RAM", 3000, 500);
         Lenovo.getStorageTime();

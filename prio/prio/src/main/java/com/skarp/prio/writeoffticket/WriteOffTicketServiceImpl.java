@@ -32,7 +32,7 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
     SparePartRepository sparePartRepository;
 
     @Override
-    public void createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, String prod_id, String tech_id) throws Exception {
+    public WriteOffTicket createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, String prod_id, String tech_id) {
         System.out.println("about to findById("+prod_id+")");
         Optional<Product> DBproduct = productRepository.findById(prod_id);
 
@@ -70,7 +70,17 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
     }
 
     @Override
-    public void approveWriteOffTicket(String id) throws Exception {
+    public WriteOffTicket getWriteOffTicketById(String woId) {
+
+        Optional<WriteOffTicket> woTicket = writeOffTicketRepository.findById(woId);
+        if (woTicket.isPresent()) {
+            return woTicket.get();
+        }
+        throw new NoSuchElementException("Could not find writeoff-ticket");
+    }
+
+    @Override
+    public void approveWriteOffTicket(String id) {
         Optional<WriteOffTicket> DBticket = writeOffTicketRepository.findById(id);
 
         if (DBticket.isEmpty())
@@ -79,7 +89,7 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         WriteOffTicket ticket = DBticket.get();
 
         if (ticket.getState() != WriteOffTicketState.AWAITING)
-            throw new Exception("Write-off ticket is not awaiting");
+            throw new RuntimeException("Write-off ticket is not awaiting");
 
         Product product = productRepository.findById(ticket.getProduct().getId()).orElseThrow();
         System.out.println(product);
@@ -101,12 +111,12 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
     }
 
     @Override
-    public void disApproveWriteOffTicket(String id) throws Exception {
+    public void disApproveWriteOffTicket(String id) {
 
         WriteOffTicket ticket = writeOffTicketRepository.findById(id).orElseThrow();
 
         if (ticket.getState() != WriteOffTicketState.AWAITING)
-            throw new Exception("Write-off ticket is not awaiting");
+            throw new RuntimeException("Write-off ticket is not awaiting");
 
         Product product = productRepository.findByProductId(ticket.getProduct().getProductId());
 
@@ -124,10 +134,8 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         System.out.println("product.getSpareParts() = " + ticket.getSpareParts());
 
         System.out.println("clearing product part array");
-        product.getSpareParts().clear();
+        ticket.getSpareParts().clear();
 
-        System.out.println("partList = " + partList);
-        System.out.println("product.getSpareParts() = " + product.getSpareParts());
 
         /*
         for (SparePart part : partList) {

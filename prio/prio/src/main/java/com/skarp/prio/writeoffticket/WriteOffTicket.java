@@ -44,7 +44,7 @@ public class WriteOffTicket {
         return this.approvalDate;
     }
 
-    public void addReason(String reason) {
+    public void setReason(String reason) {
         this.reason = reason;
     }
 
@@ -55,23 +55,24 @@ public class WriteOffTicket {
     public Product getProduct() {
         return this.product;
     }
-/*
-    public List<SparePart> getSparePartList() {
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setTechnicianName(String tech_id) {
+        this.technicianName = tech_id;
+    }
+
+    public String getTechnicianName() {
+        return technicianName;
+    }
+
+    public void addSparePart(SparePart sparePart) {
+        this.sparePartList.add(sparePart);
+    }
+
+    public List<SparePart> getSpareParts() {
         return sparePartList;
-
     }
-
-    public void setSparePartList(List<SparePart> sparePartList) {
-        this.SparePartList = sparePartList;
-    }
-
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void addSparePart(SparePart sparePart) {}
-
- */
-
 }

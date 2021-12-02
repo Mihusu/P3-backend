@@ -16,30 +16,13 @@ public class ProductParser {
         parsedProduct.setCostPrice(Double.parseDouble(line_split[8].replace(",",".")));
         parsedProduct.setDefectiveComment("Den virker ikke... :)");
 
-        switch (line_split[5].trim().toLowerCase()) { //TODO: Make conversion from string to enum with valueOf
-
-            case "iphone":
-                parsedProduct.setCategory(Category.IPHONE);
-                break;
-
-            case "macbook":
-                parsedProduct.setCategory(Category.MACBOOK);
-                break;
-
-            case "ipad":
-                parsedProduct.setCategory(Category.IPAD);
-                break;
-
-            case "laptop":
-                parsedProduct.setCategory(Category.LAPTOP);
-                break;
-
-            case "smartphone":
-                parsedProduct.setCategory(Category.SMARTPHONE);
-                break;
-
-            case "tablet":
-                parsedProduct.setCategory(Category.TABLET);
+        switch (line_split[5].trim().toLowerCase()) { //TODO: Make conversion from string to enum with valueOf½
+            case "iphone" -> parsedProduct.setCategory(Category.IPHONE);
+            case "macbook" -> parsedProduct.setCategory(Category.MACBOOK);
+            case "ipad" -> parsedProduct.setCategory(Category.IPAD);
+            case "laptop" -> parsedProduct.setCategory(Category.LAPTOP);
+            case "smartphone" -> parsedProduct.setCategory(Category.SMARTPHONE);
+            case "tablet" -> parsedProduct.setCategory(Category.TABLET);
         }
 
         return parsedProduct;

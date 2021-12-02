@@ -39,6 +39,16 @@ public class WriteOffTicketController {
         return new ResponseEntity<>(writeOffTicketService.getAllWriteOffTickets(), HttpStatus.OK);
     }
 
+    @GetMapping("/writeoffs/{woId}")
+    public ResponseEntity<?> getWriteOffTicketById(@PathVariable String woId) {
+
+        try {
+            return new ResponseEntity<>(writeOffTicketService.getWriteOffTicketById(woId), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping(value = "/writeoffs/create", consumes = "application/json")
     public ResponseEntity<?> createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, @RequestParam(value = "prod_id") String prod_id, @RequestParam(value = "tech_id") String tech_id)
     {
@@ -51,7 +61,7 @@ public class WriteOffTicketController {
             return new ResponseEntity<>("Write-off created", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

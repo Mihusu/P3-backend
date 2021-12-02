@@ -33,7 +33,7 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
 
     @Override
     public WriteOffTicket createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, String prod_id, String tech_id) {
-        System.out.println("about to findById("+prod_id+")");
+
         Optional<Product> DBproduct = productRepository.findById(prod_id);
 
         if (DBproduct.isEmpty())
@@ -92,7 +92,7 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
             throw new RuntimeException("Write-off ticket is not awaiting");
 
         Product product = productRepository.findById(ticket.getProduct().getId()).orElseThrow();
-        System.out.println(product);
+
         List<SparePart> partList = ticket.getSpareParts();
 
         // update product cost price from added parts
@@ -118,33 +118,15 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         if (ticket.getState() != WriteOffTicketState.AWAITING)
             throw new RuntimeException("Write-off ticket is not awaiting");
 
-        Product product = productRepository.findByProductId(ticket.getProduct().getProductId());
+        Product product = productRepository.findById(ticket.getProduct().getId()).orElseThrow();
 
         product.setState(ProductState.DEFECTIVE);
         List<SparePart> partList = ticket.getSpareParts();
 
+        //Remove all spareparts that were marked functional
         sparePartRepository.deleteAll(partList);
-
-        System.out.println("partList = " + partList);
-        System.out.println("ticket.getSpareParts() = " + ticket.getSpareParts());
-
-        System.out.println("deleting parts from DB");
-        sparePartRepository.deleteAll(partList);
-        System.out.println("partList = " + partList);
-        System.out.println("product.getSpareParts() = " + ticket.getSpareParts());
-
-        System.out.println("clearing product part array");
         ticket.getSpareParts().clear();
 
-
-        /*
-        for (SparePart part : partList) {
-            // maybe not needed if already got the right part::: SparePart foundPart = sparePartRepository.findById(part.getPart_id()).orElseThrow();
-            // part.setState(SparePartState.AVAILABLE);
-            sparePartRepository.delete(part);
-        }
-
-         */
 
         productRepository.save(product);
         writeOffTicketRepository.delete(ticket);

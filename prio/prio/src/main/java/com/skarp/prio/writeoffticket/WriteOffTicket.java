@@ -2,15 +2,18 @@ package com.skarp.prio.writeoffticket;
 
 import com.skarp.prio.Technician;
 import com.skarp.prio.products.Product;
-import com.skarp.prio.products.ProductState;
+import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class WriteOffTicket {
 
     @Id
     private String id;
+    private List<SparePart> sparePartList = new ArrayList<>();
     private Product product;
     private String productId;       // Id of product for write-off
     private String reason;          //Reason for making the write-off
@@ -26,7 +29,6 @@ public class WriteOffTicket {
         this.technicianName = technicianName;
         this.creationDate = new Date();
         this.state = WriteOffTicketState.AWAITING;
-        product.setState(ProductState.IN_WRITEOFF);
     }
 
     public WriteOffTicketState getState() {
@@ -47,10 +49,29 @@ public class WriteOffTicket {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
+
+    public Product getProduct() {
+        return this.product;
+    }
+/*
+    public List<SparePart> getSparePartList() {
+        return sparePartList;
+
+    }
+
+    public void setSparePartList(List<SparePart> sparePartList) {
+        this.SparePartList = sparePartList;
+    }
+
 
     public Product getProduct() {
         return product;
     }
+
+    public void addSparePart(SparePart sparePart) {}
+
+ */
+
 }

@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * The {@code ProductController} overall aim is to find product and product information based on product repository
+ * The {@code ProductController} overall aim is to find products based on product information. through
+ * {@link ProductRepository}
  * information.
- * The {@code ProductController} has four essential functions.
+ * The {@code ProductController} achieves this through four essential functions.
  * 1. The {@code ProductController}  finds a list of parameter values from a product. These parameter values are bound
  * to the URL "/products".
  * 2. Creates a query that contains product information and finds products matching query information repository

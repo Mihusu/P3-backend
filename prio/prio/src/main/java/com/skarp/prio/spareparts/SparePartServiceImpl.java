@@ -1,8 +1,11 @@
 package com.skarp.prio.spareparts;
 
 import com.skarp.prio.products.Category;
+import com.skarp.prio.products.Product;
+import com.skarp.prio.repairs.Repair;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -20,6 +23,7 @@ public class SparePartServiceImpl implements SparePartService {
 
     @Autowired
     SparePartRepository sparePartRepository;
+
 
     @Override
     public List<SparePart> getSparePartList(Category category, String model, String year, String brand, SparePartState state) {
@@ -49,5 +53,25 @@ public class SparePartServiceImpl implements SparePartService {
         }
 
         return sparePartRepository.findById(id).get();
+    }
+
+    /**
+     * Gives back a sorted list of compatible & available sparepart types for a given repair
+     * @param repair The repair to get recommended spareparts from
+     * @return A list of compatible spareparts for the product under repair
+     */
+    @Override
+    public List<SparePart> getRecommendedSpareParts(Repair repair) {
+
+        Product product = repair.getProduct();
+
+        Query query = new Query();
+        if (product.getCategory() != null) {query.addCriteria(Criteria.where("category").is(product.getCategory()));}
+        if (product.getModel() != null) {query.addCriteria(Criteria.where("model").is(product.getModel()));}
+        if (product.getBrand() != null) {query.addCriteria(Criteria.where("brand").is(product.getBrand()));}
+        query.addCriteria(Criteria.where("state").is(SparePartState.AVAILABLE));
+        query.with(Sort.by(Sort.Direction.ASC, "type"));
+
+        return operations.find(query, SparePart.class);
     }
 }

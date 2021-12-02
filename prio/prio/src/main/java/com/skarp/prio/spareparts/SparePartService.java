@@ -1,6 +1,8 @@
 package com.skarp.prio.spareparts;
 
 import com.skarp.prio.products.Category;
+import com.skarp.prio.products.Product;
+import com.skarp.prio.repairs.Repair;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,4 +18,5 @@ public interface SparePartService {
                                      @RequestParam(required = false, value = "state") SparePartState state);
 
     SparePart getSparePartByID(@PathVariable(required = true, value = "id") String id);
+    List<SparePart> getRecommendedSpareParts(Repair repair);
 }

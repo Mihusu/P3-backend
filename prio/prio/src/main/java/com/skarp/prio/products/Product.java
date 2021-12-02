@@ -60,7 +60,7 @@ public class Product {
     @Id
     private String id;
     /** Array contains the spare part(s) within the product*/
-    private ArrayList<SparePart> spareParts = new ArrayList<>();
+    // private ArrayList<SparePart> spareParts = new ArrayList<>();
     /** Contains in store product ID*/
     private String productId;       // In store product ID
     /** Contains name of product*/
@@ -189,15 +189,20 @@ public class Product {
      * Adds a spare part(s) to a product.
      * @return a {@code boolean} specifying if a spare part is successfully added.
      */
+    /*
     public boolean addSparePart(SparePart sp) {
         return this.spareParts.add(sp);
     }
+
+     */
     /**
      * @return a {@code ArrayList} containing spare parts within the product.
      */
+    /*
     public ArrayList<SparePart> getSpareParts() {
         return spareParts;
     }
+     */
     /**
      * Getter for the brand of a product.
      * @return a {@code String} specifying the brand of the product.

@@ -9,6 +9,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * {@code RepairService} is the interface responsible for providing our {@link RepairController} with methods.
+ * The logic for these methods is then implemented in our {@link RepairServiceImpl} class.
+ *
+ * @author Team Skarp
+ * @see RepairController
+ * @see RepairServiceImpl
+ */
+
 public interface RepairService {
     public List<Repair>      getRepairList(@RequestParam(required = false, value = "sortBy") String sortBy, @RequestParam(required = false, value = "LIMIT") String limit);
     public URI               createRepair(@RequestParam(required = true, value = "prod_id") String prod_id, @RequestParam(required = false, value = "tech_id") String tech_id, UriComponentsBuilder uriComponentsBuilder);

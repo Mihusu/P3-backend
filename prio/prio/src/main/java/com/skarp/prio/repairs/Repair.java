@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
  * The {@code Repair} class represents a repair existing in the Priotool application, which Blue City uses to
  * manage repairs. A {@code Repair} object contains information about the objectId, which {@link Product} object
  * the repair is made for, what state the repair is currently in, when the repair was started, when the repair
- * was ended, the amount of time the repair spent in the paused state, the total repair time for the repair. As well as a list of the
- * spareparts used during the repair.
+ * was ended, the amount of time the repair spent in the paused state, the total repair time for the repair,
+ * as well as a list of the spareparts used during the repair.
  *
  * This is an example of the creation of a {@code Repair} object.
  *
@@ -248,6 +248,9 @@ public class Repair {
 
     /**
      * Setter for removing a sparepart which has been added to a repair.
+     * It uses the {@code stream} interface and creates a new {@code List<>} of spareparts, applying the {@code filter}
+     * method. For each object in the {@code List}, if the object is not equal to the {@code sparePart} given as
+     * the parameter, the spareparts are accumulated to the new {@code List} using the {@code collect} method.
      * @param sparePart, a {@link SparePart} object, specifying which sparepart to remove.
      */
     public void removeSparePart(SparePart sparePart) {

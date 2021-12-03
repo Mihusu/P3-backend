@@ -24,6 +24,11 @@ public class UsedSparePartTest {
         assertNotNull(battery.getOriginProductId());
     }
 
+    @Test
+    public void test() {
+
+    }
+
 
 }
 // good job :)

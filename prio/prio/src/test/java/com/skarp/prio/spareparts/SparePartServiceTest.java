@@ -3,6 +3,7 @@ package com.skarp.prio.spareparts;
 import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
+import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,14 +52,28 @@ public class SparePartServiceTest {
         spRepository.delete(testSp);
     }
 
+    // Test if getSparePartList() returns a part matching query
     @Test
     void getSparePartList() {
         Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
 
         SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), testProduct.getYear(), SparePartType.BATTERY, 200);
+        testSp.setState(SparePartState.AVAILABLE);
         testSp = spRepository.save(testSp);
 
+        // Perform query and compare the test part's stats with those of the first entry of the query's return object
+        List<SparePart> testList = spService.getSparePartList(null,"Apple", Category.IPHONE.toString(), "11 Pro", SparePartType.BATTERY.toString(), SparePartState.AVAILABLE.toString(), "costPrice" +
+          "");
+        assertFalse(testList.isEmpty());
+        assertEquals(testSp.getBrand(), testList.get(0).getBrand());
+        assertEquals(testSp.getCategory(), testList.get(0).getCategory());
+        assertEquals(testSp.getModel(), testList.get(0).getModel());
+        assertEquals(testSp.getType(), testList.get(0).getType());
+        assertEquals(testSp.getState(), testList.get(0).getState());
+        // assertEquals(testSp.getPart_id(), testList.get(testList.size()-1).getPart_id());
 
+        /* Remove after test completion */
+        spRepository.delete(testSp);
     }
 
     @Test

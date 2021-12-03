@@ -9,15 +9,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface SparePartService {
-
-    List<SparePart> getSparePartList(
+/*
+    List<SparePart> getSparePartList( Todo: why dese not necessary
+      @RequestParam(required = false, value = "brand") String brand,
       @RequestParam(required = false, value = "category") Category category,
       @RequestParam(required = false, value = "model") String model,
-      @RequestParam(required = false, value = "year") String year,
-      @RequestParam(required = false, value = "brand") String brand,
+      @RequestParam(required = false, value = "year") String modelYear,
       @RequestParam(required = false, value = "state") SparePartState state);
+*/
+    List<SparePart> getSparePartList(String name, String brand, String category, String model, String type, String state, String sortBy);
 
-    SparePart getSparePartByID(@PathVariable(required = true, value = "id") String id);
+    SparePart getSparePartByID(@PathVariable(value = "id") String id);
     List<SparePart> getRecommendedSpareParts(Repair repair);
 
     SparePart uploadSparePart(

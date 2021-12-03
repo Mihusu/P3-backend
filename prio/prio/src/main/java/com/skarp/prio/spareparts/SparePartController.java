@@ -1,6 +1,8 @@
 package com.skarp.prio.spareparts;
 
 import com.skarp.prio.products.Category;
+import com.skarp.prio.spareparts.Enums.SparePartState;
+import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -60,7 +62,26 @@ public class SparePartController {
         }
     }
 
-    @GetMapping("/spareparts") // Todo: find out if this is still used or should be changed to getSparePartList
+    @GetMapping("/spareparts")
+    public ResponseEntity<?> getSparePartList(@RequestParam(required = false, value="name") String name,
+                                              @RequestParam(required = false, value="brand") String brand,
+                                              @RequestParam(required = false, value="category") String category,
+                                              @RequestParam(required = false, value="model") String model,
+                                              @RequestParam(required = false, value="type") String type,
+                                              @RequestParam(required = false, value="state") String state,
+                                              @RequestParam(required = false, value="sortBy") String sortBy) {
+        // Feed parameters to part finder method
+        try {
+            return new ResponseEntity<>(sparePartService.getSparePartList(name, brand, category, model, type, state, sortBy), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
+    /* moved to service layer
+    @GetMapping("/sparepartsold") // Todo: find out if this is still used or should be changed to getSparePartList
     public List<SparePart> spareparts(
             @RequestParam(required = false, value="name") String name,
             @RequestParam(required = false, value="type") String type,
@@ -77,13 +98,13 @@ public class SparePartController {
 
         // Check for Params and add to Criteria
         if (name != null) {sparepartQuery.addCriteria(Criteria.where("name").regex(name));}
-        if (type != null) {sparepartQuery.addCriteria(Criteria.where("type").is(type));}
-        if (model != null) {sparepartQuery.addCriteria(Criteria.where("model").is(model));}
         if (brand != null) {sparepartQuery.addCriteria(Criteria.where("brand").is(brand));}
         if (category != null) {
             //Convert to enum type
             Category category1 = Category.valueOf(category.toUpperCase());
             sparepartQuery.addCriteria(Criteria.where("category").is(category1));}
+        if (model != null) {sparepartQuery.addCriteria(Criteria.where("model").is(model));}
+        if (type != null) {sparepartQuery.addCriteria(Criteria.where("type").is(type));}
         if (state != null) {sparepartQuery.addCriteria(Criteria.where("state").is(state));}
         if (sortBy != null) {sparepartQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
 
@@ -98,6 +119,7 @@ public class SparePartController {
         }
     }
 
+     */
 
 
     @GetMapping("/spareparts/{id}")

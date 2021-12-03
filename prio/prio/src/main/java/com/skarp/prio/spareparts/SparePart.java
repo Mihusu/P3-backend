@@ -32,6 +32,9 @@ public class SparePart {
         this.addedDate = new Date();
     }
 
+    public SparePart() {
+    }
+
     public String setDisplayName(String brand, Category category, String model, String modelYear, SparePartType type) {
 
         String displayName = "";
@@ -82,4 +85,39 @@ public class SparePart {
 
     public void setState(SparePartState state) {this.state = state;}
 
+    public void setPart_id(String part_id) {
+        this.part_id = part_id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setModelYear(String modelYear) {
+        this.modelYear = modelYear;
+    }
+
+    public void setType(SparePartType type) {
+        this.type = type;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
+    }
+
+    public void setCostPrice(double costPrice) {
+        this.costPrice = costPrice;
+    }
 }

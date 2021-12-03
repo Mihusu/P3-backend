@@ -9,7 +9,12 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -105,6 +110,20 @@ public class SparePartController {
         }
     }
 
+    @PostMapping("/spareparts/file")
+    public ResponseEntity<Object> uploadSpareParts(@RequestParam("File") MultipartFile multipart) {
+        if (!multipart.isEmpty()) {
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(
+                            new ByteArrayInputStream(multipart.getBytes())))) {
+                List<NewSparePart> sparePartList = reader.lines().map(SparePartParser::parse).toList();
 
-
+                sparePartRepository.saveAll(sparePartList);
+            } catch (IOException e) {
+                return new ResponseEntity<>("The uploaded file could not be read.",HttpStatus.EXPECTATION_FAILED);
+            }
+            return new ResponseEntity<>("The file uploaded successfully.",HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("The uploaded file was empty", HttpStatus.NO_CONTENT);
+        }
+    }
 }

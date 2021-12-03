@@ -17,9 +17,13 @@ public class NewSparePart extends SparePart{
         name = name.concat(" " + grade.toString()); // Todo: may need super.name, awaiting test
     }
 
+    public NewSparePart() {
+    }
+
     public String getLocation(){return this.location;}
     public String getSku(){return this.sku;}
     public void setLocation(String location){this.location = location;}
     public void setSku(String sku){this.sku = sku;}
+    public void setGrade(Grade grade) {this.grade = grade;}
 
 }

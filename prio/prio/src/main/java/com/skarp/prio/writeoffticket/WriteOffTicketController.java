@@ -67,11 +67,8 @@ public class WriteOffTicketController {
     }
 
     @GetMapping("/writeoffs/{id}/approve")
-    public ResponseEntity<?> approveWriteOffTicket(@RequestParam (value = "managerCode") String managerCode,
-                                                   @PathVariable String id) {
+    public ResponseEntity<?> approveWriteOffTicket(@PathVariable String id) {
         try {
-           // if (!Objects.equals(request, "approve")) throw new InvalidParameterException("Bad request parameter", null);
-            if (!Objects.equals(managerCode, "Bertan")) throw new IncorrectManagerCodeException ();
             writeOffTicketService.approveWriteOffTicket(id);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -80,10 +77,8 @@ public class WriteOffTicketController {
     }
 
     @GetMapping("/writeoffs/{id}/disapprove")
-    public ResponseEntity<?> disApproveWriteOffTicket(@RequestParam (value = "managerCode") String managerCode,
-                                                      @PathVariable String id) {
+    public ResponseEntity<?> disApproveWriteOffTicket(@PathVariable String id) {
         try {
-            if (!Objects.equals(managerCode, "Bertan")) throw new IncorrectManagerCodeException ();
             writeOffTicketService.disApproveWriteOffTicket(id);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

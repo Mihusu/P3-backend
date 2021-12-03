@@ -304,6 +304,9 @@ public class RepairServiceImpl implements RepairService {
                 List<SparePart> duplicates = repairModel.getAddedSpareParts()
                         .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0).toList();
 
+                if (repairModel.getState() != RepairState.ON_GOING) {
+                    throw new IllegalRepairOperationException("Sparepart can not be added while repair is: " + repairModel.getState());
+                }
                 if (duplicates.isEmpty()) {
                     sparePartModel.setState(SparePartState.RESERVED);
                     repairModel.addSparePart(sparePartModel);
@@ -335,6 +338,10 @@ public class RepairServiceImpl implements RepairService {
 
             Repair repairModel = repair.get();
             SparePart sparePartModel = sparePart.get();
+
+            if (repairModel.getState() != RepairState.ON_GOING) {
+                throw new IllegalRepairOperationException("Sparepart can not be removed while repair is: " + repairModel.getState());
+            }
 
             sparePartModel.setState(SparePartState.AVAILABLE);
             repairModel.removeSparePart(sparePartModel);

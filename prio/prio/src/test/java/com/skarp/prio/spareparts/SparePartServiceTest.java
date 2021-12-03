@@ -61,9 +61,9 @@ public class SparePartServiceTest {
         testSp.setState(SparePartState.AVAILABLE);
         testSp = spRepository.save(testSp);
 
+        System.out.println(Category.IPHONE);
         // Perform query and compare the test part's stats with those of the first entry of the query's return object
-        List<SparePart> testList = spService.getSparePartList(null,"Apple", Category.IPHONE.toString(), "11 Pro", SparePartType.BATTERY.toString(), SparePartState.AVAILABLE.toString(), "costPrice" +
-          "");
+        List<SparePart> testList = spService.getSparePartList(null,"Apple", Category.IPHONE.toString(), "11 Pro", SparePartType.BATTERY.toString(), SparePartState.AVAILABLE.toString(), "brand");
         assertFalse(testList.isEmpty());
         assertEquals(testSp.getBrand(), testList.get(0).getBrand());
         assertEquals(testSp.getCategory(), testList.get(0).getCategory());
@@ -73,7 +73,7 @@ public class SparePartServiceTest {
         // assertEquals(testSp.getPart_id(), testList.get(testList.size()-1).getPart_id());
 
         /* Remove after test completion */
-        spRepository.delete(testSp);
+       // spRepository.delete(testSp);
     }
 
     @Test

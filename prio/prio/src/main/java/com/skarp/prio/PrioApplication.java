@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
 @SpringBootApplication
 public class PrioApplication implements CommandLineRunner {
@@ -38,5 +40,7 @@ public class PrioApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
+
+		System.out.println("Instant: " + Instant.now() + " LocalDate: " + LocalDate.now() + " Date: " + new Date());
 	}
 }

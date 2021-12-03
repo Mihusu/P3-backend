@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 
-public class ProductRepositoryImpl implements ProductRepositoryCustom  {
+public class ProductRepositoryImpl implements ProductRepositoryService {
 
     @Autowired
     MongoOperations operations;

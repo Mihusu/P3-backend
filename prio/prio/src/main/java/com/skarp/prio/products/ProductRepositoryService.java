@@ -1,6 +1,6 @@
 package com.skarp.prio.products;
 
-public interface ProductRepositoryCustom {
+public interface ProductRepositoryService {
 
     Product findByProductID(String productId);
 }

@@ -8,13 +8,10 @@ import com.skarp.prio.spareparts.Enums.SparePartType;
 import com.skarp.prio.spareparts.NewSparePart;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
-import com.skarp.prio.spareparts.SparePartService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.awt.*;
 import java.net.URI;
@@ -57,24 +54,12 @@ public class RepairTest {
         assertEquals(RepairState.ON_GOING, repair.getState());
     }
 
-
     @Test
     public void hasDate() {
 
         Repair repair = new Repair(iphone);
 
         assertNotNull(repair.getStartDate());
-    }
-
-    @Test
-    public void canAddSparePart() {
-
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "skunumber");
-        Repair repair = new Repair(iphone);
-
-        repair.addSparePart(battery);
-
-        assertEquals(1, repair.getAddedSpareParts().size());
     }
 
     @Test
@@ -137,6 +122,9 @@ public class RepairTest {
 
     }
 
+    /**
+     * Skal måske slettes. Mangler second opinion om det kan implementeres ordentligt
+     */
     @Test
     public void whenRepairIsCreated_ProductIsUnderRepair() {
         //Get back the saved repair to retrieve ID
@@ -243,11 +231,9 @@ public class RepairTest {
         Repair savedRepair = repairRepository.save(repair);
         SparePart savedSP = sparePartRepository.save(battery);
 
-        System.out.println(battery.getState());
         //Service under test for adding spare part
         repairService.finishRepair(savedRepair.getId());
 
-        System.out.println(battery.getState());
         SparePart updateSparePart = sparePartRepository.findById(savedSP.getPart_id()).get();
 
         assertEquals(SparePartState.CONSUMED, updateSparePart.getState());

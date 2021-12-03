@@ -3,6 +3,7 @@ package com.skarp.prio;
 import com.skarp.prio.products.ProductRepository;
 import com.skarp.prio.repairs.RepairRepository;
 import com.skarp.prio.spareparts.SparePartRepository;
+import com.skarp.prio.user.SHA3;
 import com.skarp.prio.user.User;
 import com.skarp.prio.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,6 @@ public class PrioApplication implements CommandLineRunner {
 		//sparePartRepository.deleteAll();
 		//repairRepository.deleteAll();
 		System.out.println(Instant.now());
-		userRepository.deleteAll();
-		User skarp = new User("Prof. Dr. Skarp","VerySkarp");
-		userRepository.save(skarp);
+
 	}
 }

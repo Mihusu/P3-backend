@@ -53,8 +53,9 @@ public class UserController {
 
             if (requestUser != null) {
                 // Check user password against input string
-                if (requestUser.checkPassword(SHA3.hashPassword(password))) {
-                    return new ResponseEntity<>(requestUser.getId(), HttpStatus.ACCEPTED);
+                if (requestUser.checkPassword(password)) {
+                    requestUser.compoundCounter();
+                    return new ResponseEntity<>(SHA3.hashPassword(requestUser.getCounter()+requestUser.getId()), HttpStatus.ACCEPTED);
                 } else {
                     return new ResponseEntity<>("Password didn't match ", HttpStatus.FORBIDDEN);
                 }

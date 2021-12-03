@@ -17,18 +17,35 @@ public class User {
     private long employmentTime; //in days
     private UserState state;
     private UserPrivilege userPrivilege;
+    private int counter;
 
     public User(String username, String password){
-        this.state = UserState.Idle;
-        this.dateRegistered = LocalDate.now();
-        this.userPrivilege = UserPrivilege.VIEW_ONLY;
-        this.username = username;
-        this.initials = generateInitials(username);
-        this.password = SHA3.hashPassword(password);
+        System.out.println(this.counter);
+        if(!(SHA3.hashPassword("").split("").length == password.split("").length)){
+            this.password = SHA3.hashPassword(password);
+            this.state = UserState.IDLE;
+            this.dateRegistered = LocalDate.now();
+            this.userPrivilege = UserPrivilege.VIEW_ONLY;
+            this.username = username;
+            this.initials = generateInitials(username);
+            this.counter = 0;
+        }else{
+            this.password = password;
+            this.username = username;
+        }
+
+
     }
 
     public String getId() {
         return id;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+    public void compoundCounter(){
+        this.counter++;
     }
 
     public String generateInitials(String username){
@@ -49,7 +66,7 @@ public class User {
             return true;
         }else return false;
     }
-    public String getPassword(){return password;}
+    public String getPassword(){return this.password;}
     public String getUsername() {
         return username;
     }
@@ -72,6 +89,10 @@ public class User {
 
     public UserState getState() {
         return state;
+    }
+
+    public void setState(UserState state) {
+        this.state = state;
     }
 
     public UserPrivilege getUserPrivilege() {

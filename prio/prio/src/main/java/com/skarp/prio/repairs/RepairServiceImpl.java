@@ -7,6 +7,7 @@ import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -75,7 +76,7 @@ public class RepairServiceImpl implements RepairService {
     public List<Repair> getRepairList(String sortBy, String LIMIT) {
 
         Query repairQuery = new Query();
-
+        if (sortBy != null) {repairQuery.with(Sort.by(Sort.Direction.DESC, sortBy));}
         return operations.find(repairQuery, Repair.class);
 
     }

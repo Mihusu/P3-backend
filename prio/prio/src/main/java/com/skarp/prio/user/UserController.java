@@ -55,7 +55,10 @@ public class UserController {
                 // Check user password against input string
                 if (requestUser.checkPassword(password)) {
                     requestUser.compoundCounter();
-                    return new ResponseEntity<>(SHA3.hashPassword(requestUser.getCounter()+requestUser.getId()), HttpStatus.ACCEPTED);
+                    String cookie = SHA3.hashPassword(requestUser.getCounter()+requestUser.getId());
+                    requestUser.setSessionCookie(cookie);
+                    repository.save(requestUser);
+                    return new ResponseEntity<>(cookie, HttpStatus.ACCEPTED);
                 } else {
                     return new ResponseEntity<>("Password didn't match ", HttpStatus.FORBIDDEN);
                 }

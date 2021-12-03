@@ -64,26 +64,6 @@ public class ProductTest {
     }
 
     @Test
-    public void testStateAfterWriteOffDecline() {
-        Technician technician = new Technician("Jakob", "MacBook");
-        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician.getName());
-
-        // Todo: reimplement this test when the decline method is working --- testTicket.decline();
-
-        // assertEquals(ProductState.DEFECTIVE, iphone.getState());
-    }
-
-    @Test
-    public void testStateAfterWriteOffApproved() {
-        Technician technician = new Technician("Jakob", "MacBook");
-        WriteOffTicket testTicket = new WriteOffTicket(iphone, technician.getName());
-
-        // Todo: reimplement this test when the decline method is working --- testTicket.approve();
-
-        // assertEquals(ProductState.WRITTEN_OFF, iphone.getState());
-    }
-
-    @Test
     public void testStorageTime(){
         Product Lenovo = new Product("somenumber","Lenovo", Category.LAPTOP, "TI", "2016", "8gb RAM", 3000, 500);
         Lenovo.getStorageTime();

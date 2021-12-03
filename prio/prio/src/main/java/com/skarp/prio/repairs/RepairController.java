@@ -4,6 +4,7 @@ import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
+import com.skarp.prio.spareparts.SparePartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -20,6 +21,7 @@ import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -27,6 +29,9 @@ public class RepairController {
 
     @Autowired
     RepairService repairService;
+
+    @Autowired
+    SparePartService sparePartService;
 
     @Autowired
     RepairRepository repairRepository;
@@ -135,6 +140,17 @@ public class RepairController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/repairs/{repairId}/spareparts")
+    public ResponseEntity<?> getCompatibleSpareParts(@PathVariable String repairId)
+    {
+        Optional<Repair> repair = repairRepository.findById(repairId);
+        if (repair.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(sparePartService.getRecommendedSpareParts(repair.get()), HttpStatus.OK);
     }
 
     @PostMapping("/repairs/{repairId}/add/{sparepartId}")

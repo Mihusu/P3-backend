@@ -178,7 +178,6 @@ public class ProductController {
             @RequestParam("category") String category,
             @RequestParam("comment") String comment
     ) {
-        System.out.println("Ramt");
         Product product = new Product();
         product.setName(brand +" "+ category +" "+ model +" "+ specification);
         product.setProductId(productId);

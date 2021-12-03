@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
  * @see com.skarp.prio.Technician
  * @see ProductState
  * @see RepairState
+ * @see SparePart
  */
 
 @Service
@@ -169,8 +170,9 @@ public class RepairServiceImpl implements RepairService {
     }
 
     /**
-     * Functions similarly to the {@code pauseRepair} method, but changes the {@code RepairState} of a {@code Repair}
-     * in the {@code "PAUSED"} state to the {@code "ON_GOING"} state.
+     * The {@code resumeRepair} method functions similarly to the {@link #pauseRepair(String id)} method,
+     * but changes the {@code RepairState} of a {@code Repair} object which is in the {@code "PAUSED"} state to the
+     * {@code "ON_GOING"} state.
      * @param id a {@code String} with the {@code Id} for the {@code Repair} object.
      */
     @Override
@@ -197,6 +199,15 @@ public class RepairServiceImpl implements RepairService {
         throw new NoSuchElementException("Repair not found :(");
     }
 
+    /**
+     * The {@code cancelRepair} method functions similarly to {@link #pauseRepair(String id)}.
+     * It cancels the {@code Repair} provided by the {@code PathVariable String Id}.
+     * As a {@code Repair} can have {@code SpareParts} added to it with the {@link #addSparePart(String, String)}
+     * method, these made available again by the method {@code getAddedSpareParts} making a list of added parts and
+     * the {@code setState} method from {@link SparePart}, setting the state to {@code "AVAILABLE"} on each of them.
+     * The {@code SpareParts} are disassociated with the {@code Repair} with the {@code removeSparePart} method.
+     * @param id a {@code String} with the {@code Id} for the {@code Repair} object.
+     */
     @Override
     public void cancelRepair(String id) {
 
@@ -225,11 +236,23 @@ public class RepairServiceImpl implements RepairService {
 
                 return;
             }
-            throw new IllegalRepairOperationException("Repair can not be cancelled when finished, dumb ass");
+            throw new IllegalRepairOperationException("Repair can not be cancelled when finished");
         }
-        throw new NoSuchElementException("Repair not found");
+        throw new NoSuchElementException("Repair not found with id: " + id);
     }
 
+    /**
+     * The {@code finishRepair} method relies on many of the methods documented throughout {@link RepairServiceImpl}.
+     * It takes a {@code Repair} in the {@code RepairState "ON_GOING"} and sets the state to {@code "FINISHED"}.
+     * Then the {@code endDate} is set to the current date and the repair time is calculated using
+     * {@code endDate, startDate} and {@code pausedTime}. The {@code costPrice} of the {@code Product} object being
+     * repaired is updated with the {@code costPrice} of each {@code SparePart} used in the repair, and each
+     * {@code SparePart} has its {@code SparePartState} set to {@code "CONSUMED"}.
+     * An {@code IllegalRepairOperationException} is thrown if the provided {@link Repair} is not in the
+     * {@code "ON_GOING"} state, and a {@code "NoSuchElementException} if no {@code Repair} is found with the
+     * {@code PathVariable id}.
+     * @param id a {@code String} with the {@code Id} for the {@code Repair} object.
+     */
     @Override
     public void finishRepair(String id) {
 
@@ -260,9 +283,18 @@ public class RepairServiceImpl implements RepairService {
             }
             throw new IllegalRepairOperationException("Repair must be on-going before it can be finished");
         }
-        throw new NoSuchElementException("Repair not found :(");
+        throw new NoSuchElementException("Repair not found with id: " + id);
     }
 
+    /**
+     * The {@code addSparePart} method is used to apply a {@link SparePart} to a {@link Repair}.
+     * The method adds a {@code SparePart} object to a {@code Repair} with the {@code addSparePart} method.
+     * It sets the {@code SparePartState} to {@code "RESERVED"} such that it can not be used in another {@code Repair}.
+     * Before adding the {@code SparePart} it checks whether the specific {@code SparePart} is already added.
+     *
+     * @param id a {@code String} for the {@code Id} of the {@code Repair} object.
+     * @param sparepart_id a {@code String} for the {@code Id} of the {@code SparePart} object.
+     */
     @Override
     public void addSparePart(String id, String sparepart_id) {
 
@@ -274,15 +306,9 @@ public class RepairServiceImpl implements RepairService {
             Repair repairModel = repair.get();
             SparePart sparePartModel = sparePart.get();
 
-            // Check if the repair product and given sparepart is compatible
-            // TODO: Remove comparability check - Let the user handle that
-            //if (sparePartModel.getModel().equals(repairModel.getProduct().getModel())) {
-            if (true) {
-
                 // Check if the repair already contains this sparepart
                 List<SparePart> duplicates = repairModel.getAddedSpareParts()
-                        .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0)
-                        .collect(Collectors.toList());
+                        .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0).toList();
 
                 if (duplicates.isEmpty()) {
                     sparePartModel.setState(SparePartState.RESERVED);
@@ -295,18 +321,16 @@ public class RepairServiceImpl implements RepairService {
                     throw new IllegalRepairOperationException("Repair can not contain the same spare-part twice");
                 }
             } else {
-                throw new IncompatibleSparepartTypeException("Spare-part and the product being repaired is not compatible");
+                throw new NoSuchElementException("Must add an existing SparePart to an existing Repair");
             }
-
-            return;
-
-        }
-
-        throw new NoSuchElementException("Could not add the sparepart to repair");
-
-
     }
 
+    /**
+     * The {@code removeSparePart} method functions similarly to the {@link #addSparePart(String, String)} method and
+     * exists because a {@code SparePart} can be faulty, requiring removal.
+     * @param repairId a {@code String} for the {@code Id} of the {@code Repair} object.
+     * @param sparepartId a {@code String} for the {@code Id} of the {@code SparePart} object.
+     */
     @Override
     public void removeSparePart(String repairId, String sparepartId) {
 
@@ -326,7 +350,6 @@ public class RepairServiceImpl implements RepairService {
 
             return;
         }
-
         throw new NoSuchElementException("The current repair does not contain the requested sparepart");
     }
 }

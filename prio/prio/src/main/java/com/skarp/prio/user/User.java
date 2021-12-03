@@ -2,9 +2,15 @@ package com.skarp.prio.user;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import com.skarp.prio.user.SHA3;
+import org.springframework.data.annotation.Id;
+
 
 public class User {
-    private String name;
+    @Id
+    private String id;
+    private String username;
+    private String password; //password is hashed
     private String initials;
     private LocalDate dateRegistered;
     private LocalDate dateResigned;
@@ -12,16 +18,40 @@ public class User {
     private UserState state;
     private UserPrivilege userPrivilege;
 
-    public User(String name, String initials){
+    public User(String username, String password){
         this.state = UserState.Idle;
         this.dateRegistered = LocalDate.now();
         this.userPrivilege = UserPrivilege.VIEW_ONLY;
-        this.name = name;
-        this.initials = initials;
+        this.username = username;
+        this.initials = generateInitials(username);
+        this.password = SHA3.hashPassword(password);
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
+    }
+
+    public String generateInitials(String username){
+        String initials = "";
+        for (String s : username.split(" ")) {
+            initials+=s.split("")[0];
+        }
+        return initials.toUpperCase();
+    }
+    public boolean checkCredentials(String inputName, String inputPassword){
+        if(this.username.equals(inputName) && this.password.equals(SHA3.hashPassword(inputPassword))){
+            return true;
+        }else return false;
+    }
+
+    public boolean checkPassword(String inputPassword){
+        if(this.password.equals(SHA3.hashPassword(inputPassword))){
+            return true;
+        }else return false;
+    }
+    public String getPassword(){return password;}
+    public String getUsername() {
+        return username;
     }
 
     public String getInitials() {

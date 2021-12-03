@@ -35,6 +35,5 @@ public class PrioApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
 	}
 }

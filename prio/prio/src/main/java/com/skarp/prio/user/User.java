@@ -18,7 +18,6 @@ public class User {
     private UserState state;
     private UserPrivilege userPrivilege;
     private int counter;
-    private String sessionCookie;
 
     public User(String username, String password){
         if(!(SHA3.hashPassword("").split("").length == password.split("").length)){
@@ -37,13 +36,6 @@ public class User {
 
     }
 
-    public void setSessionCookie(String sessionCookie) {
-        this.sessionCookie = sessionCookie;
-    }
-
-    public String getSessionCookie() {
-        return sessionCookie;
-    }
 
     public String getId() {
         return id;

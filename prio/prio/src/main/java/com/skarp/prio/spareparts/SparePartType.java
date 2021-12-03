@@ -1,3 +1,4 @@
+/* DEPRECATED
 package com.skarp.prio.spareparts;
 
 import com.skarp.prio.products.Category;
@@ -14,3 +15,5 @@ public class SparePartType {
   private String modelYear;       // 2016
   private com.skarp.prio.spareparts.Enums.SparePartType type;     // Ex: Battery, Screen
 }
+
+ */

@@ -74,7 +74,7 @@ public class RepairTest {
     @Test
     public void canAddSparePart() {
 
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250);
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "skunumber");
         Repair repair = new Repair(iphone);
 
         repair.addSparePart(battery);

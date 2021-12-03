@@ -118,38 +118,92 @@ public class UserController {
             return new ResponseEntity<>(e, HttpStatus.SERVICE_UNAVAILABLE);
         }
     }
-    /*
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
+
+    @PostMapping("/users/setprivilege")
+    public ResponseEntity<?> changeUserPrivilege(
             @RequestParam(value="username") String username,
-            @RequestParam(value="password") String password) {
-        try {
-            Query userQuery = new Query();
+            @RequestParam(value="userPrivilege") String userPrivilege) {
+        Query userQuery = new Query();
 
-            //if username is not null
-            if (username != null) {
-                userQuery.addCriteria(Criteria.where("username").is(username));
+        if (username != null) { userQuery.addCriteria(Criteria.where("username").is(username)); }
 
-                //then Check if the username is legal, not legal if it already exists
-                User requestUser = operations.findOne(userQuery, User.class);
-                if (!requestUser.getUsername().equals(username)) {
-                    //check if the password is acceptable
-                    if (password.split("").length < 8) {
-                        User user = new User(username, password);
-                        repository.save(user);
-                        return new ResponseEntity<>("User registered", HttpStatus.ACCEPTED);
-                    } else {
-                        return new ResponseEntity<>("Password to short", HttpStatus.NOT_ACCEPTABLE);
-                    }
-                } else {
-                    return new ResponseEntity<>("Username already taken", HttpStatus.NOT_ACCEPTABLE);
-                }
+
+        // Find users with matching username
+        User requestUser = operations.findOne(userQuery, User.class);
+
+        if (requestUser != null) {
+            // Check user password against input string
+            if(userPrivilege.equals("FULL_ACCESS")) {
+                requestUser.setUserPrivilege(UserPrivilege.FULL_ACCESS);
+                requestUser.resetDateResigned();
+                repository.save(requestUser);
+                return new ResponseEntity<>("User Privilege changed to FULL_ACCESS", HttpStatus.ACCEPTED);
+            }else if(userPrivilege.equals("SEMI_ACCESS")) {
+                requestUser.setUserPrivilege(UserPrivilege.SEMI_ACCESS);
+                requestUser.resetDateResigned();
+                repository.save(requestUser);
+                return new ResponseEntity<>("User Privilege changed to SEMI_ACCESS", HttpStatus.ACCEPTED);
+            }else if(userPrivilege.equals("UNASSIGNED")) {
+                requestUser.setUserPrivilege(UserPrivilege.UNASSIGNED);
+                repository.save(requestUser);
+                return new ResponseEntity<>("User Privilege changed to UNASSIGNED", HttpStatus.ACCEPTED);
+            } else {
+                return new ResponseEntity<>("No such user privilege", HttpStatus.FORBIDDEN);
             }
-        }catch(Exception e){
-            return new ResponseEntity<>(e, HttpStatus.SERVICE_UNAVAILABLE);
+        } else {
+            return new ResponseEntity<>("No such user", HttpStatus.NOT_FOUND);
         }
     }
-     */
+
+    @PostMapping("/users/resign")
+    public ResponseEntity<?> changeUserPrivilege(
+            @RequestParam(value="username") String username) {
+        Query userQuery = new Query();
+
+        if (username != null) { userQuery.addCriteria(Criteria.where("username").is(username)); }
+
+
+        // Find users with matching username
+        User requestUser = operations.findOne(userQuery, User.class);
+
+        if (requestUser != null) {
+            // Check user password against input string
+            if(requestUser.getDateResigned() == null) {
+                requestUser.resign();
+                repository.save(requestUser);
+                return new ResponseEntity<>("Resigned user", HttpStatus.ACCEPTED);
+            }else {
+                return new ResponseEntity<>("User already resigned", HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>("No such user", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/users/setpassword")
+    public ResponseEntity<?> changePassword(
+            @RequestParam(value="username") String username,
+            @RequestParam(value="password") String password){
+        Query userQuery = new Query();
+
+        if (username != null) { userQuery.addCriteria(Criteria.where("username").is(username)); }
+
+        // Find users with matching username
+        User requestUser = operations.findOne(userQuery, User.class);
+
+        if (requestUser != null) {
+            // Check user password against input string
+            if(password.split("").length >= 6) {
+                requestUser.setPassword(password);
+                repository.save(requestUser);
+                return new ResponseEntity<>("password changed", HttpStatus.ACCEPTED);
+            }else {
+                return new ResponseEntity<>("password to short", HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>("No such user", HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 

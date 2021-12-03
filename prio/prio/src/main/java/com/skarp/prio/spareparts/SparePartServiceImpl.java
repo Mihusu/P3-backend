@@ -28,22 +28,21 @@ public class SparePartServiceImpl implements SparePartService {
 
 
     @Override
-    public List<SparePart> getSparePartList(Category category, String model, String year, String brand, SparePartState state) {
-
+    public List<SparePart> getSparePartList(String name, String brand, String category, String model, String type, String state, String sortBy) {
 
         Query sparePartQuery = new Query();
 
         // Check for Params and add to Criteria
-        if (category != null) {sparePartQuery.addCriteria(Criteria.where("category").is(category));}
-        if (model != null) {sparePartQuery.addCriteria(Criteria.where("model").is(model));}
-        if (year != null) {sparePartQuery.addCriteria(Criteria.where("year").is(year));}
-        if (brand != null) {sparePartQuery.addCriteria(Criteria.where("brand").is(brand));}
-        if (state != null) {sparePartQuery.addCriteria(Criteria.where("state").is(state));}
+        if (name != null) {sparePartQuery.addCriteria(Criteria.where("name").regex(name.toUpperCase()));}
+        if (brand != null) {sparePartQuery.addCriteria(Criteria.where("brand").is(brand.toUpperCase()));}
+        if (category != null) {sparePartQuery.addCriteria(Criteria.where("category").is(category.toUpperCase()));}
+        if (model != null) {sparePartQuery.addCriteria(Criteria.where("model").is(model.toUpperCase()));}
+        if (type != null) {sparePartQuery.addCriteria(Criteria.where("type").is(type.toUpperCase()));}
+        if (state != null) {sparePartQuery.addCriteria(Criteria.where("state").is(state.toUpperCase()));}
+        if (sortBy != null) {sparePartQuery.with(Sort.by(Sort.Direction.ASC, sortBy.toUpperCase()));}
 
-
-        // Find NewSpareParts matching Query
+        // Find SpareParts matching Query
         return operations.find(sparePartQuery, SparePart.class);
-
     }
 
     @Override

@@ -25,5 +25,7 @@ public class NewSparePart extends SparePart{
     public void setLocation(String location){this.location = location;}
     public void setSku(String sku){this.sku = sku;}
     public void setGrade(Grade grade) {this.grade = grade;}
-
+    public Grade getGrade() {
+        return this.grade;
+    }
 }

@@ -60,10 +60,10 @@ public class ProductController {
      */
     @GetMapping("/products")
     public List<Product> product(
-            @RequestParam(required=false, value="name") String name,
-            @RequestParam(required=false, value="model") String model,
-            @RequestParam(required=false, value="brand") String brand,
-            @RequestParam(required=false, value="category") String category,
+            @RequestParam(required = false, value="name") String name,
+            @RequestParam(required = false, value="model") String model,
+            @RequestParam(required = false, value="brand") String brand,
+            @RequestParam(required = false, value="category") String category,
             @RequestParam(required = false, value="state") String state,
             @RequestParam(required = false, value="sortBy") String sortBy
     ) {
@@ -146,7 +146,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/products/")
+    @PostMapping("/products")
     public  ResponseEntity<?> uploadProduct(
             @RequestParam("product_id") String productId,
             @RequestParam("brand") String brand,
@@ -178,7 +178,7 @@ public class ProductController {
 
         try {
             repository.save(product);
-            System.out.println(product.toString());
+            System.out.println(product);
             return new ResponseEntity<>("Product created:"+product.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.EXPECTATION_FAILED);

@@ -149,11 +149,9 @@ public class RepairServiceImpl implements RepairService {
 
         Optional<Repair> repair = repairRepository.findById(id);
 
-
         if (repair.isPresent()) {
             Repair repairModel = repair.get();
 
-            System.out.println(repairModel.getState());
             if (repairModel.getState().equals(RepairState.ON_GOING)) {
 
                 repairModel.setState(RepairState.PAUSED);

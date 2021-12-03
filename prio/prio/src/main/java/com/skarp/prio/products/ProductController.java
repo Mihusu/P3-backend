@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * The {@code ProductController} overall aim is to find products based on product information. through
- * {@link ProductRepository}
+ * The {@code ProductController} overall aim is to find products based on product information. This information will
  * information.
  * The {@code ProductController} achieves this through four essential functions.
  * 1. The {@code ProductController}  finds a list of parameter values from a product. These parameter values are bound
@@ -30,31 +29,11 @@ import org.springframework.web.multipart.MultipartFile;
  * The {@code ProductsController} contains the following information about a product: name, model, brand, category,
  * state and sort-by. Sort-by is used
  *
- * class represents a product. A {@code Product} object contains information about the:
- * ID of the product, an array containing sparepart(s) within the product, in store product ID, name of product,
- * model of product, year the product was produced, the brand of the product,the category of the product,
- * the specifications of the product, the date added to warehouse, the current state of the product {@link ProductState},
- * the sales price of the product, the cost price of the product,
- * the serial number of the product and the defective comment added to the product.
  *
- * This is an example of the creation of a {@code Product} object.
+ * This is an example of the creation of a ... object.
  *
  * <blockquote><pre>
- *     Product product = new Product("61a2b2f0a14da164b79664af");
- *     product.Array ???
- *     product.setProductId("697140000001");
- *     product.setName("Lenovo LAPTOP E480 2016 17");
- *     product.setModel("E480");
- *     product.setYear("2016");
- *     product.setBrand("Lenovo");
- *     product.setCategory(Category.LAPTOP);
- *     product.setSpecification("128GB White");
- *     product.setDateAdded("2021-11-26T23:00:00.000+00:00");
- *     product.setState(ProductState.DEFECTIVE);
- *     product.setSalesPrice("4321");
- *     product.setCostPrice("1274");
- *     product.setSerialNumber("352925111010833");
- *     product.setDefectiveComment("Den virker ikke... .");
+ *
  * </pre></blockquote>
  *
  * @author Team-Skarp

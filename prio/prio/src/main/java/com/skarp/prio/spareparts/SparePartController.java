@@ -35,7 +35,6 @@ public class SparePartController {
     /**
      * private String type;        // Ex: Battery, Screen
      *     private String model;       // Ex: Pro, E480
-     *     private String modelYear;   // 2016
      *     private String brand;       // Apple, Lenovo
      *     private String category;    // Smartphone (and iPhone), Laptop, MacBook
      */
@@ -45,7 +44,6 @@ public class SparePartController {
       @RequestParam("brand") String brand,
       @RequestParam("category") String category,
       @RequestParam("model") String model,
-      @RequestParam("modelYear") String modelYear,
       @RequestParam("grade") String grade,
       @RequestParam("type") String type,
       @RequestParam("costPrice") Double costPrice,
@@ -54,7 +52,7 @@ public class SparePartController {
         System.out.println("uploadSparePart mapping ramt");
 
         try {
-            SparePart sparePart = sparePartService.uploadSparePart(brand, category, model, modelYear, grade, type, costPrice, sku);
+            SparePart sparePart = sparePartService.uploadSparePart(brand, category, model, grade, type, costPrice, sku);
 
             return new ResponseEntity<>("Spare part created: "+ sparePart.getName(), HttpStatus.CREATED);
         } catch (Exception e) {

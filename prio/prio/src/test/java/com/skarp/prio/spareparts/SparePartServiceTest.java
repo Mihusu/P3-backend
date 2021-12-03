@@ -33,10 +33,10 @@ public class SparePartServiceTest {
 
     @Test
     void testFindsCompatibleSparePartsFromRepair() {
-        Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
+        Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
 
         /* Create and save Used Spare part compatible with product */
-        SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), testProduct.getYear(), SparePartType.BATTERY, 200);
+        SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), SparePartType.BATTERY, 200);
         testSp = spRepository.save(testSp);
 
         Repair testRepair = new Repair(testProduct);
@@ -55,9 +55,9 @@ public class SparePartServiceTest {
     // Test if getSparePartList() returns a part matching query
     @Test
     void getSparePartList() {
-        Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
+        Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
 
-        SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), testProduct.getYear(), SparePartType.BATTERY, 200);
+        SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), SparePartType.BATTERY, 200);
         testSp.setState(SparePartState.AVAILABLE);
         testSp = spRepository.save(testSp);
 
@@ -73,7 +73,7 @@ public class SparePartServiceTest {
         // assertEquals(testSp.getPart_id(), testList.get(testList.size()-1).getPart_id());
 
         /* Remove after test completion */
-       // spRepository.delete(testSp);
+       spRepository.delete(testSp);
     }
 
     @Test
@@ -84,12 +84,15 @@ public class SparePartServiceTest {
     @Test
     void TestUploadSparePart() {
 
-        NewSparePart NewTestSp = spService.uploadSparePart("Apple","iPhone","11 Pro","","Original","Screen",2300.00,"19931");
+        NewSparePart NewTestSp = spService.uploadSparePart("Apple","iPhone","11 Pro","Original","Screen",200.00,"200");
 
-        assertEquals("Apple", NewTestSp.getBrand());
+        assertEquals("APPLE", NewTestSp.getBrand());
         assertEquals(Category.IPHONE, NewTestSp.getCategory());
-        assertEquals("11 Pro", NewTestSp.getModel());
+        assertEquals("11 PRO", NewTestSp.getModel());
         assertEquals(SparePartType.SCREEN, NewTestSp.getType());
         assertEquals(Grade.ORIGINAL, NewTestSp.getGrade());
+
+        /* Remove after test completion */
+        spRepository.delete(NewTestSp);
     }
 }

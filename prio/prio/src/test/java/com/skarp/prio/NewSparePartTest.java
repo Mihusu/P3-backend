@@ -16,7 +16,7 @@ class NewSparePartTest {
     @BeforeEach
     public void setup() {
         battery = new NewSparePart(
-                "Apple", Category.IPHONE, "11 Pro", "",
+                "Apple", Category.IPHONE, "11 Pro",
                 Grade.OEM, SparePartType.BATTERY, 260, "123122");
     }
 

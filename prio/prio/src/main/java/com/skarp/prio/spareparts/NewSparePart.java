@@ -10,8 +10,8 @@ public class NewSparePart extends SparePart{
     private String sku;         // stock keeping unit
     private Grade grade;        // OEM, ORIGINAL, A
 
-    public NewSparePart(String brand, Category category, String model, String modelYear, Grade grade, SparePartType type, double costPrice, String sku) {
-        super(brand.toUpperCase(), category, model.toUpperCase(), modelYear, type, costPrice);
+    public NewSparePart(String brand, Category category, String model, Grade grade, SparePartType type, double costPrice, String sku) {
+        super(brand.toUpperCase(), category, model.toUpperCase(), type, costPrice);
         this.grade = grade;
         this.sku = sku;
         name = name.concat(" " + grade.toString()); // Todo: may need super.name, awaiting test

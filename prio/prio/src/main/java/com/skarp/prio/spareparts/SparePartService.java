@@ -30,7 +30,6 @@ public interface SparePartService {
       @RequestParam("brand") String brand,
       @RequestParam("category") String category,
       @RequestParam("model") String model,
-      @RequestParam("modelYear") String modelYear,
       @RequestParam("grade") String grade,
       @RequestParam("type") String type,
       @RequestParam("cost_price") Double costPrice,

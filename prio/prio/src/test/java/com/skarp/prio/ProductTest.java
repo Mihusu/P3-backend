@@ -13,7 +13,7 @@ public class ProductTest {
 
     @BeforeEach
     public void setup() {
-       iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
+       iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class ProductTest {
 
     @Test
     public void testGetName() {
-        assertEquals("Apple IPHONE 11 Pro 2018 256gb white", iphone.getName());
+        assertEquals("Apple IPHONE 11 Pro 256gb white", iphone.getName());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ProductTest {
 
     @Test
     public void testStorageTime(){
-        Product Lenovo = new Product("somenumber","Lenovo", Category.LAPTOP, "TI", "2016", "8gb RAM", 3000, 500);
+        Product Lenovo = new Product("somenumber","Lenovo", Category.LAPTOP, "TI", "8gb RAM", 3000, 500);
         Lenovo.getStorageTime();
         assertEquals(0, Lenovo.getStorageTime());
     }

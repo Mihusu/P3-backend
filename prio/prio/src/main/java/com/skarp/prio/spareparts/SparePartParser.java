@@ -16,9 +16,8 @@ public class SparePartParser {
         parsedSparePart.setBrand(line_split[2].trim());
         parsedSparePart.setCategory(Category.valueOf(line_split[3].trim().toUpperCase()));
         parsedSparePart.setModel(line_split[4]);
-        parsedSparePart.setModelYear(line_split[5]);
-        parsedSparePart.setType(SparePartType.valueOf(line_split[6].trim().toUpperCase()));
-        parsedSparePart.setCostPrice(Double.parseDouble(line_split[7].replace(",", ".")));
+        parsedSparePart.setType(SparePartType.valueOf(line_split[5].trim().toUpperCase()));
+        parsedSparePart.setCostPrice(Double.parseDouble(line_split[6].replace(",", ".")));
         parsedSparePart.setState(SparePartState.AVAILABLE);
         parsedSparePart.setAddedDate(new Date());
 

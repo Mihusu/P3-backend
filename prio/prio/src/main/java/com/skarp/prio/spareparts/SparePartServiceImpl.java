@@ -77,7 +77,7 @@ public class SparePartServiceImpl implements SparePartService {
     }
 
     @Override
-    public NewSparePart uploadSparePart(String brand, String category, String model, String modelYear, String grade, String type, Double costPrice, String sku) {
+    public NewSparePart uploadSparePart(String brand, String category, String model, String grade, String type, Double costPrice, String sku) {
 
         // Transform input strings to enum types
         Category enumCategory = Category.valueOf(category.toUpperCase());
@@ -89,7 +89,7 @@ public class SparePartServiceImpl implements SparePartService {
         SparePartType enumType = SparePartType.valueOf(type.toUpperCase());
         System.out.println("enumType = " + enumType);
 
-        NewSparePart sparePart = new NewSparePart(brand, enumCategory, model, modelYear, enumGrade, enumType, costPrice, sku);
+        NewSparePart sparePart = new NewSparePart(brand, enumCategory, model, enumGrade, enumType, costPrice, sku);
 
         System.out.println("saving to db: " + sparePart);
         System.out.println("sparePart.getPart_id() = " + sparePart.getPart_id());

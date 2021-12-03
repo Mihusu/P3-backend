@@ -182,6 +182,8 @@ public class RepairController {
             repairService.removeSparePart(repairId, sparepartId);
         } catch (NoSuchElementException e) {
             return  new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalRepairOperationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
 
         return new  ResponseEntity<>(HttpStatus.OK);

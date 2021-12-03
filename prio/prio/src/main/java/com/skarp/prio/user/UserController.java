@@ -56,7 +56,6 @@ public class UserController {
                 if (requestUser.checkPassword(password)) {
                     requestUser.compoundCounter();
                     String cookie = SHA3.hashPassword(requestUser.getCounter()+requestUser.getId());
-                    requestUser.setSessionCookie(cookie);
                     repository.save(requestUser);
                     return new ResponseEntity<>(cookie, HttpStatus.ACCEPTED);
                 } else {

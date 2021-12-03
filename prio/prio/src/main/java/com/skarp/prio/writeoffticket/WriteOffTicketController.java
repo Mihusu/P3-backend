@@ -1,19 +1,12 @@
 package com.skarp.prio.writeoffticket;
 
 import com.skarp.prio.products.ProductRepository;
-import org.apache.maven.plugin.descriptor.InvalidParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 @CrossOrigin("*")
 @RestController
@@ -31,7 +24,7 @@ public class WriteOffTicketController {
     @Autowired
     WriteOffTicketServiceImpl writeOffTicketService;
 
-    private static int writeoffs = ThreadLocalRandom.current().nextInt(0,200); // Todo: find out what this is used for
+    // private static int writeoffs = ThreadLocalRandom.current().nextInt(0,200); // Todo: find out what this is used for
 
     @GetMapping("/writeoffs")
     public ResponseEntity<?> getAllWriteOffTickets() {

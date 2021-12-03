@@ -1,25 +1,16 @@
 package com.skarp.prio.repairs;
 
-import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductRepository;
-import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
 import com.skarp.prio.spareparts.SparePartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 

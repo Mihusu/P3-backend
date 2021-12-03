@@ -1,13 +1,7 @@
 package com.skarp.prio.spareparts;
 
-import com.skarp.prio.products.Category;
-import com.skarp.prio.spareparts.Enums.SparePartState;
-import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

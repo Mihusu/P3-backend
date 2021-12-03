@@ -4,6 +4,7 @@ import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
 import com.skarp.prio.spareparts.Enums.SparePartState;
+import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,6 @@ public class SparePartServiceTest {
 
     @Test
     void testFindsCompatibleSparePartsFromRepair() {
-
         Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
 
         /* Create and save Used Spare part compatible with product */
@@ -82,6 +82,14 @@ public class SparePartServiceTest {
 
     // make a new spare part
     @Test
-    void uploadSparePart() {
+    void TestUploadSparePart() {
+
+        NewSparePart NewTestSp = spService.uploadSparePart("Apple","iPhone","11 Pro","","Original","Screen",2300.00,"19931");
+
+        assertEquals("Apple", NewTestSp.getBrand());
+        assertEquals(Category.IPHONE, NewTestSp.getCategory());
+        assertEquals("11 Pro", NewTestSp.getModel());
+        assertEquals(SparePartType.SCREEN, NewTestSp.getType());
+        assertEquals(Grade.ORIGINAL, NewTestSp.getGrade());
     }
 }

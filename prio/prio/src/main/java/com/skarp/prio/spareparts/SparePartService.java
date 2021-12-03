@@ -22,7 +22,7 @@ public interface SparePartService {
     SparePart getSparePartByID(@PathVariable(value = "id") String id);
     List<SparePart> getRecommendedSpareParts(Repair repair);
 
-    SparePart uploadSparePart(
+    NewSparePart uploadSparePart(
       @RequestParam("brand") String brand,
       @RequestParam("category") String category,
       @RequestParam("model") String model,

@@ -12,7 +12,7 @@ public class SparePart {
     @Id
     private String part_id;         // Internal ID use
     protected String name;          // Brand-Category-Model-Year-Grade-Type
-    private String brand;           // Apple, Lenovo Todo: Decide whether this should be String or Category
+    private String brand;           // Apple, Lenovo
     private Category category;      // Smartphone (and iPhone), Laptop, MacBook
     private String model;           // Ex: Pro, E480
     private String modelYear;       // 2016

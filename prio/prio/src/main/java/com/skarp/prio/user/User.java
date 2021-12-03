@@ -2,7 +2,7 @@ package com.skarp.prio.user;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import com.skarp.prio.user.SHA3;
+
 import org.springframework.data.annotation.Id;
 
 
@@ -24,7 +24,7 @@ public class User {
             this.password = SHA3.hashPassword(password);
             this.state = UserState.IDLE;
             this.dateRegistered = LocalDate.now();
-            this.userPrivilege = UserPrivilege.VIEW_ONLY;
+            this.userPrivilege = UserPrivilege.UNASSIGNED;
             this.username = username;
             this.initials = generateInitials(username);
             this.counter = 0;
@@ -36,6 +36,13 @@ public class User {
 
     }
 
+    public void setPassword(String password) {
+        this.password = SHA3.hashPassword(password);
+    }
+
+    public void resetDateResigned() {
+        this.dateResigned = null;
+    }
 
     public String getId() {
         return id;
@@ -102,10 +109,15 @@ public class User {
     public void setUserPrivilege(UserPrivilege userPrivilege){
         this.userPrivilege = userPrivilege;
     }
+    public void resign(){
+        this.userPrivilege = UserPrivilege.UNASSIGNED;
+        this.dateResigned = LocalDate.now();
+        this.employmentTime = ChronoUnit.DAYS.between(this.dateRegistered, this.dateResigned);
+    }
 
     public void demoteUser(User user){
         if (hasFullPrivilege()){
-            user.setUserPrivilege(UserPrivilege.VIEW_ONLY);
+            user.setUserPrivilege(UserPrivilege.UNASSIGNED);
             user.dateResigned = LocalDate.now();
             user.employmentTime = ChronoUnit.DAYS.between(user.dateRegistered, user.dateResigned);
         }else{throw new MissingPrivilegeException();}

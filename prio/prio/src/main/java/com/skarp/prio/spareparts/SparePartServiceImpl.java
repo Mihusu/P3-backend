@@ -3,7 +3,9 @@ package com.skarp.prio.spareparts;
 import com.skarp.prio.products.Category;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.repairs.Repair;
+import com.skarp.prio.spareparts.Enums.Grade;
 import com.skarp.prio.spareparts.Enums.SparePartState;
+import com.skarp.prio.spareparts.Enums.SparePartType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -73,5 +75,30 @@ public class SparePartServiceImpl implements SparePartService {
         query.with(Sort.by(Sort.Direction.ASC, "type"));
 
         return operations.find(query, SparePart.class);
+    }
+
+    @Override
+    public SparePart uploadSparePart(String brand, String category, String model, String modelYear, String grade, String type, Double costPrice, String sku) {
+
+        // Transform input strings to enum types
+        Category enumCategory = Category.valueOf(category.toUpperCase());
+        System.out.println("enumCategory = " + enumCategory);
+
+        Grade enumGrade = Grade.valueOf(grade.toUpperCase());
+        System.out.println("enumGrade = " + enumGrade);
+
+        SparePartType enumType = SparePartType.valueOf(type.toUpperCase());
+        System.out.println("enumType = " + enumType);
+
+        SparePart sparePart = new NewSparePart(brand, enumCategory, model, modelYear, enumGrade, enumType, costPrice, sku);
+
+        System.out.println("saving to db: " + sparePart);
+        System.out.println("sparePart.getPart_id() = " + sparePart.getPart_id());
+        sparePart = sparePartRepository.save(sparePart);
+        System.out.println("saved to db: " + sparePart);
+        System.out.println("sparePart.getPart_id() = " + sparePart.getPart_id());
+
+        return sparePart;
+
     }
 }

@@ -7,18 +7,19 @@ import com.skarp.prio.spareparts.Enums.SparePartType;
 public class NewSparePart extends SparePart{
 
     private String location;    // Workshop location
-    private String SKU;         // stock keeping unit
+    private String sku;         // stock keeping unit
     private Grade grade;        // OEM, ORIGINAL, A
 
-    public NewSparePart(String brand, Category category, String model, String modelYear, Grade grade, SparePartType type, double costPrice) {
+    public NewSparePart(String brand, Category category, String model, String modelYear, Grade grade, SparePartType type, double costPrice, String sku) {
         super(brand, category, model, modelYear, type, costPrice);
         this.grade = grade;
-        name = name.concat(grade.toString()); // Todo: may need super.name, awaiting test
+        this.sku = sku;
+        name = name.concat(" " + grade.toString()); // Todo: may need super.name, awaiting test
     }
 
     public String getLocation(){return this.location;}
-    public String getSKU(){return this.SKU;}
+    public String getSku(){return this.sku;}
     public void setLocation(String location){this.location = location;}
-    public void setSKU(String SKU){this.SKU = SKU;}
+    public void setSku(String sku){this.sku = sku;}
 
 }

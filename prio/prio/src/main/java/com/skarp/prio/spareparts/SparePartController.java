@@ -8,10 +8,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -35,14 +33,35 @@ public class SparePartController {
      *     private String category;    // Smartphone (and iPhone), Laptop, MacBook
      */
 
+    @PostMapping("/spareparts")
+    public  ResponseEntity<?> uploadSparePart(
+      @RequestParam("brand") String brand,
+      @RequestParam("category") String category,
+      @RequestParam("model") String model,
+      @RequestParam("modelYear") String modelYear,
+      @RequestParam("grade") String grade,
+      @RequestParam("type") String type,
+      @RequestParam("costPrice") Double costPrice,
+      @RequestParam("sku") String sku
+    ) {
+        System.out.println("uploadSparePart mapping ramt");
+
+        try {
+            SparePart sparePart = sparePartService.uploadSparePart(brand, category, model, modelYear, grade, type, costPrice, sku);
+
+            return new ResponseEntity<>("Spare part created: "+ sparePart.getName(), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 
     @GetMapping("/spareparts") // Todo: find out if this is still used or should be changed to getSparePartList
     public List<SparePart> spareparts(
-            @RequestParam(required=false, value="name") String name,
-            @RequestParam(required=false, value="type") String type,
+            @RequestParam(required = false, value="name") String name,
+            @RequestParam(required = false, value="type") String type,
             @RequestParam(required = false, value="model") String model,
-            @RequestParam(required=false, value="brand") String brand,
-            @RequestParam(required=false, value="category") String category,
+            @RequestParam(required = false, value="brand") String brand,
+            @RequestParam(required = false, value="category") String category,
             @RequestParam(required = false, value="state") String state,
             @RequestParam(required = false, value="sortBy") String sortBy
     ) {
@@ -62,6 +81,8 @@ public class SparePartController {
             sparepartQuery.addCriteria(Criteria.where("category").is(category1));}
         if (state != null) {sparepartQuery.addCriteria(Criteria.where("state").is(state));}
         if (sortBy != null) {sparepartQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
+
+        System.out.println("sparepartQuery = " + sparepartQuery);
 
         // Find Products matching Query
         try {

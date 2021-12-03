@@ -16,6 +16,8 @@ import java.time.Instant;
 @SpringBootApplication
 public class PrioApplication implements CommandLineRunner {
 
+	// Todo: do the repositories need to be here?
+	/*
 	@Autowired
 	private ProductRepository productRepository;
 
@@ -28,6 +30,7 @@ public class PrioApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 
+ */
 	public static void main(String[] args) {
 
 		SpringApplication.run(PrioApplication.class, args);

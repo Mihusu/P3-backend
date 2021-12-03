@@ -39,7 +39,7 @@ public class SparePartServiceImpl implements SparePartService {
         if (model != null) {sparePartQuery.addCriteria(Criteria.where("model").is(model.toUpperCase()));}
         if (type != null) {sparePartQuery.addCriteria(Criteria.where("type").is(type.toUpperCase()));}
         if (state != null) {sparePartQuery.addCriteria(Criteria.where("state").is(state.toUpperCase()));}
-        if (sortBy != null) {sparePartQuery.with(Sort.by(Sort.Direction.ASC, sortBy.toUpperCase()));}
+        if (sortBy != null) {sparePartQuery.with(Sort.by(Sort.Direction.ASC, sortBy));}
 
         // Find SpareParts matching Query
         return operations.find(sparePartQuery, SparePart.class);

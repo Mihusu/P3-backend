@@ -15,7 +15,7 @@ public class UserTest {
         Frederik.setUserPrivilege(UserPrivilege.SEMI_ACCESS);
         assertEquals(UserPrivilege.SEMI_ACCESS,Frederik.getUserPrivilege());
         Hans.demoteUser(Frederik);
-        assertEquals(UserPrivilege.VIEW_ONLY,Frederik.getUserPrivilege());
+        assertEquals(UserPrivilege.UNASSIGNED,Frederik.getUserPrivilege());
         assertEquals("Frederik", Frederik.getUsername());
         assertEquals("F", Frederik.getInitials());
         assertEquals("Frederik", Frederik.getUsername());

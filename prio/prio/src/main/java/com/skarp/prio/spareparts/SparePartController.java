@@ -90,7 +90,8 @@ public class SparePartController {
     @PostMapping("/spareparts/file")
     public ResponseEntity<Object> uploadSpareParts(@RequestParam("File") MultipartFile multipart) {
         if (!multipart.isEmpty()) {
-            try(BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(multipart.getBytes())))) {
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(
+                            new ByteArrayInputStream(multipart.getBytes())))) {
                 List<NewSparePart> sparePartList = reader.lines().map(SparePartParser::parse).toList();
 
                 sparePartRepository.saveAll(sparePartList);

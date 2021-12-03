@@ -145,7 +145,7 @@ public class RepairServiceImpl implements RepairService {
      * @param id a {@code String} with the {@code Id} for the {@code Repair} object.
      */
     @Override
-    public void pauseRepair(String id) {
+    public Repair pauseRepair(String id) {
 
         Optional<Repair> repair = repairRepository.findById(id);
 
@@ -159,8 +159,7 @@ public class RepairServiceImpl implements RepairService {
                 repairModel.setState(RepairState.PAUSED);
                 repairModel.setPausedAt(new Date());
 
-                repairRepository.save(repairModel);
-                return;
+                return repairRepository.save(repairModel);
             }
             throw new IllegalRepairOperationException("Repair must be on-going before a pause");
 
@@ -176,7 +175,7 @@ public class RepairServiceImpl implements RepairService {
      * @param id a {@code String} with the {@code Id} for the {@code Repair} object.
      */
     @Override
-    public void resumeRepair(String id) {
+    public Repair resumeRepair(String id) {
 
         Optional<Repair> repair = repairRepository.findById(id);
 
@@ -189,13 +188,10 @@ public class RepairServiceImpl implements RepairService {
                 repairModel.setState(RepairState.ON_GOING);
                 repairModel.setPausedTime(new Date());
 
-                repairRepository.save(repairModel);
-                return;
+                return repairRepository.save(repairModel);
             }
-
             throw new IllegalRepairOperationException("Repair must be paused before it can be resumed");
         }
-
         throw new NoSuchElementException("Repair not found :(");
     }
 
@@ -296,7 +292,7 @@ public class RepairServiceImpl implements RepairService {
      * @param sparepart_id a {@code String} for the {@code Id} of the {@code SparePart} object.
      */
     @Override
-    public void addSparePart(String id, String sparepart_id) {
+    public SparePart addSparePart(String id, String sparepart_id) {
 
         Optional<Repair> repair = repairRepository.findById(id);
         Optional<SparePart> sparePart = sparePartRepository.findById(sparepart_id);
@@ -315,7 +311,7 @@ public class RepairServiceImpl implements RepairService {
                     repairModel.addSparePart(sparePartModel);
 
                     repairRepository.save(repairModel);
-                    sparePartRepository.save(sparePartModel);
+                    return sparePartRepository.save(sparePartModel);
 
                 } else {
                     throw new IllegalRepairOperationException("Repair can not contain the same spare-part twice");
@@ -332,7 +328,7 @@ public class RepairServiceImpl implements RepairService {
      * @param sparepartId a {@code String} for the {@code Id} of the {@code SparePart} object.
      */
     @Override
-    public void removeSparePart(String repairId, String sparepartId) {
+    public SparePart removeSparePart(String repairId, String sparepartId) {
 
         Optional<Repair> repair = repairRepository.findById(repairId);
         Optional<SparePart> sparePart = sparePartRepository.findById(sparepartId);
@@ -346,9 +342,7 @@ public class RepairServiceImpl implements RepairService {
             repairModel.removeSparePart(sparePartModel);
 
             repairRepository.save(repairModel);
-            sparePartRepository.save(sparePartModel);
-
-            return;
+            return sparePartRepository.save(sparePartModel);
         }
         throw new NoSuchElementException("The current repair does not contain the requested sparepart");
     }

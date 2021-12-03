@@ -15,7 +15,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class WriteOffTicketTest {
+public class WriteOffTicketServiceTest {
 
   @Autowired
   WriteOffTicketRepository woRepository;

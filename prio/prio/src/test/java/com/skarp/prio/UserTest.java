@@ -17,7 +17,7 @@ public class UserTest {
         Hans.demoteUser(Frederik);
         assertEquals(UserPrivilege.VIEW_ONLY,Frederik.getUserPrivilege());
         assertEquals("Frederik", Frederik.getUsername());
-        assertEquals("FB", Frederik.getInitials());
+        assertEquals("F", Frederik.getInitials());
         assertEquals("Frederik", Frederik.getUsername());
     }
     @Test

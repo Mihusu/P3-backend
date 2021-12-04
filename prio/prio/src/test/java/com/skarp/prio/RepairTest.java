@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.awt.*;
-import java.net.URI;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +36,7 @@ public class RepairTest {
 
     @BeforeEach
     public void setup() {
-        iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "2018", "256gb white", 4000, 1500);
+        iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
     }
 
     @Test
@@ -68,7 +66,7 @@ public class RepairTest {
 
         Repair repair = new Repair(iphone);
 
-        //Get back the saved repair to retreive ID
+        //Get back the saved repair to retrieve ID
         Repair savedRepair = repairRepository.save(repair);
 
         //Service under test
@@ -142,7 +140,7 @@ public class RepairTest {
 
     @Test
     public void whenSparePartIsAddedToRepair_SparePartIsReserved() {
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "23124124");
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", Grade.A, SparePartType.BATTERY, 250, "23124124");
         Repair repair = new Repair(iphone);
 
         //Get back the saved repair to retrieve ID
@@ -157,7 +155,7 @@ public class RepairTest {
 
     @Test
     public void whenRepairIsCancelled_SparePartsIsAvailable() {
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "23124124");
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", Grade.A, SparePartType.BATTERY, 250, "23124124");
         Repair repair = new Repair(iphone);
 
         //Get back the saved repair to retrieve ID
@@ -224,7 +222,7 @@ public class RepairTest {
 
     @Test
     public void whenARepairIsFinished_ExpectSparePartToBeConsumed() {
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "23124124");
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", Grade.A, SparePartType.BATTERY, 250, "23124124");
         battery.setState(SparePartState.CONSUMED);
         Repair repair = new Repair(iphone);
 
@@ -269,7 +267,7 @@ public class RepairTest {
      */
     @Test
     public void whenSparePartIsRemoved_SparePartsIsAvailable() {
-        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "23124124");
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", Grade.A, SparePartType.BATTERY, 250, "23124124");
         Repair repair = new Repair(iphone);
 
         //Get back the saved spare part to retrieve ID

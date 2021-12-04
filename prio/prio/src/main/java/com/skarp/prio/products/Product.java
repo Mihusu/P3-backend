@@ -1,24 +1,20 @@
 package com.skarp.prio.products;
 
-import com.skarp.prio.repairs.RepairState;
-import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 /**
  * The {@code Product} class represents a product. A {@code Product} object contains information about the:
  * ID of the product, an array containing sparepart(s) within the product, in store product ID, name of product,
- * model of product, year the product was produced, the brand of the product,the category of the product,
+ * model of product, the brand of the product,the category of the product,
  * the specifications of the product, the date added to warehouse, the current state of the product {@link ProductState},
  * the sales price of the product, the cost price of the product,
  * the serial number of the product and the defective comment added to the product.
  *
  * <p>
- *  The product ID, name of product, model of product, year the product was made, the brand of the product, the category
+ *  The product ID, name of product, model of product, the brand of the product, the category
  *  of the product, the specifications of the product, the sales price of the product and the serial number of the
  *  product are not mutable.
  *  The date added to warehouse, the current state of the product, the cost price of the product and the defective
@@ -36,7 +32,6 @@ import java.util.ArrayList;
  *     product.setProductId("697140000001");
  *     product.setName("Lenovo LAPTOP E480 2016 17");
  *     product.setModel("E480");
- *     product.setYear("2016");
  *     product.setBrand("Lenovo");
  *     product.setCategory(Category.LAPTOP);
  *     product.setSpecification("128GB White");
@@ -67,8 +62,6 @@ public class Product {
     private String name;
     /** Contains model of product*/
     private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
-    /** Contains year product was produced*/
-    private String year;            // 2016
     /** Contains brand of product*/
     private String brand;           // Apple, Lenovo
     /** Contains category of product*/
@@ -99,18 +92,17 @@ public class Product {
     /**
      * Initializes a newly created {@code Product} object.
      * It contains the following information about the product:
-     * productId, brand, category, model, year, specification, sales price, cost price.
+     * productId, brand, category, model, specification, sales price, cost price.
      * The {@link ProductState} is set to {@code DEFECTIVE}.
      * @param ???, a {@code ???} containing ???.
     */
     // Seems it doesn't need this @PersistenceConstructor even though it has a no-arg constructor
-    public Product(String productId, String brand, Category category, String model, String year, String specification, double salesPrice, double costPrice) {
-        this.name = brand + " " + category + " " + model + " " + year + " " + specification;
+    public Product(String productId, String brand, Category category, String model, String specification, double salesPrice, double costPrice) {
+        this.name = brand + " " + category + " " + model + " " + specification;
         this.productId = productId;
         this.brand = brand;
         this.category = category;
         this.model = model;
-        this.year = year;
         this.specification = specification;
         this.salesPrice = salesPrice;
         this.costPrice = costPrice;
@@ -121,7 +113,6 @@ public class Product {
 
     public Product(){
         this.dateAdded = LocalDate.now();
-        this.year = null;
     }
     /**
      * Getter for the date product added to warehouse.
@@ -224,13 +215,7 @@ public class Product {
     public String getModel() {
         return this.model;
     }
-    /**
-     * Getter for the year produced of a product.
-     * @return a {@code String} specifying the year of the product.
-     */
-    public String getYear() {
-        return this.year;
-    }
+
     /**
      * Getter for the state of a product.
      * @return a {@link ProductState} specifying the state of the product.

@@ -4,7 +4,6 @@ import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
 import java.util.Date;

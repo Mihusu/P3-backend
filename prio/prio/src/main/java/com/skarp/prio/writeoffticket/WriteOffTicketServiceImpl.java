@@ -55,7 +55,7 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
 
         /*Generate used spare-parts from the product under write-off and add to the ticket*/
         for (SparePartType type : sparePartTypes) {
-            UsedSparePart part = new UsedSparePart(product.getProductId(), product.getBrand(), product.getCategory(), product.getModel(), product.getYear(), type,product.getCostPrice() / (double) sparePartTypes.size());
+            UsedSparePart part = new UsedSparePart(product.getProductId(), product.getBrand(), product.getCategory(), product.getModel(), type,product.getCostPrice() / (double) sparePartTypes.size());
             part.setState(SparePartState.MARKED_FUNCTIONAL);
             sparePartRepository.save(part);
             ticket.addSparePart(part);

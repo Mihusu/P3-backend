@@ -35,7 +35,7 @@ public class WriteOffTicketServiceTest {
 
   @BeforeEach
   void setup() {
-    testProduct = new Product("20004000", "Apple", Category.IPHONE, "11 Pro", "", "128 gb White", 4500, 2000);
+    testProduct = new Product("20004000", "Apple", Category.IPHONE, "11 Pro", "128 gb White", 4500, 2000);
     testProduct = pRepository.save(testProduct);
 
     fakeForm = new WriteOffTicketForm();

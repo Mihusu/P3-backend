@@ -7,11 +7,9 @@ import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -21,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * The {@code RepairServiceImpl} class is responsible for implementing the logic to the methods provided by the
@@ -75,7 +72,7 @@ public class RepairServiceImpl implements RepairService {
     public List<Repair> getRepairList(String sortBy, String LIMIT) {
 
         Query repairQuery = new Query();
-
+        if (sortBy != null) {repairQuery.with(Sort.by(Sort.Direction.DESC, sortBy));}
         return operations.find(repairQuery, Repair.class);
 
     }
@@ -304,6 +301,9 @@ public class RepairServiceImpl implements RepairService {
                 List<SparePart> duplicates = repairModel.getAddedSpareParts()
                         .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0).toList();
 
+                if (repairModel.getState() != RepairState.ON_GOING) {
+                    throw new IllegalRepairOperationException("Sparepart can not be added while repair is: " + repairModel.getState());
+                }
                 if (duplicates.isEmpty()) {
                     sparePartModel.setState(SparePartState.RESERVED);
                     repairModel.addSparePart(sparePartModel);
@@ -335,6 +335,10 @@ public class RepairServiceImpl implements RepairService {
 
             Repair repairModel = repair.get();
             SparePart sparePartModel = sparePart.get();
+
+            if (repairModel.getState() != RepairState.ON_GOING) {
+                throw new IllegalRepairOperationException("Sparepart can not be removed while repair is: " + repairModel.getState());
+            }
 
             sparePartModel.setState(SparePartState.AVAILABLE);
             repairModel.removeSparePart(sparePartModel);

@@ -8,6 +8,7 @@ import com.skarp.prio.spareparts.Enums.SparePartType;
 import com.skarp.prio.spareparts.NewSparePart;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
+import com.skarp.prio.spareparts.SparePartServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,6 +238,30 @@ public class RepairTest {
         SparePart updateSparePart = sparePartRepository.findById(savedSP.getPart_id()).get();
 
         assertEquals(SparePartState.CONSUMED, updateSparePart.getState());
+    }
+
+    @Test
+    public void whenARepairIsFinished_ExpectProductCostPriceToBeUpdated() {
+        SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", "2019", Grade.A, SparePartType.BATTERY, 250, "23124124");
+        Repair repair = new Repair(iphone);
+
+        repair.addSparePart(battery);
+
+        // Get back the saved repair to retrieve ID
+        Repair savedRepair = repairRepository.save(repair);
+        Product savedProduct = productRepository.save(iphone);
+        SparePart savedSparePart = sparePartRepository.save(battery);
+
+        // Testing the repair service for finish repair
+        repairService.finishRepair(savedRepair.getId());
+
+        // Finding the respective IDs of repair and product in the database
+        Repair updatedRepair = repairRepository.findById(savedRepair.getId()).get();
+        Product updatedProduct = productRepository.save(savedProduct);
+        Product updatedProductPrice = productRepository.findById(updatedProduct.getId()).get();
+
+        // When repair finished then it will get the cost price of the product
+        assertEquals(updatedRepair.getProduct().getCostPrice(), updatedProductPrice.getCostPrice() + savedSparePart.getCostPrice());
     }
 
     /**

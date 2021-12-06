@@ -91,6 +91,7 @@ public class User {
     }
 
     public long getEmploymentTime() {
+        this.employmentTime = ChronoUnit.DAYS.between(this.dateRegistered, LocalDate.now());
         return employmentTime;
     }
 

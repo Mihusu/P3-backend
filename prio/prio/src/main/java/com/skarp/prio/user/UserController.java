@@ -67,7 +67,7 @@ public class UserController {
         }
 
 
-    @PostMapping("/auth/validateSessionCookie")
+    @PostMapping("/auth/validate_session_cookie")
     public ResponseEntity<?> authenticateSessionCookie(
             @RequestParam(value="username") String username,
             @RequestParam(value="sessionCookie") String sessionCookie) {
@@ -83,7 +83,7 @@ public class UserController {
             if (requestUser != null) {
                 // Check the sessionCookie against calculating what should be the correct sessionCookie
                 if (sessionCookie.equals(SHA3.hashPassword(requestUser.getCounter()+requestUser.getId()))) {
-                    return new ResponseEntity<>("Valid Cookie", HttpStatus.ACCEPTED);
+                    return new ResponseEntity<>("Valid Cookie", HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Invalid Cookie", HttpStatus.FORBIDDEN);
                 }

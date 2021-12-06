@@ -82,7 +82,7 @@ public class UserController {
 
             if (requestUser != null) {
                 // Check the sessionCookie against calculating what should be the correct sessionCookie
-                if (sessionCookie.equals(SHA3.hashPassword(requestUser.getCounter()+requestUser.getId()))) {
+                if (sessionCookie.equals(SHA3.hashPassword(requestUser.getCounter()+requestUser.getId())) && !(requestUser.getUserPrivilege().equals(UserPrivilege.UNASSIGNED))) {
                     return new ResponseEntity<>("Valid Cookie", HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Invalid Cookie", HttpStatus.FORBIDDEN);

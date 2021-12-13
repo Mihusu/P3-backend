@@ -2,6 +2,7 @@ package com.skarp.prio.products;
 
 import java.io.*;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.NoSuchElementException;
 
@@ -97,7 +98,7 @@ public class ProductController {
 
         try {
             if (repository.findById(id).isEmpty()) {
-                String msg = "Repair not found with id: " + id; // Todo: get some meatballs for this juicy copy-pasta :P
+                String msg = "Product not found with id: " + id;
                 throw new NoSuchElementException(msg);
             }
 
@@ -165,16 +166,8 @@ public class ProductController {
         product.setSpecification(specification);
         product.setCostPrice(costPrice);
         product.setSalesPrice(salePrice);
+        product.setCategory(Category.valueOf(category.trim().toUpperCase()));
         product.setDefectiveComment(comment);
-
-        switch (category.trim().toLowerCase()) { //TODO: Make conversion from string to enum with valueOf
-            case "iphone" -> product.setCategory(Category.IPHONE);
-            case "macbook" -> product.setCategory(Category.MACBOOK);
-            case "ipad" -> product.setCategory(Category.IPAD);
-            case "laptop" -> product.setCategory(Category.LAPTOP);
-            case "smartphone" -> product.setCategory(Category.SMARTPHONE);
-            case "tablet" -> product.setCategory(Category.TABLET);
-        }
 
         try {
             repository.save(product);

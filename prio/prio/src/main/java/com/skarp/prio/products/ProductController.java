@@ -127,7 +127,7 @@ public class ProductController {
     @PostMapping("/products/file")
     public ResponseEntity<Object> uploadProducts(@RequestParam("File") MultipartFile multipart) throws IOException {
         if (!multipart.isEmpty()) {
-            try(BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(multipart.getBytes())))) {
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(multipart.getInputStream()))) {
                 List<Product> productList = reader.lines().map(ProductParser::parse).toList();
 
                for (Product product: productList) {

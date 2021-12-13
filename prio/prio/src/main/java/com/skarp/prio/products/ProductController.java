@@ -168,6 +168,7 @@ public class ProductController {
         product.setSalesPrice(salePrice);
         product.setCategory(Category.valueOf(category.trim().toUpperCase()));
         product.setDefectiveComment(comment);
+        product.setState(ProductState.DEFECTIVE);
 
         try {
             repository.save(product);

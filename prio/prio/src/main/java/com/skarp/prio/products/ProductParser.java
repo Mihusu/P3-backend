@@ -14,7 +14,7 @@ public class ProductParser {
         parsedProduct.setModel(line_split[2].replace("''","\""));
         parsedProduct.setSpecification(line_split[3]);
         parsedProduct.setBrand(line_split[4]);
-        parsedProduct.setState(ProductState.valueOf(line_split[6]));
+        parsedProduct.setState(ProductState.valueOf(line_split[6].trim().toUpperCase()));
         parsedProduct.setSalesPrice(Double.parseDouble(line_split[7].replace(",",".")));
         parsedProduct.setCostPrice(Double.parseDouble(line_split[8].replace(",",".")));
         parsedProduct.setCategory(Category.valueOf(line_split[5].trim().toUpperCase()));

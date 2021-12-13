@@ -3,6 +3,7 @@ package com.skarp.prio.repairs;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.SparePart;
+import com.skarp.prio.user.User;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class Repair {
      * Contains the {@link Product} object which was used to initialize the repair.
      */
     private Product product;
+
+    /**
+     * Contains the {@link User} object which was used to initialize the repair.
+     */
+    private String technicianName;
 
     /**
      * Contains the current state of the repair.
@@ -139,6 +145,15 @@ public class Repair {
     }
 
     /**
+     * Getter for the user which was used to initialize the repair object.
+     * @return user, a {@code String} object from the {@link Repair} class, specifying who initiated the repair
+     */
+    public String getTechnicianName() {
+        return this.technicianName;
+    }
+
+
+    /**
      * Getter for the Id of the repair.
      * @return id, a {@code String} object which refers to the document_id in the database.
      */
@@ -152,6 +167,14 @@ public class Repair {
      */
     public void setRepairTime(Long repairTime) {
         this.repairTime = repairTime;
+    }
+
+    /**
+     * Setter for the technician name of the {@code Repair}.
+     * @param tech_id,a {@code String} specifying the name of the technician who is initiated the repair on {@code Product}.
+     */
+    public void setTechnicianName(String tech_id) {
+        this.technicianName = tech_id;
     }
 
     /**

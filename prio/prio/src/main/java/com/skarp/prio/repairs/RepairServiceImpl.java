@@ -6,9 +6,12 @@ import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
+import com.skarp.prio.user.User;
+import com.skarp.prio.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
@@ -96,9 +99,11 @@ public class RepairServiceImpl implements RepairService {
         Product product;
         Repair repair;
 
+
         product = productRepository.findById(prod_id).orElseThrow();
 
         repair = new Repair(product);
+        repair.setTechnicianName(tech_id);
         product.setState(ProductState.IN_REPAIR);
 
         productRepository.save(product);

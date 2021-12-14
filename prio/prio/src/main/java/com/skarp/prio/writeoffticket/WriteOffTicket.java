@@ -1,6 +1,5 @@
 package com.skarp.prio.writeoffticket;
 
-import com.skarp.prio.Technician;
 import com.skarp.prio.products.Product;
 import com.skarp.prio.spareparts.SparePart;
 import org.springframework.data.annotation.Id;
@@ -13,11 +12,11 @@ public class WriteOffTicket {
 
     @Id
     private String id;
-    private List<SparePart> sparePartList = new ArrayList<>();
-    private Product product;
+    private List<SparePart> sparePartList = new ArrayList<>();  // Contains the functional spare parts to be generated on approval
+    private Product product;        // The product for write off
     private String productId;       // Id of product for write-off
-    private String reason;          //Reason for making the write-off
-    private String technicianName;  // name of technician initiating the write-off
+    private String reason;          // Reason for making the write-off
+    private String technicianName;  // Name of technician initiating the write-off
     private Date creationDate;
     private Date approvalDate;
     private WriteOffTicketState state;

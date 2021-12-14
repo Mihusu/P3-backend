@@ -53,7 +53,7 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         ticket.setReason(woForm.getReason());
         ticket.setTechnicianName(tech_id);
 
-        /*Generate used spare-parts from the product under write-off and add to the ticket*/
+        /* Generate used spare-parts from the product under write-off and add to the ticket */
         for (SparePartType type : sparePartTypes) {
             UsedSparePart part = new UsedSparePart(product.getProductId(), product.getBrand(), product.getCategory(), product.getModel(), type,product.getCostPrice() / (double) sparePartTypes.size());
             part.setState(SparePartState.MARKED_FUNCTIONAL);

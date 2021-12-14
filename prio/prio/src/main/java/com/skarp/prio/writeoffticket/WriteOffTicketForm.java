@@ -5,8 +5,8 @@ import java.util.List;
 
 public class WriteOffTicketForm {
 
-    private String reason;
-    private List<String> markedParts = new ArrayList<>();
+    private String reason;                                  // the reason for write-off supplied in post request
+    private List<String> markedParts = new ArrayList<>();   // the type of spare part marked functional in post request
 
     public String getReason() {
         return reason;

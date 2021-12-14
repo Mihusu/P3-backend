@@ -6,12 +6,9 @@ import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
-import com.skarp.prio.user.User;
-import com.skarp.prio.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
@@ -216,7 +213,7 @@ public class RepairServiceImpl implements RepairService {
 
             if (!repairModel.getState().equals(RepairState.FINISHED)) {
 
-                // Set all spareparts states to available
+                // Set all spare parts states to available
                 repairModel.getAddedSpareParts().forEach((sparePart -> {
                     sparePart.setState(SparePartState.AVAILABLE);
                     repairModel.removeSparePart(sparePart);
@@ -302,12 +299,12 @@ public class RepairServiceImpl implements RepairService {
             Repair repairModel = repair.get();
             SparePart sparePartModel = sparePart.get();
 
-                // Check if the repair already contains this sparepart
+                // Check if the repair already contains this spare part
                 List<SparePart> duplicates = repairModel.getAddedSpareParts()
                         .stream().filter(part -> part.getPart_id().compareTo(sparePartModel.getPart_id()) == 0).toList();
 
                 if (repairModel.getState() != RepairState.ON_GOING) {
-                    throw new IllegalRepairOperationException("Sparepart can not be added while repair is: " + repairModel.getState());
+                    throw new IllegalRepairOperationException("Spare part can not be added while repair is: " + repairModel.getState());
                 }
                 if (duplicates.isEmpty()) {
                     sparePartModel.setState(SparePartState.RESERVED);
@@ -342,7 +339,7 @@ public class RepairServiceImpl implements RepairService {
             SparePart sparePartModel = sparePart.get();
 
             if (repairModel.getState() != RepairState.ON_GOING) {
-                throw new IllegalRepairOperationException("Sparepart can not be removed while repair is: " + repairModel.getState());
+                throw new IllegalRepairOperationException("Spare part can not be removed while repair is: " + repairModel.getState());
             }
 
             sparePartModel.setState(SparePartState.AVAILABLE);
@@ -351,6 +348,6 @@ public class RepairServiceImpl implements RepairService {
             repairRepository.save(repairModel);
             return sparePartRepository.save(sparePartModel);
         }
-        throw new NoSuchElementException("The current repair does not contain the requested sparepart");
+        throw new NoSuchElementException("The current repair does not contain the requested spare part");
     }
 }

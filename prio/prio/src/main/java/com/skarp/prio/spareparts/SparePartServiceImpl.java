@@ -90,6 +90,7 @@ public class SparePartServiceImpl implements SparePartService {
         System.out.println("enumType = " + enumType);
 
         NewSparePart sparePart = new NewSparePart(brand, enumCategory, model, enumGrade, enumType, costPrice, sku);
+        sparePart.setState(SparePartState.AVAILABLE);
 
         System.out.println("saving to db: " + sparePart);
         System.out.println("sparePart.getPart_id() = " + sparePart.getPart_id());

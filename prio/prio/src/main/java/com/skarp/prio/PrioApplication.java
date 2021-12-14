@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @SpringBootApplication
-public class PrioApplication implements CommandLineRunner {
+public class
+PrioApplication implements CommandLineRunner {
 
 	// Todo: do the repositories need to be here, I commented them out and everything still works?
 	/*

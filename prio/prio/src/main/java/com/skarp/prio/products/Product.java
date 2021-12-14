@@ -58,10 +58,10 @@ public class Product {
     private String productId;       // In store product ID
     /** Contains name of product*/
     private String name;
-    /** Contains model of product*/
-    private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     /** Contains brand of product*/
     private String brand;           // Apple, Lenovo
+    /** Contains model of product*/
+    private String model;           // Ex: Pro, E480, 8, 9, 11 Pro
     /** Contains category of product*/
     private Category category;      // Smartphone (and iPhone), Laptop, MacBook
     /** Contains specifications of product*/

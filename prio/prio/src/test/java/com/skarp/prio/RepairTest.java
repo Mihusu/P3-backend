@@ -8,11 +8,14 @@ import com.skarp.prio.spareparts.Enums.SparePartType;
 import com.skarp.prio.spareparts.NewSparePart;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
-import com.skarp.prio.spareparts.SparePartServiceImpl;
+import com.skarp.prio.user.User;
+import com.skarp.prio.user.UserPrivilege;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.NoSuchElementException;
 
@@ -20,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class RepairTest {
-    Product iphone;
+    Product iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);;
 
     @Autowired
     private RepairRepository repairRepository;
@@ -36,7 +39,6 @@ public class RepairTest {
 
     @BeforeEach
     public void setup() {
-        iphone = new Product("somenumber","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
     }
 
     @Test
@@ -126,15 +128,19 @@ public class RepairTest {
      */
     @Test
     public void whenRepairIsCreated_ProductIsUnderRepair() {
+        Repair repair = new Repair(iphone);
+        User user = new User("Ming", "password");
+        user.setUserPrivilege(UserPrivilege.SEMI_ACCESS);
+        //UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
+        //String id = "{id}";
+        //UriComponents result = builder.scheme("http").host("priotool.com").path("/repairs" + id).build();
+
         //Get back the saved repair to retrieve ID
-        /*UriComponentsBuilder uriComponentsBuilder =
         Product savedProduct = productRepository.save(iphone);
 
-        Product updateProduct = repairService.createRepair(iphone.getProductId(), );
+        Repair updateRepair = repairService.createRepair(savedProduct.getId(), user.getUsername());
 
-        assertEquals(ProductState.IN_REPAIR, "/repairs/{id}");*/
-
-        //URI startRepair = repairService.createRepair(repair.getId(), uriComponentsBuilder.path("/repairs/{id}").cloneBuilder());
+        assertEquals(ProductState.IN_REPAIR, updateRepair.getProduct().getState());
 
     }
 

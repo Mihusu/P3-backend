@@ -6,16 +6,12 @@ import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
-import com.skarp.prio.user.User;
-import com.skarp.prio.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Date;
@@ -88,31 +84,27 @@ public class RepairServiceImpl implements RepairService {
      * the {@code Repair} is saved in the MongoDB repository with the {@code save} method.
      * @param prod_id a required {@code String} referring to the product for which the {@code Repair} is started.
      * @param tech_id an optional {@code String} referring to the technician who initialized the repair.
-     * @param uriComponentsBuilder a {@code UriComponentsBuilder} used to build the URI path for the newly created
-     *                             repair.
      * @return a {@code uriComponents} object with the path of the newly created repair using the {@code getId} method
      * from {@link Repair} to {@code buildAndExpand} the URI with the {@code Id} of this specific repair.
      */
     @Override
-    public URI createRepair(String prod_id, String tech_id, UriComponentsBuilder uriComponentsBuilder) {
+    public Repair createRepair(String prod_id, String tech_id) {
 
         Product product;
         Repair repair;
 
-
         product = productRepository.findById(prod_id).orElseThrow();
 
         repair = new Repair(product);
-        repair.setTechnicianName(tech_id);
         product.setState(ProductState.IN_REPAIR);
 
         productRepository.save(product);
-        repairRepository.save(repair);
+        return repairRepository.save(repair);
 
         //Builds URI path
-        UriComponents uriComponents = uriComponentsBuilder.path("/repairs/{id}").buildAndExpand(repair.getId());
+        //UriComponents uriComponents = uriComponentsBuilder.path("/repairs/" + repair.getId()).buildAndExpand(repair.getId());
 
-        return uriComponents.toUri();
+        //return uriComponents.toUri();
 
     }
 

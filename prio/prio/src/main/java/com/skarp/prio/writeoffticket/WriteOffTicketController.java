@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 
 @CrossOrigin("*")
 @RestController
-public class WriteOffTicketController {
+public class  WriteOffTicketController {
 
     @Autowired
     MongoOperations operations;
@@ -48,6 +48,9 @@ public class WriteOffTicketController {
         try {
             System.out.println(woForm.getReason());
             System.out.println(woForm.getMarkedParts());
+            System.out.println(tech_id);
+            tech_id = tech_id.replace("%20"," ");
+            System.out.println(tech_id);
 
             // System.out.println("Before creating WOT");
             writeOffTicketService.createWriteOffTicket(woForm, prod_id, tech_id);

@@ -47,7 +47,7 @@ public class RepairController {
     public ResponseEntity<?> createRepair(@RequestParam(required = true, value = "prod_id") String prod_id,
                                           @RequestParam(required = false, value = "tech_id") String tech_id) {
         try {
-            return new ResponseEntity<Repair>(repairService.createRepair(prod_id, tech_id), HttpStatus.CREATED);
+            return new ResponseEntity<>(repairService.createRepair(prod_id, tech_id), HttpStatus.CREATED);
 
         } catch (NoSuchElementException e) { //TODO: Should have an error handler
             String msg = "Failed to create repair: ";

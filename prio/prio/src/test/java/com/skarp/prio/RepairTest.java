@@ -37,10 +37,6 @@ public class RepairTest {
     @Autowired
     private RepairServiceImpl repairService;
 
-    @BeforeEach
-    public void setup() {
-    }
-
     @Test
     void sanityTest() {
         assertNotNull(repairService);
@@ -61,6 +57,21 @@ public class RepairTest {
         Repair repair = new Repair(iphone);
 
         assertNotNull(repair.getStartDate());
+    }
+
+    @Test
+    public void whenRepairIsCreated_ProductIsUnderRepair() {
+        // Making a user and set its privilege
+        User user = new User("Somename", "password");
+        user.setUserPrivilege(UserPrivilege.SEMI_ACCESS);
+
+        //Get back the saved product to retrieve ID
+        Product savedProduct = productRepository.save(iphone);
+
+        // Service under test for creating repair
+        Repair updateRepair = repairService.createRepair(savedProduct.getId(), user.getUsername());
+
+        assertEquals(ProductState.IN_REPAIR, updateRepair.getProduct().getState());
     }
 
     @Test
@@ -120,27 +131,6 @@ public class RepairTest {
 
         //The repair is now RESUMED
         assertEquals(RepairState.ON_GOING, updatedRepairToResume.getState());
-
-    }
-
-    /**
-     * Skal måske slettes. Mangler second opinion om det kan implementeres ordentligt
-     */
-    @Test
-    public void whenRepairIsCreated_ProductIsUnderRepair() {
-        Repair repair = new Repair(iphone);
-        User user = new User("Ming", "password");
-        user.setUserPrivilege(UserPrivilege.SEMI_ACCESS);
-        //UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
-        //String id = "{id}";
-        //UriComponents result = builder.scheme("http").host("priotool.com").path("/repairs" + id).build();
-
-        //Get back the saved repair to retrieve ID
-        Product savedProduct = productRepository.save(iphone);
-
-        Repair updateRepair = repairService.createRepair(savedProduct.getId(), user.getUsername());
-
-        assertEquals(ProductState.IN_REPAIR, updateRepair.getProduct().getState());
 
     }
 
@@ -239,6 +229,7 @@ public class RepairTest {
         //Service under test for adding spare part
         repairService.finishRepair(savedRepair.getId());
 
+        //Service under test for update spare part
         SparePart updateSparePart = sparePartRepository.findById(savedSP.getPart_id()).get();
 
         assertEquals(SparePartState.CONSUMED, updateSparePart.getState());

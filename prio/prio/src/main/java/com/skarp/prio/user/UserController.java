@@ -12,7 +12,8 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-public class UserController {
+public class
+UserController {
 
     @Autowired
     MongoOperations operations;

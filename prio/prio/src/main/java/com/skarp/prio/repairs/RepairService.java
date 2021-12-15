@@ -18,7 +18,7 @@ import java.util.List;
 
 public interface RepairService {
     List<Repair>      getRepairList(@RequestParam(required = false, value = "sortBy") String sortBy, @RequestParam(required = false, value = "LIMIT") String limit);
-    Repair               createRepair(@RequestParam(required = true, value = "prod_id") String prod_id, @RequestParam(required = false, value = "tech_id") String tech_id);
+    Repair            createRepair(@RequestParam(required = true, value = "prod_id") String prod_id, @RequestParam(required = false, value = "tech_id") String tech_id);
     Repair            getRepairByID(@PathVariable String id);
     Repair            pauseRepair(@PathVariable String id);
     Repair            resumeRepair(@PathVariable String id);

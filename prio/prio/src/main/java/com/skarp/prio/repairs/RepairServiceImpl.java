@@ -101,11 +101,6 @@ public class RepairServiceImpl implements RepairService {
         productRepository.save(product);
         return repairRepository.save(repair);
 
-        //Builds URI path
-        //UriComponents uriComponents = uriComponentsBuilder.path("/repairs/" + repair.getId()).buildAndExpand(repair.getId());
-
-        //return uriComponents.toUri();
-
     }
 
     /**

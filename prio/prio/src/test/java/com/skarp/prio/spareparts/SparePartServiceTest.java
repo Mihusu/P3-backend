@@ -33,7 +33,7 @@ public class SparePartServiceTest {
 
     @Test
     void testFindsCompatibleSparePartsFromRepair() {
-        Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
+        Product testProduct = new Product("20005000","APPLE", Category.IPHONE, "11 PRO", "256GB WHITE", 4000, 1500);
 
         /* Create and save Used Spare part compatible with product */
         SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), SparePartType.BATTERY, 200);
@@ -44,46 +44,41 @@ public class SparePartServiceTest {
         List<SparePart> spareParts = spService.getRecommendedSpareParts(testRepair);
 
         /* It is sufficient to test only that a single spare part is compatible with the product since they share the same query */
-        assertEquals("Apple", spareParts.get(0).getBrand());
+        assertEquals("APPLE", spareParts.get(0).getBrand());
         assertEquals(Category.IPHONE, spareParts.get(0).getCategory());
-        assertEquals("11 Pro", spareParts.get(0).getModel());
+        assertEquals("11 PRO", spareParts.get(0).getModel());
 
         /* Remove after test completion */
         spRepository.delete(testSp);
+
     }
 
     // Test if getSparePartList() returns a part matching query
     @Test
     void getSparePartList() {
-        Product testProduct = new Product("20005000","Apple", Category.IPHONE, "11 Pro", "256gb white", 4000, 1500);
+        Product testProduct = new Product("20005000","APPLE", Category.IPHONE, "11 PRO", "256GB WHITE", 4000, 1500);
 
         SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), SparePartType.BATTERY, 200);
         testSp.setState(SparePartState.AVAILABLE);
         testSp = spRepository.save(testSp);
 
-        System.out.println(Category.IPHONE);
         // Perform query and compare the test part's stats with those of the first entry of the query's return object
-        List<SparePart> testList = spService.getSparePartList(null,"Apple", Category.IPHONE.toString(), "11 Pro", SparePartType.BATTERY.toString(), SparePartState.AVAILABLE.toString(), "brand");
+        List<SparePart> testList = spService.getSparePartList(null,"APPLE", Category.IPHONE.toString(), "11 PRO", SparePartType.BATTERY.toString(), SparePartState.AVAILABLE.toString(), "brand");
         assertFalse(testList.isEmpty());
         assertEquals(testSp.getBrand(), testList.get(0).getBrand());
         assertEquals(testSp.getCategory(), testList.get(0).getCategory());
         assertEquals(testSp.getModel(), testList.get(0).getModel());
         assertEquals(testSp.getType(), testList.get(0).getType());
         assertEquals(testSp.getState(), testList.get(0).getState());
-        // assertEquals(testSp.getPart_id(), testList.get(testList.size()-1).getPart_id());
 
         /* Remove after test completion */
        spRepository.delete(testSp);
-    }
 
-    @Test
-    void getSparePartByID() {
     }
 
     // make a new spare part
     @Test
     void TestUploadSparePart() {
-
         NewSparePart NewTestSp = spService.uploadSparePart("Apple","iPhone","11 Pro","Original","Screen",200.00,"200");
 
         assertEquals("APPLE", NewTestSp.getBrand());
@@ -94,5 +89,6 @@ public class SparePartServiceTest {
 
         /* Remove after test completion */
         spRepository.delete(NewTestSp);
+
     }
 }

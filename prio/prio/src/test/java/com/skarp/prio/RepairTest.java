@@ -10,12 +10,9 @@ import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
 import com.skarp.prio.user.User;
 import com.skarp.prio.user.UserPrivilege;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.NoSuchElementException;
 
@@ -41,22 +38,23 @@ public class RepairTest {
     void sanityTest() {
         assertNotNull(repairService);
         assertNotNull(repairRepository);
+
     }
 
     @Test
     public void canStartRepair() {
-
         Repair repair = new Repair(iphone);
 
         assertEquals(RepairState.ON_GOING, repair.getState());
+
     }
 
     @Test
     public void hasDate() {
-
         Repair repair = new Repair(iphone);
 
         assertNotNull(repair.getStartDate());
+
     }
 
     @Test
@@ -76,7 +74,6 @@ public class RepairTest {
 
     @Test
     public void whenPauseRepair_ExpectRepairToBePaused() {
-
         Repair repair = new Repair(iphone);
 
         //Get back the saved repair to retrieve ID
@@ -91,33 +88,7 @@ public class RepairTest {
     }
 
     @Test
-    public void whenFinisingAPausedRepair_throwIllegalRepairOperationException() {
-        Repair repair = new Repair(iphone);
-
-        //Get back the saved repair to retrieve ID
-        Repair savedRepair = repairRepository.save(repair);
-
-        //Service under test for repair
-        repairService.finishRepair(savedRepair.getId());
-
-        //The repair cannot be paused when it is finished
-        assertThrows(IllegalRepairOperationException.class,
-                () -> repairService.pauseRepair(savedRepair.getId()));
-    }
-
-    @Test
-    public void whenGivenUnknownRepairID_throwsNoSuchElementException() {
-        String fakeRepairID = "123456789";
-
-        //The repair cannot be paused when it is finished
-        assertThrows(NoSuchElementException.class,
-                () -> repairService.pauseRepair(fakeRepairID));
-
-    }
-
-    @Test
     public void whenResumeRepair_ExpectRepairToBeResumed() {
-
         Repair repair = new Repair(iphone);
 
         //Get back the saved repair to retreive ID
@@ -135,6 +106,32 @@ public class RepairTest {
     }
 
     @Test
+    public void whenFinisingAPausedRepair_throwIllegalRepairOperationException() {
+        Repair repair = new Repair(iphone);
+
+        //Get back the saved repair to retrieve ID
+        Repair savedRepair = repairRepository.save(repair);
+
+        //Service under test for repair
+        repairService.finishRepair(savedRepair.getId());
+
+        //The repair cannot be paused when it is finished
+        assertThrows(IllegalRepairOperationException.class,
+                () -> repairService.pauseRepair(savedRepair.getId()));
+
+    }
+
+    @Test
+    public void whenGivenUnknownRepairID_throwsNoSuchElementException() {
+        String fakeRepairID = "123456789";
+
+        //The repair cannot be paused when it is finished
+        assertThrows(NoSuchElementException.class,
+                () -> repairService.pauseRepair(fakeRepairID));
+
+    }
+
+    @Test
     public void whenSparePartIsAddedToRepair_SparePartIsReserved() {
         SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", Grade.A, SparePartType.BATTERY, 250, "23124124");
         Repair repair = new Repair(iphone);
@@ -147,6 +144,7 @@ public class RepairTest {
         SparePart updatedPart = repairService.addSparePart(savedRepair.getId(), savedSP.getPart_id());
 
         assertEquals(SparePartState.RESERVED, updatedPart.getState());
+
     }
 
     @Test
@@ -179,6 +177,7 @@ public class RepairTest {
 
         // Get the product state
         assertEquals(ProductState.DEFECTIVE, savedProduct.getState());
+
     }
 
     @Test
@@ -194,8 +193,8 @@ public class RepairTest {
         // Finding the saved repair in the database again to get the specific repair as well
         Repair updatedRepair = repairRepository.findById(savedRepair.getId()).get();
 
-        //The repair cannot be paused when it is finished
         assertEquals(RepairState.FINISHED, updatedRepair.getState());
+
     }
 
     @Test
@@ -204,7 +203,6 @@ public class RepairTest {
 
         //Get back the saved repair to retrieve ID
         Repair savedRepair = repairRepository.save(repair);
-        Product savedProduct = productRepository.save(iphone);
 
         // Testing the repair service for finish repair
         repairService.finishRepair(savedRepair.getId());
@@ -212,8 +210,8 @@ public class RepairTest {
         // Finding the saved repair in the database again to get the specific product as well
         Repair updatedRepair = repairRepository.findById(savedRepair.getId()).get();
 
-        //The repair cannot be paused when it is finished
         assertEquals(ProductState.REPAIRED, updatedRepair.getProduct().getState());
+
     }
 
     @Test
@@ -233,6 +231,7 @@ public class RepairTest {
         SparePart updateSparePart = sparePartRepository.findById(savedSP.getPart_id()).get();
 
         assertEquals(SparePartState.CONSUMED, updateSparePart.getState());
+
     }
 
     @Test
@@ -257,11 +256,9 @@ public class RepairTest {
 
         // When repair finished then it will get the cost price of the product
         assertEquals(updatedRepair.getProduct().getCostPrice(), updatedProductPrice.getCostPrice() + savedSparePart.getCostPrice());
+
     }
 
-    /**
-     * Skal måske slettes siden funktionen bliver også testet i whenRepairIsCancelled_SparePartsIsAvailable.
-     */
     @Test
     public void whenSparePartIsRemoved_SparePartsIsAvailable() {
         SparePart battery = new NewSparePart("Apple",Category.IPHONE,"11 Pro", Grade.A, SparePartType.BATTERY, 250, "23124124");

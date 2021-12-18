@@ -89,7 +89,7 @@ public class SparePartController {
       @RequestParam("costPrice") Double costPrice,
       @RequestParam("sku") String sku
     ) {
-        System.out.println("uploadSparePart mapping ramt");
+        // System.out.println("uploadSparePart mapping ramt");
 
         try {
             SparePart sparePart = sparePartService.uploadSparePart(brand, category, model, grade, type, costPrice, sku);

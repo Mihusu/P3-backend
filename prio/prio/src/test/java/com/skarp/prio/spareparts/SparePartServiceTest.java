@@ -79,8 +79,6 @@ public class SparePartServiceTest {
        spRepository.delete(testSp);
     }
 
-    }
-
     // make a new spare part
     @Test
     void TestUploadSparePart() {

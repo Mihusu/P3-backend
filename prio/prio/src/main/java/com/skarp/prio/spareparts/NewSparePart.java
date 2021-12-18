@@ -14,7 +14,7 @@ public class NewSparePart extends SparePart{
         super(brand, category, model, type, costPrice);
         this.grade = grade;
         this.sku = sku;
-        name = name.concat(" " + grade.toString()); // Todo: may need super.name, awaiting test
+        this.name = name.concat(" (" + grade.toString() + (")"));
     }
 
     public NewSparePart() {

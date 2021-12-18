@@ -211,29 +211,6 @@ public class Repair {
         this.pausedTime += this.resumedAt.getTime() - this.pausedAt.getTime();
     }
 
-/*    public void finishRepair() {
-
-        double addedProductCost = 0;
-        double currentProductCost = this.product.getCostPrice();
-
-        if (!this.state.equals(RepairState.ON_GOING)) {
-            throw new IllegalRepairOperationException("Repair must be on going before it can be finished");
-        }
-
-        //Update product cost
-        for (SparePart sp : this.spareParts) {
-            addedProductCost += sp.getCostPrice();
-        }
-
-        this.product.setCostPrice(currentProductCost + addedProductCost);
-
-        this.state = RepairState.FINISHED;
-        this.endDate = new Date();
-        this.repairTime = this.endDate.getTime() - (this.startDate.getTime() - this.pausedTime);
-        product.setState(ProductState.REPAIRED);
-        //Todo find out if this is needed
-    }*/
-
     /**
      * Setter for adding a sparepart to a product during a repair.
      * @param sparePart, a {@code sparePart} object from {@link SparePart} specifying which sparepart to be added

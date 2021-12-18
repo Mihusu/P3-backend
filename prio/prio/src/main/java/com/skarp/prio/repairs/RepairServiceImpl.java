@@ -63,7 +63,7 @@ public class RepairServiceImpl implements RepairService {
      * {@code getRepairList} is a get method for the {@link RepairController}.
      * @param sortBy, an optional {@code String} which allows sorting of the returned {@code List} of {@code Repair}
      *                objects.
-     * @param LIMIT, an optional {@code String} which limits the amount of {@code Repair} objects being returned.
+     * @param STATE, an optional {@code String} which limits the amount of {@code Repair} objects being returned. TODO: Change this description
      * @return a {@code List} of {@code Repair} objects based on the {@code Query} made from the parameters,
      * using the MongoOperations {@code find} method.
      */

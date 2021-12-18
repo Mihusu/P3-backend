@@ -46,11 +46,14 @@ public class  WriteOffTicketController {
     public ResponseEntity<?> createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, @RequestParam(value = "prod_id") String prod_id, @RequestParam(value = "tech_id") String tech_id)
     {
         try {
+            /* debug
             System.out.println(woForm.getReason());
             System.out.println(woForm.getMarkedParts());
             System.out.println(tech_id);
-            tech_id = tech_id.replace("%20"," ");
+            tech_id = tech_id.replace("%20"," "); // appears redundant since supplying as request param name: "first%20last" still produces "first last"
             System.out.println(tech_id);
+
+             */
 
             // System.out.println("Before creating WOT");
             writeOffTicketService.createWriteOffTicket(woForm, prod_id, tech_id);

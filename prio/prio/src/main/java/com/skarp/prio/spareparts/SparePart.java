@@ -87,7 +87,7 @@ public class SparePart {
     }
 
     public void setBrand(String brand) {
-        this.brand = brand;
+        this.brand = brand.toUpperCase();
     }
 
     public void setCategory(Category category) {
@@ -95,7 +95,7 @@ public class SparePart {
     }
 
     public void setModel(String model) {
-        this.model = model;
+        this.model = model.toUpperCase();
     }
 
     public void setType(SparePartType type) {

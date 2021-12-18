@@ -58,7 +58,7 @@ public class SparePartServiceImpl implements SparePartService {
 
     /**
      * Gives back a sorted list of compatible & available sparepart types for a given repair
-     * @param repair The repair to get recommended spareparts from
+     * @param repair The repair to get recommended spareparts for
      * @return A list of compatible spareparts for the product under repair
      */
     @Override
@@ -66,14 +66,30 @@ public class SparePartServiceImpl implements SparePartService {
 
         Product product = repair.getProduct();
 
+        System.out.println("Wat is product? " + product);
+        System.out.println("category.getCategory() = " + product.getCategory());
+        System.out.println("product.getModel() = " + product.getModel());
+        System.out.println("product.getBrand() = " + product.getBrand());
+
         Query query = new Query();
+        // avoid null pointer exceptions and look for values in upper case
         if (product.getCategory() != null) {query.addCriteria(Criteria.where("category").is(product.getCategory()));}
-        if (product.getModel() != null) {query.addCriteria(Criteria.where("model").is(product.getModel()));}
-        if (product.getBrand() != null) {query.addCriteria(Criteria.where("brand").is(product.getBrand()));}
+        if (product.getModel() != null) {query.addCriteria(Criteria.where("model").is(product.getModel().toUpperCase()));}
+        if (product.getBrand() != null) {query.addCriteria(Criteria.where("brand").is(product.getBrand().toUpperCase()));}
         query.addCriteria(Criteria.where("state").is(SparePartState.AVAILABLE));
         query.with(Sort.by(Sort.Direction.ASC, "type"));
+        List<SparePart> result = operations.find(query, SparePart.class);
 
-        return operations.find(query, SparePart.class);
+
+        System.out.println("result = " + result);
+        List<NewSparePart> resultNew = operations.find(query, NewSparePart.class);
+        System.out.println("resultNew = " + resultNew);
+        List<UsedSparePart> resultUsed = operations.find(query, UsedSparePart.class);
+        System.out.println("resultUsed = " + resultUsed);
+
+
+        return result;
+
     }
 
     @Override

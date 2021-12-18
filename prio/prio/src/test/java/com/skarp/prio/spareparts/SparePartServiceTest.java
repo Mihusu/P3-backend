@@ -37,16 +37,22 @@ public class SparePartServiceTest {
 
         /* Create and save Used Spare part compatible with product */
         SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), SparePartType.BATTERY, 200);
+        testSp.setState(SparePartState.AVAILABLE);
         testSp = spRepository.save(testSp);
+        // System.out.println("testSp.getBrand() = " + testSp.getBrand());
+        // System.out.println("testSp.getModel() = " + testSp.getModel());
 
         Repair testRepair = new Repair(testProduct);
 
         List<SparePart> spareParts = spService.getRecommendedSpareParts(testRepair);
 
+        // System.out.println("1: " + testSp.getPart_id() + " 2: " + spareParts.get(0).getPart_id());
+        // getRecommendedSpareParts was altered to look for upper case values as there was mismatch between product and spare part model and brand values
+        // added toUpperCase()
         /* It is sufficient to test only that a single spare part is compatible with the product since they share the same query */
-        assertEquals("Apple", spareParts.get(0).getBrand());
+        assertEquals(testProduct.getBrand().toUpperCase(), spareParts.get(0).getBrand());
         assertEquals(Category.IPHONE, spareParts.get(0).getCategory());
-        assertEquals("11 Pro", spareParts.get(0).getModel());
+        assertEquals(testProduct.getModel().toUpperCase(), spareParts.get(0).getModel());
 
         /* Remove after test completion */
         spRepository.delete(testSp);

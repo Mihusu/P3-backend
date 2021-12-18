@@ -121,14 +121,14 @@ public class WriteOffTicketServiceImpl implements WriteOffTicketService{
         Product product = productRepository.findById(ticket.getProduct().getId()).orElseThrow();
 
         product.setState(ProductState.DEFECTIVE);
+        productRepository.save(product);
+
         List<SparePart> partList = ticket.getSpareParts();
 
-        //Remove all spareparts that were marked functional
+        //Remove all spareparts that were marked functional from database
         sparePartRepository.deleteAll(partList);
-        ticket.getSpareParts().clear();
+        ticket.getSpareParts().clear(); // redundant if ticket is deleted anyway
 
-
-        productRepository.save(product);
         writeOffTicketRepository.delete(ticket);
 
     }

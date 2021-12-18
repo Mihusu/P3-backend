@@ -7,7 +7,7 @@ public class UsedSparePart extends SparePart {
     private String originProductId;     // productId of the write-off product that the spare-part is in
 
     public UsedSparePart(String originProductId, String brand, Category category, String model, SparePartType type, double costPrice) {
-        super(brand.toUpperCase(), category, model.toUpperCase(), type, costPrice);
+        super(brand, category, model, type, costPrice);
         this.originProductId = originProductId;
     }
 

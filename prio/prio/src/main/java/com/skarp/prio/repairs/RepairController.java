@@ -36,9 +36,9 @@ public class RepairController {
     MongoOperations operations;
 
     @GetMapping("/repairs")
-    public ResponseEntity<?> getRepairList(@RequestParam(required = false, value = "sortBy") String sortBy, @RequestParam(required = false, value = "LIMIT") String limit)
+    public ResponseEntity<?> getRepairList(@RequestParam(required = false, value = "sortBy") String sortBy, @RequestParam(required = false, value = "state") String state)
     {
-        return new ResponseEntity<>(repairService.getRepairList(sortBy, limit), HttpStatus.OK);
+        return new ResponseEntity<>(repairService.getRepairList(sortBy, state), HttpStatus.OK);
 
     }
 

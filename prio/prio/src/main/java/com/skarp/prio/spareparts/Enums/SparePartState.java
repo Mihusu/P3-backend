@@ -8,3 +8,4 @@ public enum SparePartState {
     INCOMING,
     MARKED_FUNCTIONAL,
 }
+

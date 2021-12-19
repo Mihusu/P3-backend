@@ -10,6 +10,7 @@ import com.skarp.prio.spareparts.SparePartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
@@ -62,15 +63,16 @@ public class RepairServiceImpl implements RepairService {
      * {@code getRepairList} is a get method for the {@link RepairController}.
      * @param sortBy, an optional {@code String} which allows sorting of the returned {@code List} of {@code Repair}
      *                objects.
-     * @param LIMIT, an optional {@code String} which limits the amount of {@code Repair} objects being returned.
+     * @param state, an optional {@code String} which allows filtering the list by state.
      * @return a {@code List} of {@code Repair} objects based on the {@code Query} made from the parameters,
      * using the MongoOperations {@code find} method.
      */
     @Override
-    public List<Repair> getRepairList(String sortBy, String LIMIT) {
+    public List<Repair> getRepairList(String sortBy, String state) {
 
         Query repairQuery = new Query();
         if (sortBy != null) {repairQuery.with(Sort.by(Sort.Direction.DESC, sortBy));}
+        if (state != null) {repairQuery.addCriteria(Criteria.where("state").is(state));}
         return operations.find(repairQuery, Repair.class);
 
     }

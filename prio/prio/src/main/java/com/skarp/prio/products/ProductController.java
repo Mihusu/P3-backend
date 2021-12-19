@@ -59,6 +59,7 @@ public class ProductController {
      *
      * @return a {@code LocalDate} specifying the date product added to warehouse.
      */
+    @CrossOrigin
     @GetMapping("/products")
     public List<Product> product(
             @RequestParam(required = false, value="name") String name,

@@ -42,6 +42,7 @@ public class  WriteOffTicketController {
         }
     }
 
+    @CrossOrigin
     @PostMapping(value = "/writeoffs/create", consumes = "application/json")
     public ResponseEntity<?> createWriteOffTicket(@RequestBody WriteOffTicketForm woForm, @RequestParam(value = "prod_id") String prod_id, @RequestParam(value = "tech_id") String tech_id)
     {

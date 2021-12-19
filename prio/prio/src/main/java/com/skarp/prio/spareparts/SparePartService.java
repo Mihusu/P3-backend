@@ -19,10 +19,6 @@ public interface SparePartService {
       @RequestParam(required = false, value="state") String state,
       @RequestParam(required = false, value="sortBy") String sortBy);
 
- /*   List<SparePart> getSparePartList(String name, String brand, String category, String model, String type, String state, String sortBy);
-
-
-  */
     SparePart getSparePartByID(@PathVariable(value = "id") String id);
     List<SparePart> getRecommendedSpareParts(Repair repair);
 

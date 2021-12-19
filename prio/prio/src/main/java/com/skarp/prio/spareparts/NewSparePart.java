@@ -11,10 +11,10 @@ public class NewSparePart extends SparePart{
     private Grade grade;        // OEM, ORIGINAL, A
 
     public NewSparePart(String brand, Category category, String model, Grade grade, SparePartType type, double costPrice, String sku) {
-        super(brand.toUpperCase(), category, model.toUpperCase(), type, costPrice);
+        super(brand, category, model, type, costPrice);
         this.grade = grade;
         this.sku = sku;
-        name = name.concat(" " + grade.toString()); // Todo: may need super.name, awaiting test
+        this.name = name.concat(" (" + grade.toString() + (")"));
     }
 
     public NewSparePart() {
@@ -22,8 +22,8 @@ public class NewSparePart extends SparePart{
 
     public String getLocation(){return this.location;}
     public String getSku(){return this.sku;}
+    public Grade getGrade() {return this.grade;}
     public void setLocation(String location){this.location = location;}
     public void setSku(String sku){this.sku = sku;}
     public void setGrade(Grade grade) {this.grade = grade;}
-    public Grade getGrade() {return this.grade;}
 }

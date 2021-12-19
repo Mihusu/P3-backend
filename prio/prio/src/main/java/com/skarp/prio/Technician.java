@@ -1,5 +1,5 @@
 package com.skarp.prio;
-
+// Todo: remove this class as it is unused
 public class Technician {
     private final String name;
     private String specialization;

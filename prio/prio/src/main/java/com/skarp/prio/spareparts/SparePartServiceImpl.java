@@ -58,7 +58,7 @@ public class SparePartServiceImpl implements SparePartService {
 
     /**
      * Gives back a sorted list of compatible & available sparepart types for a given repair
-     * @param repair The repair to get recommended spareparts from
+     * @param repair The repair to get recommended spareparts for
      * @return A list of compatible spareparts for the product under repair
      */
     @Override
@@ -67,13 +67,15 @@ public class SparePartServiceImpl implements SparePartService {
         Product product = repair.getProduct();
 
         Query query = new Query();
+        // avoid null pointer exceptions and look for values in upper case
         if (product.getCategory() != null) {query.addCriteria(Criteria.where("category").is(product.getCategory()));}
-        if (product.getModel() != null) {query.addCriteria(Criteria.where("model").is(product.getModel()));}
-        if (product.getBrand() != null) {query.addCriteria(Criteria.where("brand").is(product.getBrand()));}
+        if (product.getModel() != null) {query.addCriteria(Criteria.where("model").is(product.getModel().toUpperCase()));}
+        if (product.getBrand() != null) {query.addCriteria(Criteria.where("brand").is(product.getBrand().toUpperCase()));}
         query.addCriteria(Criteria.where("state").is(SparePartState.AVAILABLE));
         query.with(Sort.by(Sort.Direction.ASC, "type"));
 
         return operations.find(query, SparePart.class);
+
     }
 
     @Override
@@ -81,22 +83,18 @@ public class SparePartServiceImpl implements SparePartService {
 
         // Transform input strings to enum types
         Category enumCategory = Category.valueOf(category.toUpperCase());
-        System.out.println("enumCategory = " + enumCategory);
+        //System.out.println("enumCategory = " + enumCategory);
 
         Grade enumGrade = Grade.valueOf(grade.toUpperCase());
-        System.out.println("enumGrade = " + enumGrade);
+        //System.out.println("enumGrade = " + enumGrade);
 
         SparePartType enumType = SparePartType.valueOf(type.toUpperCase());
-        System.out.println("enumType = " + enumType);
+        //System.out.println("enumType = " + enumType);
 
         NewSparePart sparePart = new NewSparePart(brand, enumCategory, model, enumGrade, enumType, costPrice, sku);
         sparePart.setState(SparePartState.AVAILABLE);
 
-        System.out.println("saving to db: " + sparePart);
-        System.out.println("sparePart.getPart_id() = " + sparePart.getPart_id());
         sparePart = sparePartRepository.save(sparePart);
-        System.out.println("saved to db: " + sparePart);
-        System.out.println("sparePart.getPart_id() = " + sparePart.getPart_id());
 
         return sparePart;
 

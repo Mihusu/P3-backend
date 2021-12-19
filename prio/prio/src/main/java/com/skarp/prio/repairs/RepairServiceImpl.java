@@ -6,14 +6,13 @@ import com.skarp.prio.products.ProductState;
 import com.skarp.prio.spareparts.Enums.SparePartState;
 import com.skarp.prio.spareparts.SparePart;
 import com.skarp.prio.spareparts.SparePartRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponents;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -90,21 +89,17 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair createRepair(String prod_id, String tech_id) {
 
-        Product product;
-        Repair repair;
+        Product product = productRepository.findById(prod_id).orElseThrow();
+        if (product.getState() != ProductState.DEFECTIVE) {
+            throw new IllegalRepairOperationException("Product is not in DEFECTIVE state");
+        }
 
-        product = productRepository.findById(prod_id).orElseThrow();
-
-        repair = new Repair(product);
+        Repair repair = new Repair(product);
+        repair.setTechnicianName(tech_id); // might want to do this in repair constructor
         product.setState(ProductState.IN_REPAIR);
 
         productRepository.save(product);
         return repairRepository.save(repair);
-
-        //Builds URI path
-        //UriComponents uriComponents = uriComponentsBuilder.path("/repairs/" + repair.getId()).buildAndExpand(repair.getId());
-
-        //return uriComponents.toUri();
 
     }
 
@@ -293,6 +288,9 @@ public class RepairServiceImpl implements RepairService {
 
             Repair repairModel = repair.get();
             SparePart sparePartModel = sparePart.get();
+
+            if (sparePartModel.getState() != SparePartState.AVAILABLE)
+                throw new IllegalRepairOperationException("Spare part state is not AVAILABLE, state is: " + sparePartModel.getState());
 
                 // Check if the repair already contains this spare part
                 List<SparePart> duplicates = repairModel.getAddedSpareParts()

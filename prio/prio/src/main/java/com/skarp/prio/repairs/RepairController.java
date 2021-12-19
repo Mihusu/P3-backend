@@ -3,14 +3,13 @@ package com.skarp.prio.repairs;
 import com.skarp.prio.products.ProductRepository;
 import com.skarp.prio.spareparts.SparePartRepository;
 import com.skarp.prio.spareparts.SparePartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -45,14 +44,16 @@ public class RepairController {
 
     @PostMapping("/repairs")
     public ResponseEntity<?> createRepair(@RequestParam(required = true, value = "prod_id") String prod_id,
-                                          @RequestParam(required = false, value = "tech_id") String tech_id) {
+                                          @RequestParam(required = true, value = "tech_id") String tech_id) {
         try {
-            return new ResponseEntity<Repair>(repairService.createRepair(prod_id, tech_id), HttpStatus.CREATED);
+            return new ResponseEntity<>(repairService.createRepair(prod_id, tech_id), HttpStatus.CREATED);
 
         } catch (NoSuchElementException e) { //TODO: Should have an error handler
             String msg = "Failed to create repair: ";
-
-            return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(msg + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        catch (IllegalRepairOperationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }

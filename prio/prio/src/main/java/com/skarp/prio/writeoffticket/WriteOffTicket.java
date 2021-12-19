@@ -19,8 +19,7 @@ public class WriteOffTicket {
     private String technicianName;  // Name of technician initiating the write-off
     private Date creationDate;
     private Date approvalDate;
-    private WriteOffTicketState state;
-    //private String approvedByManagerName;
+    private WriteOffTicketState state;  // AWAITING, APPROVED, DECLINED
 
     public WriteOffTicket(Product product, String technicianName){
         this.product = product;

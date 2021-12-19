@@ -30,7 +30,7 @@ package com.skarp.prio.products;
  * @since ???
  */
 public enum ProductState {
-    /** ??? */
+    /** Enum values */
     DEFECTIVE,
     IN_REPAIR,
     IN_WRITEOFF,

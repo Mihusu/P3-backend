@@ -37,16 +37,20 @@ public class SparePartServiceTest {
 
         /* Create and save Used Spare part compatible with product */
         SparePart testSp = new UsedSparePart(testProduct.getProductId(), testProduct.getBrand(), testProduct.getCategory(), testProduct.getModel(), SparePartType.BATTERY, 200);
+        testSp.setState(SparePartState.AVAILABLE);
         testSp = spRepository.save(testSp);
 
         Repair testRepair = new Repair(testProduct);
 
         List<SparePart> spareParts = spService.getRecommendedSpareParts(testRepair);
 
+        // System.out.println("1: " + testSp.getPart_id() + " 2: " + spareParts.get(0).getPart_id());
+        // getRecommendedSpareParts was altered to look for upper case values as there was mismatch between product and spare part model and brand values
+        // added toUpperCase()
         /* It is sufficient to test only that a single spare part is compatible with the product since they share the same query */
-        assertEquals("Apple", spareParts.get(0).getBrand());
+        assertEquals(testProduct.getBrand().toUpperCase(), spareParts.get(0).getBrand());
         assertEquals(Category.IPHONE, spareParts.get(0).getCategory());
-        assertEquals("11 Pro", spareParts.get(0).getModel());
+        assertEquals(testProduct.getModel().toUpperCase(), spareParts.get(0).getModel());
 
         /* Remove after test completion */
         spRepository.delete(testSp);
@@ -70,20 +74,14 @@ public class SparePartServiceTest {
         assertEquals(testSp.getModel(), testList.get(0).getModel());
         assertEquals(testSp.getType(), testList.get(0).getType());
         assertEquals(testSp.getState(), testList.get(0).getState());
-        // assertEquals(testSp.getPart_id(), testList.get(testList.size()-1).getPart_id());
 
         /* Remove after test completion */
        spRepository.delete(testSp);
     }
 
-    @Test
-    void getSparePartByID() {
-    }
-
     // make a new spare part
     @Test
     void TestUploadSparePart() {
-
         NewSparePart NewTestSp = spService.uploadSparePart("Apple","iPhone","11 Pro","Original","Screen",200.00,"200");
 
         assertEquals("APPLE", NewTestSp.getBrand());

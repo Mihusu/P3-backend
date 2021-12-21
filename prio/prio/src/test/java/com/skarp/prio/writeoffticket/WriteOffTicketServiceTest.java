@@ -53,7 +53,7 @@ public class WriteOffTicketServiceTest {
     }
 
     @Test
-    void testStatesWhenCreatingWriteoff() {
+    void testStatesWhenCreatingWriteOff() {
         testTicket = woService.createWriteOffTicket(fakeForm, testProduct.getId(), "Bertan");
         assertEquals(ProductState.IN_WRITEOFF, testTicket.getProduct().getState());
         assertEquals(WriteOffTicketState.AWAITING, testTicket.getState());
@@ -62,7 +62,7 @@ public class WriteOffTicketServiceTest {
     }
 
     @Test
-    void testStatesWhenApprovingWriteoff() {
+    void testStatesWhenApprovingWriteOff() {    
         testTicket = woService.createWriteOffTicket(fakeForm, testProduct.getId(), "Bertan");
 
         woService.approveWriteOffTicket(testTicket.getId());

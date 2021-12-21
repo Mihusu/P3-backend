@@ -48,9 +48,8 @@ public class SparePartServiceTest {
         // getRecommendedSpareParts was altered to look for upper case values as there was mismatch between product and spare part model and brand values
         // added toUpperCase()
         /* It is sufficient to test only that a single spare part is compatible with the product since they share the same query */
-        assertEquals(testProduct.getBrand().toUpperCase(), spareParts.get(0).getBrand());
-        assertEquals(Category.IPHONE, spareParts.get(0).getCategory());
-        assertEquals(testProduct.getModel().toUpperCase(), spareParts.get(0).getModel());
+        assertEquals("APPLE " + Category.IPHONE + " 11 PRO", spareParts.get(0).getBrand() + " " + spareParts.get(0).getCategory() + " " + spareParts.get(0).getModel());
+
 
         /* Remove after test completion */
         spRepository.delete(testSp);

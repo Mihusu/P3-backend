@@ -106,7 +106,7 @@ public class RepairTest {
     }
 
     @Test
-    public void whenFinisingAPausedRepair_throwIllegalRepairOperationException() {
+    public void whenFinishingAPausedRepair_throwIllegalRepairOperationException() {
         Repair repair = new Repair(iphone);
 
         //Get back the saved repair to retrieve ID
